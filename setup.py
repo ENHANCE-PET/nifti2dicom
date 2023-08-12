@@ -5,14 +5,16 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='nifti2dicom',
-    version='1.0.4',
+    version='1.0.5',
     packages=find_packages(),
     install_requires=[
         'pydicom',
         'nibabel',
         'numpy',
         'emoji',
-        'rich'
+        'rich',
+        'pydicom',
+        'highdicom'
     ],
     entry_points={
         'console_scripts': [
