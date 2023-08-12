@@ -17,10 +17,15 @@ import glob
 import pydicom
 import nibabel as nib
 import numpy as np
-from rich.progress import Progress
+from rich.progress import Progress, track
 from concurrent.futures import ThreadPoolExecutor
-from nifti2dicom.constants import ANSI_ORANGE, ANSI_GREEN, ANSI_VIOLET, ANSI_RESET
+from nifti2dicom.constants import ANSI_ORANGE, ANSI_GREEN, ANSI_VIOLET, ANSI_RESET, ORGAN_INDEX
 import emoji
+import highdicom as hd
+from pydicom.sr.codedict import codes
+from pydicom.dataset import Dataset
+from datetime import datetime
+
 
 def check_directory_exists(directory_path: str) -> None:
     """
@@ -64,7 +69,7 @@ def save_slice(slice_data, normalized_data, series_description, filename, output
     slice_data.save_as(os.path.join(output_dir, os.path.basename(filename)))
 
 
-def save_dicom_from_nifti(ref_dir, nifti_path, output_dir, series_description, force_overwrite=False):
+def save_dicom_from_nifti_image(ref_dir, nifti_path, output_dir, series_description, force_overwrite=False):
     print('')
     print(f'{ANSI_VIOLET} {emoji.emojize(":magnifying_glass_tilted_left:")} IDENTIFIED DATASETS:{ANSI_RESET}')
     print('')
@@ -119,6 +124,81 @@ def save_dicom_from_nifti(ref_dir, nifti_path, output_dir, series_description, f
                                 description=f"[cyan] Writing DICOM slices... [{idx + 1}/{total_slices}]")
 
 
+def save_dicom_from_nifti_seg(nifti_file: str, ref_dicom_series_dir: str, output_path: str, ORGAN_INDEX: dict) -> None:
+    """
+    Convert a NIFTI segmentation image to a DICOM Segmentation object.
+
+    Parameters
+    ----------
+    nifti_file : str
+        Path to the NIFTI segmentation file.
+    ref_dicom_series_dir : str
+        Directory containing the reference DICOM series files.
+    output_path : str
+        Path to save the resulting DICOM Segmentation file.
+    ORGAN_INDEX : dict
+        Dictionary mapping label values to organ or tissue names.
+
+    Returns
+    -------
+    None
+        The function saves the resulting DICOM file to the specified output path.
+
+    """
+    print('')
+    print(f'{ANSI_VIOLET} {emoji.emojize(":magnifying_glass_tilted_left:")} IDENTIFIED DATASETS:{ANSI_RESET}')
+    print('')
+    # Load the reference DICOM series
+    ref_series = [pydicom.dcmread(f) for f in sorted(glob.glob(os.path.join(ref_dicom_series_dir, "*.dcm")))]
+    print(f' {ANSI_GREEN}* Reference DICOM series directory: {ref_dicom_series_dir}{ANSI_RESET}')
+    # Load and preprocess the NIFTI segmentation
+    print(f' {ANSI_GREEN}* Loading NIfTI segmentation: {nifti_file}{ANSI_RESET}')
+    multilabel_mask = nib.load(nifti_file).get_fdata().astype(np.uint8)
+    multilabel_mask = np.flip(multilabel_mask, (1, 2))
+    multilabel_mask = multilabel_mask.T
+    multilabel_mask = multilabel_mask.reshape((-1,) + multilabel_mask.shape[-2:])
+
+    # Generate segment descriptions based on labels in the mask
+    labels = np.unique(multilabel_mask)[1:]
+    segment_descriptions = []
+    for label, organ_name in track(ORGAN_INDEX.items(), description="[cyan] Processing segments...",
+                                   total=len(ORGAN_INDEX)):
+        category_code = (
+            codes.SCT.Organ if organ_name in ['Liver', 'Heart', 'Lung', 'Kidneys', 'Bladder', 'Brain', 'Pancreas',
+                                              'Spleen', 'Adrenal-glands']
+            else codes.SCT.Tissue
+        )
+        type_code = codes.SCT.Tissue
+
+        description = hd.seg.SegmentDescription(
+            segment_number=int(label),
+            segment_label=organ_name,
+            segmented_property_category=category_code,
+            segmented_property_type=type_code,
+            algorithm_type=hd.seg.SegmentAlgorithmTypeValues.MANUAL,
+        )
+        segment_descriptions.append(description)
+
+    # Construct the DICOM Segmentation object
+    seg = hd.seg.Segmentation(
+        source_images=ref_series,
+        pixel_array=multilabel_mask,
+        segmentation_type=hd.seg.SegmentationTypeValues.BINARY,
+        segment_descriptions=segment_descriptions,
+        series_instance_uid=hd.UID(),
+        series_number=100,
+        sop_instance_uid=hd.UID(),
+        instance_number=1,
+        manufacturer="Quantitative Imaging and Medical Physics",
+        manufacturer_model_name="MOOSE (Multi-organ objective segmentation)",
+        software_versions="2.0",
+        device_serial_number=datetime.now().strftime("%Y%m%d%H%M%S"),  # Using current timestamp as serial number
+    )
+
+    # Save the DICOM SEG object with same filename as NIFTI file
+    seg.save_as(os.path.join(output_path, os.path.basename(nifti_file) + ".dcm"))
+
+
 def main():
     import argparse
 
@@ -127,6 +207,11 @@ def main():
     parser.add_argument("nifti_path", type=str, help="Path to the NIfTI file to be converted.")
     parser.add_argument("output_dir", type=str, help="Path to the directory where the converted DICOM files will be saved.")
     parser.add_argument("series_description", type=str, help="Series description to be added to the DICOM header.")
-
+    parser.add_argument("is_seg", type=bool, help="True if the NIfTI file is a segmentation, False otherwise.")
     args = parser.parse_args()
-    save_dicom_from_nifti(args.reference_dir, args.nifti_path, args.output_dir, args.series_description)
+    if args.is_seg:
+        if not os.path.isdir(args.output_dir):
+            os.makedirs(args.output_dir)
+        save_dicom_from_nifti_seg(args.nifti_path, args.reference_dir, args.output_dir, ORGAN_INDEX)
+    else:
+        save_dicom_from_nifti(args.reference_dir, args.nifti_path, args.output_dir, args.series_description)
