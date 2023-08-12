@@ -3,7 +3,6 @@
 
 Hello there, brave soul! 🌟 Welcome to **Nifti2Dicom** - a project born out of sheer determination, despair, and probably a smidge too much caffeine. ☕️ Ever felt like converting NIfTI to DICOM was akin to summoning a minor demon? 😈 So did we. Which is why we created this snazzy tool to prevent any more unplanned infernal conferences.
 
-![Nifti2Dicom Logo](https://github.com/LalithShiyam/nifti2dicom/blob/main/logo_path_here.png) *(Replace `logo_path_here.png` with actual path if you have a logo)*
 
 ## Prerequisites 📋
 
