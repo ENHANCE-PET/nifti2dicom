@@ -1,5 +1,7 @@
-
 from setuptools import setup, find_packages
+
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
 
 setup(
     name='nifti2dicom',
@@ -19,6 +21,8 @@ setup(
     },
     author='Lalith Kumar Shiyam Sundar',
     description='A package to convert NIfTI images to DICOM format using a reference DICOM series.',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     license='MIT',
     keywords='nifti dicom converter',
 )
