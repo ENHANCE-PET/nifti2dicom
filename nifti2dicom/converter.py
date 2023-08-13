@@ -25,6 +25,7 @@ import highdicom as hd
 from pydicom.sr.codedict import codes
 from pydicom.dataset import Dataset
 from datetime import datetime
+from nifti2dicom.display import display_welcome_message
 
 
 def check_directory_exists(directory_path: str) -> None:
@@ -54,13 +55,47 @@ def load_reference_dicom_series(directory_path: str) -> tuple:
     return zip(*slices_and_names)
 
 
-def save_slice(slice_data, normalized_data, series_description, filename, output_dir, modality):
-    # Convert data to 16-bit integer and set to PixelData
+def save_slice(slice_data, normalized_data, series_description, filename, output_dir, modality, vendor):
+    """
+    Save a DICOM slice to a file.
+    :param slice_data: DICOM slice data
+    :type slice_data: Dataset
+    :param normalized_data: Normalized data from the NIfTI image
+    :type normalized_data: numpy.ndarray
+    :param series_description: Description of the series
+    :type series_description: str
+    :param filename: output filename of the converted DICOM slice
+    :type filename: str
+    :param output_dir: output directory to store the converted DICOM slice
+    :type output_dir: str
+    :param modality: Modality of the image (CT or PT)
+    :type modality: str
+    :param vendor: Vendor from which the DICOM series was obtained (ux or sms)
+    :type vendor: str
+    :return: None
+    """
     if modality == "CT":
         # Reverse the rescaling to get back to the original stored values
         slice_data.PixelData = (normalized_data - float(slice_data.RescaleIntercept)) / float(slice_data.RescaleSlope)
+    elif modality == "PT":
+        # Don't ask me why there are different rescaling methods for both vendors
+        if vendor == 'ux':
+            slice_data.PixelData = normalized_data
+            slice_data.RescaleIntercept = 0
+            slice_data.RescaleSlope = 1
+        elif vendor == 'sms':
+            max_value = np.max(normalized_data)
+            if max_value > 65535:
+                slice_data.PixelData = normalized_data * (65535 / max_value)
+                # fix the rescale slope and intercept accordingly
+                slice_data.RescaleSlope = max_value / 65535
+                slice_data.RescaleIntercept = 0
+            # Reverse the rescaling to get back to the original stored values
+            slice_data.PixelData = (normalized_data - float(slice_data.RescaleIntercept)) / float(slice_data.RescaleSlope)
+        else:
+            raise ValueError(f"Unknown vendor: {vendor}")
     else:
-        slice_data.PixelData = normalized_data
+        raise ValueError(f"Unknown modality: {modality}")
     slice_data.PixelData = slice_data.PixelData.astype(np.int16).tobytes()
 
     slice_data.SeriesNumber *= 10
@@ -69,7 +104,23 @@ def save_slice(slice_data, normalized_data, series_description, filename, output
     slice_data.save_as(os.path.join(output_dir, os.path.basename(filename)))
 
 
-def save_dicom_from_nifti_image(ref_dir, nifti_path, output_dir, series_description, force_overwrite=False):
+def save_dicom_from_nifti_image(ref_dir, nifti_path, output_dir, series_description, vendor, force_overwrite=False):
+    """
+    Convert a NIfTI image to a DICOM series.
+    :param ref_dir: DICOM series directory which serves as a reference for the conversion
+    :type ref_dir: str
+    :param nifti_path: Path to the nifti file
+    :type nifti_path: str
+    :param output_dir: Output directory to store the converted DICOM series
+    :type output_dir: str
+    :param series_description: Series description to be added to the DICOM header
+    :type series_description: str
+    :param vendor: The vendor from which the DICOM series was obtained (ux or sms)
+    :type vendor: str
+    :param force_overwrite: Force overwrite of the output directory if it already exists
+    :type force_overwrite: bool
+    :return:
+    """
     print('')
     print(f'{ANSI_VIOLET} {emoji.emojize(":magnifying_glass_tilted_left:")} IDENTIFIED DATASETS:{ANSI_RESET}')
     print('')
@@ -80,9 +131,15 @@ def save_dicom_from_nifti_image(ref_dir, nifti_path, output_dir, series_descript
     print(f' {ANSI_ORANGE}* Image dimensions: {num_dims}{ANSI_RESET}')
     print(f' {ANSI_GREEN}* Loading NIfTI image: {nifti_path}{ANSI_RESET}')
 
-    image_data = np.flip(image_data, (1, 2))
-    image_data = image_data.T
-    image_data = image_data.reshape((-1,) + image_data.shape[-2:])
+    if vendor == 'ux':
+        image_data = np.flip(image_data, (1, 2))
+        image_data = image_data.T
+        image_data = image_data.reshape((-1,) + image_data.shape[-2:])
+    if vendor == 'sms':
+        image_data = np.flip(image_data, (1, 3))
+        image_data = np.flip(image_data, (3,))  # Flip along the time axis
+        image_data = image_data.T
+        image_data = image_data.reshape((-1,) + image_data.shape[-2:])
 
     print(f' {ANSI_GREEN}* Reference DICOM series directory: {ref_dir}{ANSI_RESET}')
     dicom_slices, filenames = load_reference_dicom_series(ref_dir)
@@ -116,7 +173,7 @@ def save_dicom_from_nifti_image(ref_dir, nifti_path, output_dir, series_descript
                 normalized_data = image_data[idx]
                 futures.append(
                     executor.submit(save_slice, slice_data, normalized_data, series_description, filename, output_dir,
-                                    modality))
+                                    modality, vendor))
 
             for idx, future in enumerate(futures):
                 future.result()
@@ -127,23 +184,14 @@ def save_dicom_from_nifti_image(ref_dir, nifti_path, output_dir, series_descript
 def save_dicom_from_nifti_seg(nifti_file: str, ref_dicom_series_dir: str, output_path: str, ORGAN_INDEX: dict) -> None:
     """
     Convert a NIFTI segmentation image to a DICOM Segmentation object.
-
-    Parameters
-    ----------
-    nifti_file : str
-        Path to the NIFTI segmentation file.
-    ref_dicom_series_dir : str
-        Directory containing the reference DICOM series files.
-    output_path : str
-        Path to save the resulting DICOM Segmentation file.
-    ORGAN_INDEX : dict
-        Dictionary mapping label values to organ or tissue names.
-
-    Returns
-    -------
-    None
-        The function saves the resulting DICOM file to the specified output path.
-
+    :param nifti_file: Path to the NIFTI segmentation file.
+    :type nifti_file: str
+    :param ref_dicom_series_dir: Path to the directory containing the reference DICOM series.
+    :type ref_dicom_series_dir: str
+    :param output_path: Path to the directory where the converted DICOM files will be saved.
+    :type output_path: str
+    :param ORGAN_INDEX: Dictionary containing the organ index.
+    :type ORGAN_INDEX: dict
     """
     print('')
     print(f'{ANSI_VIOLET} {emoji.emojize(":magnifying_glass_tilted_left:")} IDENTIFIED DATASETS:{ANSI_RESET}')
@@ -203,15 +251,29 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(description="Convert NIfTI images to DICOM format using a reference DICOM series.")
-    parser.add_argument("reference_dir", type=str, help="Path to the directory containing the reference DICOM series.")
-    parser.add_argument("nifti_path", type=str, help="Path to the NIfTI file to be converted.")
-    parser.add_argument("output_dir", type=str, help="Path to the directory where the converted DICOM files will be saved.")
-    parser.add_argument("series_description", type=str, help="Series description to be added to the DICOM header.")
-    parser.add_argument("is_seg", type=bool, help="True if the NIfTI file is a segmentation, False otherwise.")
+    parser.add_argument("-d", "--dicom_dir", type=str, help="Path to the directory containing the reference DICOM "
+                                                          "series.")
+    parser.add_argument("-n", "--nifti_path", type=str, help="Path to the NIfTI file to be converted.")
+    parser.add_argument("-o", "--output_dir", type=str, help="Path to the directory where the converted DICOM files "
+                                                             "will  be saved.")
+    parser.add_argument("-desc", "--series_description", type=str, help="Series description to be added to the DICOM header.")
+    parser.add_argument("-t", "--type", type=str, choices=['img','seg'], help=("True if the NIfTI file is a "
+                                                                              "segmentation, "
+                                                             "False otherwise."))
+    # vendor is optional because it is not needed for the segmentation conversion
+
+    parser.add_argument("-v", "--vendor", type=str, choices=['sms', 'ux'], required=False, default='ux',
+                        help="Vendor of the reference DICOM series.")
+
+
     args = parser.parse_args()
-    if args.is_seg:
+
+    display_welcome_message()
+
+    if args.type == 'seg':
         if not os.path.isdir(args.output_dir):
             os.makedirs(args.output_dir)
-        save_dicom_from_nifti_seg(args.nifti_path, args.reference_dir, args.output_dir, ORGAN_INDEX)
-    else:
-        save_dicom_from_nifti(args.reference_dir, args.nifti_path, args.output_dir, args.series_description)
+        save_dicom_from_nifti_seg(args.nifti_path, args.dicom_dir, args.output_dir, ORGAN_INDEX)
+
+    elif args.type == 'img':
+        save_dicom_from_nifti_image(args.dicom_dir, args.nifti_path, args.output_dir, args.series_description, args.vendor)
