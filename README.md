@@ -61,7 +61,7 @@ This project is licensed under the MIT License. Check out the `LICENSE` file to 
 - The spirit animal of this project: A platypus, because just like this software, it's unique, unexpected, and gets the job done!
 
 
-🎩🔮 A Gentle Wizardly Reminder 🔮🎩
+## 🎩🔮 A Gentle Wizardly Reminder 🔮🎩
 
 Dear adventurous user, while Nifti2Dicom is sprinkled with a generous dose of magic and wizardry, it's essential to remember that no spell is perfect. Just like the age-old "turn a frog into a prince" trick, sometimes things don't pan out (ask any fairy tale princess).
 
