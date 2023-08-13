@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # ----------------------------------------------------------------------------------------------------------------------
-# Author: Lalith Kumar Shiyam Sundar | Aaron Selfridge
+# Author: Lalith Kumar Shiyam Sundar | Aaron Selfridge | Siqi Li
 # Institution: Medical University of Vienna | University of California, Davis
 # Research Group: Quantitative Imaging and Medical Physics (QIMP) Team | EXPLORER Molecular Imaging Center
 # Date: 09.02.2023
