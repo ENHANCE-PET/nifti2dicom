@@ -14,7 +14,8 @@ setup(
         'emoji',
         'rich',
         'pydicom',
-        'highdicom'
+        'highdicom',
+        'pyfiglet'
     ],
     entry_points={
         'console_scripts': [
