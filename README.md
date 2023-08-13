@@ -2,10 +2,10 @@
 
 
 ## Nifti2Dicom 🧠💽
+[![Documentation Status](https://readthedocs.org/projects/nifti2dicom/badge/?version=latest)](https://nifti2dicom.readthedocs.io/en/latest/?badge=latest)
+
 
 Hello there, brave soul! 🌟 Welcome to **Nifti2Dicom** - a project born out of sheer determination, despair, pain and probably a smidge too much caffeine. ☕️ Ever felt like converting NIfTI to DICOM was akin to summoning a minor demon from the pandora's box? 😈 So did we. Which is why we created this snazzy tool to prevent any more unplanned infernal conferences.
-
-[![Documentation Status](https://readthedocs.org/projects/nifti2dicom/badge/?version=latest)](https://nifti2dicom.readthedocs.io/en/latest/?badge=latest)
 
 
 ## Magic Powers (Features) 🌟
