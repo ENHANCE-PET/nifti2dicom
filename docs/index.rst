@@ -3,10 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Nifti2Dicom Documentation 🧠💽
-==============================
-
-Greetings, brave explorer! 🌟 While the GitHub repository of Nifti2Dicom may tell tales of determination and caffeine-driven nights, here, we dive into the arcane spells (commands) that power this magical tool. Set aside the coffee mug, take out your wand (keyboard), and let's embark on this mystical journey! ☕️
+Welcome to Nifti2Dicom Documentation 🧠💽!
+===========================================
 
 
 
@@ -14,6 +12,7 @@ Greetings, brave explorer! 🌟 While the GitHub repository of Nifti2Dicom may t
    :maxdepth: 2
    :caption: Contents:
 
+   introduction
    features
    prerequisites
    installation
@@ -22,4 +21,12 @@ Greetings, brave explorer! 🌟 While the GitHub repository of Nifti2Dicom may t
    license
    acknowledgments
    reminder
+   modules
 
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
