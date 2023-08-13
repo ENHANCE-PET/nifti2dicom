@@ -58,7 +58,7 @@ This project is licensed under the MIT License. Check out the `LICENSE` file to 
 
 - To coffee, our eternal ally. ☕️
 - The patience of everyone who ever sat near a developer (me) while they mumbled about DICOM headers.
-- The spirit animal of this project: A platypus, because just like this software, it's unique, unexpected, and gets the job done!
+- The spirit animal of this project: A platypus, because just like this software, it's unique, unexpected, and gets the job done (to a reasonable extent - we are managing expectations here)!
 
 
 ## 🎩🔮 A Gentle Wizardly Reminder 🔮🎩
@@ -66,5 +66,3 @@ This project is licensed under the MIT License. Check out the `LICENSE` file to 
 Dear adventurous user, while Nifti2Dicom is sprinkled with a generous dose of magic and wizardry, it's essential to remember that no spell is perfect. Just like the age-old "turn a frog into a prince" trick, sometimes things don't pan out (ask any fairy tale princess).
 
 If you ever find yourself uttering "It doesn't work!" take a deep breath, consider the vastness of the cosmos, and remember — our tool isn't the answer to every cosmic conundrum. It's not a magic bullet (or wand) that'll work wonders in every scenario. But fret not, intrepid one! Reach out, and together, let's see if we can make a tad more magic happen.
-
-
