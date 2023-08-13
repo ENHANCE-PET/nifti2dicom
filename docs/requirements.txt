@@ -1,0 +1,11 @@
+pydicom
+nibabel
+numpy
+emoji
+rich
+highdicom
+pyfiglet
+sphinx_rtd_dark_mode
+sphinxcontrib-napoleon
+Sphinx
+sphinx_rtd_theme
