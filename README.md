@@ -117,6 +117,6 @@ This project is licensed under the MIT License. Check out the `LICENSE` file to 
 
 ## 🎩🔮 A Gentle Wizardly Reminder 🔮🎩
 
-Dear adventurous user, while Nifti2Dicom is sprinkled with a generous dose of magic and wizardry, it's essential to remember that no spell is perfect. Just like the age-old "turn a frog into a prince" trick, sometimes things don't pan out (ask any fairy tale princess).
+Dear adventurous user, while Nifti2Dicom is sprinkled with a generous dose of magic and wizardry, it's essential to remember that no spell is perfect. Just like the age-old "turn a frog into a prince" trick, sometimes things don't pan out (ask any fairy tale princess). For example our segmentation conversion was tested on slicer 3D with QuantitativeReporting plugin, and we are not sure if it will work on everything.
 
 If you ever find yourself uttering "It doesn't work!" take a deep breath, consider the vastness of the cosmos, and remember — our tool isn't the answer to every cosmic conundrum. It's not a magic bullet (or wand) that'll work wonders in every scenario. But fret not, intrepid one! Reach out, and together, let's see if we can make a tad more magic happen.
