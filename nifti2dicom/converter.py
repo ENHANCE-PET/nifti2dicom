@@ -30,6 +30,7 @@ import json
 
 def check_directory_exists(directory_path: str) -> None:
     """
+    
     Checks if the specified directory exists.
 
     :param directory_path: The path to the directory.
