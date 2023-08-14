@@ -31,7 +31,7 @@ source nifti2dicom/bin/activate
 ### Windows
 ```bash
 python -m venv nifti2dicom
-nifti2dicom>\Scripts\activate.bat  
+nifti2dicom\Scripts\activate.bat  
 ```
 
 And now, wave a magic wand... just kidding. Do this:
