@@ -48,7 +48,7 @@ Using the mighty **Nifti2Dicom** is (thankfully) less complicated than its origi
    Example:
 
    ```bash
-   nifti2dicom -r ./refDICOM  -n ./brainMRI.nii -o ./convertedDICOM -desc "Fancy Brain Scan" -t image
+   nifti2dicom -r ./refDICOM  -n ./brainMRI.nii -o ./convertedDICOM -desc "Fancy Brain Scan" -t img
    ```
 
 ## Issues & Feedback 🐛🗣
