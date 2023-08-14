@@ -22,13 +22,13 @@ Hello there, brave soul! 🌟 Welcome to **Nifti2Dicom** - a project born out of
 
 We highly recommend using a different realm (virtual environment) for installing nifti2dicom (or any other Python package, really).
 
-Linux
+### Linux
 ```bash
 python3 -m venv nifti2dicom
 source nifti2dicom/bin/activate
 ```
 
-Windows
+### Windows
 ```bash
 python -m venv nifti2dicom
 nifti2dicom>\Scripts\activate.bat  
