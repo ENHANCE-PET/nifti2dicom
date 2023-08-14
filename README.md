@@ -34,7 +34,7 @@ Using the mighty **Nifti2Dicom** is (thankfully) less complicated than its origi
 2. Enter the following command, replacing the placeholders with your actual paths and desired series description:
    
    ```bash
-   nifti2dicom <reference_dir> <nifti_path> <output_dir> "<series_description>"
+   nifti2dicom -r <reference_dir> -n <nifti_path> -o <output_dir> -desc "<series_description>" -t <img | seg> -v <sms | ux> # don't bother about -v if you are in for segmentation, it's basically the vendor specific triggers for 'image' conversion.
    ```
 
    **Arguments:**
@@ -42,11 +42,13 @@ Using the mighty **Nifti2Dicom** is (thankfully) less complicated than its origi
    - `nifti_path`: Path to the NIfTI file you wish to convert.
    - `output_dir`: Path to the directory where you'd like the converted DICOM files to reside.
    - `series_description`: A description to be added to the DICOM header. Wrap it in quotes if it contains spaces!
+   - `-t or type`: Is the conversion for an image or segmentation
+   - `-v or vendor`: Is this for siemens (sms) or united imaging (ux). The default is ux, don't bother if you are doing this for segmentation as this tag is optional.
 
    Example:
 
    ```bash
-   nifti2dicom ./refDICOM ./brainMRI.nii ./convertedDICOM "Fancy Brain Scan"
+   nifti2dicom -r ./refDICOM  -n ./brainMRI.nii -o ./convertedDICOM -desc "Fancy Brain Scan" -t image
    ```
 
 ## Issues & Feedback 🐛🗣
