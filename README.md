@@ -44,26 +44,61 @@ pip install nifti2dicom
 
 Using the mighty **Nifti2Dicom** is (thankfully) less complicated than its origin story:
 
+
 1. Open your command line or terminal. 💻
 2. Enter the following command, replacing the placeholders with your actual paths and desired series description:
-   
-   ```bash
-   nifti2dicom -r <reference_dir> -n <nifti_path> -o <output_dir> -desc "<series_description>" -t <img | seg> -v <sms | ux> # don't bother about -v if you are in for segmentation, it's basically the vendor specific triggers for 'image' conversion.
-   ```
 
-   **Arguments:**
-   - `reference_dir`: Path to the directory containing the reference DICOM series.
-   - `nifti_path`: Path to the NIfTI file you wish to convert.
-   - `output_dir`: Path to the directory where you'd like the converted DICOM files to reside.
-   - `series_description`: A description to be added to the DICOM header. Wrap it in quotes if it contains spaces!
-   - `-t or type`: Is the conversion for an image or segmentation (img or seg)
-   - `-v or vendor`: Is this for siemens (sms) or united imaging (ux). The default is ux, don't bother if you are doing this for segmentation as this tag is optional.
+### Converting 3d/4d images 
 
-   Example:
+```bash
+   nifti2dicom \
+       -r <reference_dir>           # Directory containing reference DICOM series
+       -n <nifti_path>              # Path to the NIFTI file to be converted
+       -o <output_dir>              # Directory where the converted DICOM files will be saved
+       -desc "<series_description>" # Description for the DICOM series
+       -t img                       # Specifies the type of conversion (image in this case)
+       -v <sms | ux>                # Specifies the vendor, either "sms" or "ux"
+```
+ ### Converting segmentations single/multilabel segmentations
+```bash
+    nifti2dicom \
+       -r <reference_dir>           # Directory containing reference DICOM series
+       -n <nifti_path>              # Path to the NIFTI file to be converted
+       -o <output_dir>              # Directory where the converted DICOM files will be saved
+       -desc "<series_description>" # Description for the DICOM series
+       -t seg                       # Specifies the type of conversion (segmentation in this case)
+       -j <path_to_json>            # Path to the JSON file containing the organ index
+```
+For converting nifti segmentations to DICOM, you always need to a pass a json file, which contains the mapping of the labels to the region names. The sample .json file can be found [here](/labels_region.json).
 
-   ```bash
-   nifti2dicom -r ./refDICOM  -n ./brainMRI.nii -o ./convertedDICOM -desc "Fancy Brain Scan" -t img
-   ```
+### Example:
+
+#### Segmentation conversion
+  
+```bash
+nifti2dicom \
+    -r ./refDICOM               # Reference directory with DICOM series
+    -n ./brainSegmentation.nii  # Path to the NIFTI segmentation file
+    -o ./convertedSegDICOM      # Output directory for the converted segmentation DICOM
+    -desc "Brain Segmentation"  # Description for the DICOM series
+    -t seg                      # Type of conversion: segmentation
+    -j ./organ_index.json       # Path to the JSON file with organ index
+```   
+
+#### Image conversion
+
+```bash
+nifti2dicom \
+    -r ./refDICOM               # Reference directory with DICOM series
+    -n ./brainMRI.nii           # Path to the NIFTI image file
+    -o ./convertedImgDICOM      # Output directory for the converted image DICOM
+    -desc "Fancy Brain Scan"    # Description for the DICOM series
+    -t img                      # Type of conversion: image
+    -v sms                      # Vendor: Siemens (you can replace this with the \
+                                # appropriate vendor name, as of now support for united imaging \
+                                # and siemens is provided. You can choose one of the two (sms or ux), the default value is ux)
+```
+ 
 
 ## Issues & Feedback 🐛🗣
 
