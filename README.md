@@ -16,11 +16,25 @@ Hello there, brave soul! 🌟 Welcome to **Nifti2Dicom** - a project born out of
 ## Prerequisites 📋
 
 - **OS**: Universal - because we don't discriminate. 🌍
-- **Python**: Version 3.9 required, because even we have our limits. 🐍
+- **Python**: Version 3.9 is required because even we have our limits. 🐍
 
 ## Installation 🔧
 
-Wave a magic wand... just kidding. Do this:
+We highly recommend using a different realm (virtual environment) for installing nifti2dicom (or any other Python package, really).
+
+Linux
+```bash
+python3 -m venv nifti2dicom
+source nifti2dicom/bin/activate
+```
+
+Windows
+```bash
+python -m venv nifti2dicom
+nifti2dico>\Scripts\activate.bat  
+```
+
+And now, wave a magic wand... just kidding. Do this:
 
 ```bash
 pip install nifti2dicom
