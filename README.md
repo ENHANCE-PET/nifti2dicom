@@ -42,7 +42,7 @@ Using the mighty **Nifti2Dicom** is (thankfully) less complicated than its origi
    - `nifti_path`: Path to the NIfTI file you wish to convert.
    - `output_dir`: Path to the directory where you'd like the converted DICOM files to reside.
    - `series_description`: A description to be added to the DICOM header. Wrap it in quotes if it contains spaces!
-   - `-t or type`: Is the conversion for an image or segmentation
+   - `-t or type`: Is the conversion for an image or segmentation (img or seg)
    - `-v or vendor`: Is this for siemens (sms) or united imaging (ux). The default is ux, don't bother if you are doing this for segmentation as this tag is optional.
 
    Example:
