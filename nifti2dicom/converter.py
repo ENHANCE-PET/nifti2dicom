@@ -257,9 +257,7 @@ def main():
     parser.add_argument("-o", "--output_dir", type=str, help="Path to the directory where the converted DICOM files "
                                                              "will  be saved.")
     parser.add_argument("-desc", "--series_description", type=str, help="Series description to be added to the DICOM header.")
-    parser.add_argument("-t", "--type", type=str, choices=['img','seg'], help=("True if the NIfTI file is a "
-                                                                              "segmentation, "
-                                                             "False otherwise."))
+    parser.add_argument("-t", "--type", type=str, choices=['img','seg'], help=("Are you converting an image or a segmentation?."))
     # vendor is optional because it is not needed for the segmentation conversion
 
     parser.add_argument("-v", "--vendor", type=str, choices=['sms', 'ux'], required=False, default='ux',
