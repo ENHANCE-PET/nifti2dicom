@@ -19,14 +19,14 @@ import nibabel as nib
 import numpy as np
 from rich.progress import Progress, track
 from concurrent.futures import ThreadPoolExecutor
-from nifti2dicom.constants import ANSI_ORANGE, ANSI_GREEN, ANSI_VIOLET, ANSI_RESET, ORGAN_INDEX
+from nifti2dicom.constants import ANSI_ORANGE, ANSI_GREEN, ANSI_VIOLET, ANSI_RESET
 import emoji
 import highdicom as hd
 from pydicom.sr.codedict import codes
 from pydicom.dataset import Dataset
 from datetime import datetime
 from nifti2dicom.display import display_welcome_message
-
+import json 
 
 def check_directory_exists(directory_path: str) -> None:
     """
@@ -262,16 +262,28 @@ def main():
 
     parser.add_argument("-v", "--vendor", type=str, choices=['sms', 'ux'], required=False, default='ux',
                         help="Vendor of the reference DICOM series.")
+    parser.add_argument("-j", "--json", type=str, help=f"Path to the JSON file containing the label to region index. ")
+    
 
 
+    # Parse the arguments
     args = parser.parse_args()
 
+    # Display the welcome message
     display_welcome_message()
 
-    if args.type == 'seg':
+    # Check the type of conversion
+
+    if args.type == 'seg' and args.json: # if the type is segmentation and the json file is provided
         if not os.path.isdir(args.output_dir):
             os.makedirs(args.output_dir)
-        save_dicom_from_nifti_seg(args.nifti_path, args.dicom_dir, args.output_dir, ORGAN_INDEX)
-
-    elif args.type == 'img':
+        with open(args.json, 'r') as f:
+            organ_index = json.load(f)
+        save_dicom_from_nifti_seg(args.nifti_path, args.dicom_dir, args.output_dir, organ_index)
+    elif args.type == 'seg' and not args.json: # if the type is segmentation and the json file is not provided
+        raise ValueError(f"Please provide a JSON file containing the label to region index.")
+    
+    elif args.type == 'img':  # if the type is image
         save_dicom_from_nifti_image(args.dicom_dir, args.nifti_path, args.output_dir, args.series_description, args.vendor)
+    else:
+        raise ValueError(f"Unknown type: {args.type}")
