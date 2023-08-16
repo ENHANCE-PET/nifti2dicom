@@ -80,28 +80,20 @@ def save_slice(slice_data, normalized_data, series_description, filename, output
         slice_data.PixelData = (normalized_data - float(slice_data.RescaleIntercept)) / float(slice_data.RescaleSlope)
     elif modality == "PT":
         # Don't ask me why there are different rescaling methods for both vendors
-        if vendor == 'ux':
-            slice_data.PixelData = normalized_data
+        max_value = np.max(normalized_data)
+        if max_value > 65535:
+            slice_data.PixelData = normalized_data * (65535 / max_value)
+            # fix the rescale slope and intercept accordingly
+            slice_data.RescaleSlope = max_value / 65535
             slice_data.RescaleIntercept = 0
-            slice_data.RescaleSlope = 1
-        elif vendor == 'sms':
-            max_value = np.max(normalized_data)
-            if max_value > 65535:
-                slice_data.PixelData = normalized_data * (65535 / max_value)
-                # fix the rescale slope and intercept accordingly
-                slice_data.RescaleSlope = max_value / 65535
-                slice_data.RescaleIntercept = 0
-            # Reverse the rescaling to get back to the original stored values
-            slice_data.PixelData = (normalized_data - float(slice_data.RescaleIntercept)) / float(slice_data.RescaleSlope)
-        else:
-            raise ValueError(f"Unknown vendor: {vendor}")
+        # Reverse the rescaling to get back to the original stored values
+        slice_data.PixelData = (normalized_data - float(slice_data.RescaleIntercept)) / float(slice_data.RescaleSlope)        
     else:
         raise ValueError(f"Unknown modality: {modality}")
     slice_data.PixelData = slice_data.PixelData.astype(np.int16).tobytes()
-
     slice_data.SeriesNumber *= 10
     if slice_data.SeriesDescription:
-        slice_data.SeriesDescription = series_description
+        slice_data.SeriesDescription = slice_data.SeriesDescription + '_' + series_description
     slice_data.save_as(os.path.join(output_dir, os.path.basename(filename)))
 
 
