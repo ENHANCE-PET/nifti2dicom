@@ -52,7 +52,7 @@ Using the mighty **Nifti2Dicom** is (thankfully) less complicated than its origi
 
 ```bash
    nifti2dicom \
-       -r <reference_dir>           # Directory containing reference DICOM series
+       -d <dicom_dir>               # Directory containing reference DICOM series
        -n <nifti_path>              # Path to the NIFTI file to be converted
        -o <output_dir>              # Directory where the converted DICOM files will be saved
        -desc "<series_description>" # Description for the DICOM series
@@ -62,7 +62,7 @@ Using the mighty **Nifti2Dicom** is (thankfully) less complicated than its origi
  ### Converting segmentations single/multilabel segmentations
 ```bash
     nifti2dicom \
-       -r <reference_dir>           # Directory containing reference DICOM series
+       -d <dicom_dir>               # Directory containing reference DICOM series
        -n <nifti_path>              # Path to the NIFTI file to be converted
        -o <output_dir>              # Directory where the converted DICOM files will be saved
        -desc "<series_description>" # Description for the DICOM series
@@ -77,7 +77,7 @@ For converting nifti segmentations to DICOM, you always need to a pass a json fi
   
 ```bash
 nifti2dicom \
-    -r ./refDICOM               # Reference directory with DICOM series
+    -d ./refDICOM               # Reference directory with DICOM series
     -n ./brainSegmentation.nii  # Path to the NIFTI segmentation file
     -o ./convertedSegDICOM      # Output directory for the converted segmentation DICOM
     -desc "Brain Segmentation"  # Description for the DICOM series
@@ -89,7 +89,7 @@ nifti2dicom \
 
 ```bash
 nifti2dicom \
-    -r ./refDICOM               # Reference directory with DICOM series
+    -d ./refDICOM               # Reference directory with DICOM series
     -n ./brainMRI.nii           # Path to the NIFTI image file
     -o ./convertedImgDICOM      # Output directory for the converted image DICOM
     -desc "Fancy Brain Scan"    # Description for the DICOM series
