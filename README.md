@@ -98,7 +98,8 @@ nifti2dicom \
                                 # appropriate vendor name, as of now support for united imaging \
                                 # and siemens is provided. You can choose one of the two (sms or ux), the default value is ux)
 ```
- 
+
+ Still confused? You can always type ```nifti2dicom -h``` for help!
 
 ## Issues & Feedback 🐛🗣
 
