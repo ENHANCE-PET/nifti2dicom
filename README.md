@@ -49,7 +49,7 @@ Using the mighty **Nifti2Dicom** is (thankfully) less complicated than its origi
 2. Enter the following command, replacing the placeholders with your actual paths and desired series description:
 
 ### Converting 3d/4d images 
-
+#### For 3d
 ```bash
    nifti2dicom \
        -d <dicom_dir>               # Directory containing reference DICOM series
@@ -57,7 +57,16 @@ Using the mighty **Nifti2Dicom** is (thankfully) less complicated than its origi
        -o <output_dir>              # Directory where the converted DICOM files will be saved
        -desc "<series_description>" # Description for the DICOM series
        -t img                       # Specifies the type of conversion (image in this case)
-       -v <sms | ux>                # Specifies the vendor, either "sms" or "ux", doesn't matter if it's 3d images.
+```
+#### For 4d
+```bash
+   nifti2dicom \
+       -d <dicom_dir>               # Directory containing reference DICOM series
+       -n <nifti_path>              # Path to the NIFTI file to be converted
+       -o <output_dir>              # Directory where the converted DICOM files will be saved
+       -desc "<series_description>" # Description for the DICOM series
+       -t img                       # Specifies the type of conversion (image in this case)
+       -v <sms | ux>                # Specifies the vendor, either "sms" or "ux"
 ```
 Ignore the vendor tag, if you are working on 3d images. It is just relevant for 4D. The logic is the same for 3D.
 
@@ -88,7 +97,17 @@ nifti2dicom \
 ```   
 
 #### Image conversion
-
+##### 3d conversion
+```bash
+nifti2dicom \
+    -d ./refDICOM               # Reference directory with DICOM series
+    -n ./brainMRI.nii           # Path to the NIFTI image file
+    -o ./convertedImgDICOM      # Output directory for the converted image DICOM
+    -desc "Fancy Brain Scan"    # Description for the DICOM series
+    -t img                      # Type of conversion: image
+```
+                               
+##### 4d conversion
 ```bash
 nifti2dicom \
     -d ./refDICOM               # Reference directory with DICOM series
