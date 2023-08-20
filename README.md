@@ -57,8 +57,10 @@ Using the mighty **Nifti2Dicom** is (thankfully) less complicated than its origi
        -o <output_dir>              # Directory where the converted DICOM files will be saved
        -desc "<series_description>" # Description for the DICOM series
        -t img                       # Specifies the type of conversion (image in this case)
-       -v <sms | ux>                # Specifies the vendor, either "sms" or "ux"
+       -v <sms | ux>                # Specifies the vendor, either "sms" or "ux", doesn't matter if it's 3d images.
 ```
+Ignore the vendor tag, if you are working on 3d images. It is just relevant for 4D. The logic is the same for 3D.
+
  ### Converting segmentations single/multilabel segmentations
 ```bash
     nifti2dicom \
