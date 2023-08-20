@@ -124,15 +124,24 @@ def save_dicom_from_nifti_image(ref_dir, nifti_path, output_dir, series_descript
     print(f' {ANSI_ORANGE}* Image dimensions: {num_dims}{ANSI_RESET}')
     print(f' {ANSI_GREEN}* Loading NIfTI image: {nifti_path}{ANSI_RESET}')
 
-    if vendor == 'ux':
+    # if the vendor is sms or ux and a 3d image use the following
+    if vendor in ['sms', 'ux'] and num_dims == 3:
         image_data = np.flip(image_data, (1, 2))
         image_data = image_data.T
         image_data = image_data.reshape((-1,) + image_data.shape[-2:])
-    if vendor == 'sms':
+    # if the vendor is ux and a 4d image use the following
+    elif vendor == 'ux' and num_dims == 4:
+        image_data = np.flip(image_data, (1, 2))
+        image_data = image_data.T
+        image_data = image_data.reshape((-1,) + image_data.shape[-2:])
+    # if the vendor is sms and a 4d image use the following
+    elif vendor == 'sms' and num_dims == 4:
         image_data = np.flip(image_data, (1, 3))
         image_data = np.flip(image_data, (3,))  # Flip along the time axis
         image_data = image_data.T
         image_data = image_data.reshape((-1,) + image_data.shape[-2:])
+    else:
+        raise ValueError(f"Unknown vendor: {vendor}")
 
     print(f' {ANSI_GREEN}* Reference DICOM series directory: {ref_dir}{ANSI_RESET}')
     dicom_slices, filenames = load_reference_dicom_series(ref_dir)
