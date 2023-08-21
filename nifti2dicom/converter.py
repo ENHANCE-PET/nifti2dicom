@@ -286,7 +286,7 @@ def main():
             os.makedirs(args.output_dir)
         with open(args.json, 'r') as f:
             organ_index = json.load(f)
-             if args.moose == 'True':
+            if args.moose == 'True':
                 organ_index = moose_json_convertor(organ_index)        
         save_dicom_from_nifti_seg(args.nifti_path, args.dicom_dir, args.output_dir, organ_index)
     elif args.type == 'seg' and not args.json: # if the type is segmentation and the json file is not provided
