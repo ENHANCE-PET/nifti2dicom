@@ -249,10 +249,12 @@ def save_dicom_from_nifti_seg(nifti_file: str, ref_dicom_series_dir: str, output
     seg.save_as(os.path.join(output_path, os.path.basename(nifti_file) + ".dcm"))
 
 def moose_json_convertor(input_data):
-    label_data = input_data.get("label", {})
-    formatted_data = {str(value): key for key, value in label_data.items()}
+    label_data = input_data.get("labels", {})
+    formatted_data = {
+        str(value): key for key, value in label_data.items() if key != "background"
+    }
     return formatted_data
-    
+
 def main():
     import argparse
 
@@ -287,7 +289,7 @@ def main():
         with open(args.json, 'r') as f:
             organ_index = json.load(f)
             if args.moose == 'True':
-                organ_index = moose_json_convertor(organ_index)        
+                organ_index = moose_json_convertor(organ_index)             
         save_dicom_from_nifti_seg(args.nifti_path, args.dicom_dir, args.output_dir, organ_index)
     elif args.type == 'seg' and not args.json: # if the type is segmentation and the json file is not provided
         raise ValueError(f"Please provide a JSON file containing the label to region index.")
