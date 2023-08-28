@@ -24,5 +24,7 @@ python:
 # Optionally specify a custom build environment
 build:
   image: latest
+  tools:
+    python: "3.11"
 
 # Clean up any commented-out configurations to avoid confusion.
