@@ -40,6 +40,13 @@ def check_directory_exists(directory_path: str) -> None:
     if not os.path.isdir(directory_path):
         raise FileNotFoundError(f"Error: The directory '{directory_path}' does not exist.")
 
+def is_dicom_file(filename):
+    try:
+        pydicom.dcmread(filename)
+        return True
+    except pydicom.errors.InvalidDicomError:
+        return False
+
 def load_reference_dicom_series(directory_path: str) -> tuple:
     """
     Loads a DICOM series from a directory.
@@ -49,8 +56,7 @@ def load_reference_dicom_series(directory_path: str) -> tuple:
     :return: A tuple containing the slices and filenames of the DICOM series.
     :rtype: tuple
     """
-    valid_extensions = ['.dcm', '.ima', '.DCM', '.IMA']
-    files = [f for f in glob.glob(os.path.join(directory_path, '*')) if os.path.splitext(f)[1] in valid_extensions and not os.path.basename(f).startswith('.')]
+    files = [f for f in glob.glob(os.path.join(directory_path, '*')) if is_dicom_file(f) and not os.path.basename(f).startswith('.')]
     slices = [pydicom.dcmread(s) for s in files]
     slices_and_names = sorted(zip(slices, files), key=lambda s: s[0].InstanceNumber)
     return zip(*slices_and_names)
