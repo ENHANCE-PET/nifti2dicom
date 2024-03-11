@@ -47,6 +47,25 @@ def is_dicom_file(filename):
     except pydicom.errors.InvalidDicomError:
         return False
 
+
+def is_dicom_compressed(dataset) -> bool:
+    try:
+        if 'PixelData' in dataset:
+            transfer_syntax = dataset.file_meta.TransferSyntaxUID
+            uncompressed_syntaxes = [
+                pydicom.uid.ExplicitVRLittleEndian,
+                pydicom.uid.ImplicitVRLittleEndian,
+                pydicom.uid.ExplicitVRBigEndian
+            ]
+            return transfer_syntax not in uncompressed_syntaxes
+        else:
+            print("No pixel data found in this DICOM file.")
+            return False
+    except Exception as e:
+        print(f"Failed to check DICOM compression: {e}")
+        return False
+
+
 def load_reference_dicom_series(directory_path: str) -> tuple:
     """
     Loads a DICOM series from a directory.
@@ -81,6 +100,9 @@ def save_slice(slice_data, normalized_data, series_description, filename, output
     :type vendor: str
     :return: None
     """
+    if is_dicom_compressed(slice_data):
+        slice_data.decompress()
+
     if modality == "CT":
         # Reverse the rescaling to get back to the original stored values
         slice_data.PixelData = (normalized_data - float(slice_data.RescaleIntercept)) / float(slice_data.RescaleSlope)
@@ -152,6 +174,8 @@ def save_dicom_from_nifti_image(ref_dir, nifti_path, output_dir, series_descript
     print(f' {ANSI_GREEN}* Reference DICOM series directory: {ref_dir}{ANSI_RESET}')
     dicom_slices, filenames = load_reference_dicom_series(ref_dir)
     reference_slice = dicom_slices[0]
+    if is_dicom_compressed(reference_slice):
+        print(f' {ANSI_ORANGE}* DICOM is compressed. Will decompress to convert.{ANSI_RESET}')
 
     modality = reference_slice.Modality
 
