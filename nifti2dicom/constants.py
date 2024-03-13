@@ -20,4 +20,7 @@ ANSI_VIOLET = '\033[38;5;141m'
 ANSI_RESET = '\033[0m'
 
 
+TAGS_TO_EXCLUDE = ["Pixel Data", "Image Index", "Number of Slices", "Rows", "Columns", 'Pixel Spacing',
+                   "Image Position (Patient)", "Image Orientation (Patient)", "Instance Number", "Slice Thickness",
+                   "Slice Location"]
 
