@@ -12,21 +12,22 @@
 # The main module of nifti2dicom. This module contains the main function that is executed when nifti2dicom is run.
 # ----------------------------------------------------------------------------------------------------------------------
 
-import os
 import glob
 import json
+import os
 import shutil
-import nibabel as nib
-import numpy as np
-from rich.progress import Progress, track
 from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
+
 import emoji
 import highdicom as hd
+import nibabel as nib
+import numpy as np
 import pydicom
-from pydicom.sr.codedict import codes
-from datetime import datetime
-from nifti2dicom.display import display_welcome_message
 from nifti2dicom.constants import ANSI_ORANGE, ANSI_GREEN, ANSI_VIOLET, ANSI_RESET, TAGS_TO_EXCLUDE
+from nifti2dicom.display import display_welcome_message
+from pydicom.sr.codedict import codes
+from rich.progress import Progress, track
 
 
 def check_directory_exists(directory: str) -> None:
@@ -74,13 +75,15 @@ def load_dicom_series(directory: str) -> tuple:
     :return: A tuple containing the slices and filenames of the DICOM series.
     :rtype: tuple
     """
-    files = [f for f in glob.glob(os.path.join(directory, '*')) if is_dicom_file(f) and not os.path.basename(f).startswith('.')]
+    files = [f for f in glob.glob(os.path.join(directory, '*')) if
+             is_dicom_file(f) and not os.path.basename(f).startswith('.')]
     slices = [pydicom.dcmread(s) for s in files]
     slices_and_names = sorted(zip(slices, files), key=lambda s: s[0].InstanceNumber)
     return zip(*slices_and_names)
 
 
-def save_slice(slice_data, normalized_data, series_description, filename, output_dir, modality, reference_header_data=None):
+def save_slice(slice_data, normalized_data, series_description, filename, output_dir, modality,
+               reference_header_data=None):
     """
     Save a DICOM slice to a file.
     :param slice_data: DICOM slice data
@@ -135,34 +138,43 @@ def save_slice(slice_data, normalized_data, series_description, filename, output
     slice_data.save_as(os.path.join(output_dir, os.path.basename(filename)))
 
 
-def save_dicom_from_nifti_image(ref_dir, nifti_path, output_dir, vendor="ux", series_description="converted by nifti2dicom", header_dir=None, force_overwrite=False):
+def vprint(*args, verbose=False, **kwargs):
     """
-    Convert a NIfTI image to a DICOM series.
+    Conditional print function that outputs messages to the console if verbose is True.
+
+    :param args: Positional arguments to be printed.
+    :param verbose: Flag to control the print behavior. Only prints if True.
+    :type verbose: bool
+    :param kwargs: Keyword arguments to be passed to the built-in print function.
+    """
+    if verbose:
+        print(*args, **kwargs)
+
+
+def save_dicom_from_nifti_image(ref_dir, nifti_path, output_dir, vendor="ux",
+                                series_description="converted by nifti2dicom", header_dir=None, force_overwrite=False,
+                                verbose=False):
+    """
+    Convert a NIfTI image to a DICOM series, with optional verbose output.
     :param ref_dir: DICOM series directory which serves as a reference for the conversion
-    :type ref_dir: str
     :param nifti_path: Path to the nifti file
-    :type nifti_path: str
     :param output_dir: Output directory to store the converted DICOM series
-    :type output_dir: str
     :param series_description: Series description to be added to the DICOM header
-    :type series_description: str
     :param vendor: The vendor from which the DICOM series was obtained (ux or sms)
-    :type vendor: str
     :param header_dir: The path to the header reference directory
-    :type header_dir: str
     :param force_overwrite: Force overwrite of the output directory if it already exists
-    :type force_overwrite: bool
+    :param verbose: If True, print messages during the process
     :return:
     """
-    print('')
-    print(f'{ANSI_VIOLET} {emoji.emojize(":magnifying_glass_tilted_left:")} IDENTIFIED DATASETS:{ANSI_RESET}')
-    print('')
+    vprint(verbose=verbose, end='\n')
+    vprint(f'{ANSI_VIOLET} {emoji.emojize(":magnifying_glass_tilted_left:")} IDENTIFIED DATASETS:{ANSI_RESET}',
+           verbose=verbose, end='\n')
 
     nifti_image = nib.load(nifti_path)
     image_data = nifti_image.get_fdata()
     num_dims = len(image_data.shape)
-    print(f' {ANSI_ORANGE}* Image dimensions: {num_dims}{ANSI_RESET}')
-    print(f' {ANSI_GREEN}* Loading NIfTI image: {nifti_path}{ANSI_RESET}')
+    vprint(f' {ANSI_ORANGE}* Image dimensions: {num_dims}{ANSI_RESET}', verbose=verbose)
+    vprint(f' {ANSI_GREEN}* Loading NIfTI image: {nifti_path}{ANSI_RESET}', verbose=verbose)
 
     # if the vendor is sms or ux and a 3d image use the following
     if num_dims == 3:
@@ -185,34 +197,35 @@ def save_dicom_from_nifti_image(ref_dir, nifti_path, output_dir, vendor="ux", se
 
     header_slice_data = None
     if header_dir is not None:
-        print(f' {ANSI_GREEN}* Header data will be copied from: {header_dir}{ANSI_RESET}')
-        print(f' {ANSI_GREEN}* Spatial information will be taken from: {ref_dir}{ANSI_RESET}')
+        vprint(f' {ANSI_GREEN}* Header data will be copied from: {header_dir}{ANSI_RESET}', verbose=verbose)
+        vprint(f' {ANSI_GREEN}* Spatial information will be taken from: {ref_dir}{ANSI_RESET}', verbose=verbose)
         parameter_dicom_slices, _ = load_dicom_series(header_dir)
         header_slice_data = parameter_dicom_slices[0]
     else:
-        print(f' {ANSI_GREEN}* Reference DICOM series directory: {ref_dir}{ANSI_RESET}')
+        vprint(f' {ANSI_GREEN}* Reference DICOM series directory: {ref_dir}{ANSI_RESET}', verbose=verbose)
 
     dicom_slices, filenames = load_dicom_series(ref_dir)
     reference_slice = dicom_slices[0]
     if is_dicom_compressed(reference_slice):
-        print(f' {ANSI_ORANGE}* DICOM is compressed. Will decompress to convert.{ANSI_RESET}')
+        vprint(f' {ANSI_ORANGE}* DICOM is compressed. Will decompress to convert.{ANSI_RESET}', verbose=verbose)
 
     modality = reference_slice.Modality
 
     expected_shape = (len(dicom_slices), reference_slice.Columns, reference_slice.Rows)
     if expected_shape != image_data.shape:
-        print(f' {ANSI_ORANGE}* Expected data shape: {expected_shape}, but got: {image_data.shape}{ANSI_RESET}')
+        vprint(f' {ANSI_ORANGE}* Expected data shape: {expected_shape}, but got: {image_data.shape}{ANSI_RESET}',
+               verbose=verbose)
         return
 
     if os.path.exists(output_dir):
         if force_overwrite and os.path.isdir(output_dir):
-            print(f' {ANSI_ORANGE} Deleting existing directory: {output_dir}{ANSI_RESET}')
+            vprint(f' {ANSI_ORANGE} Deleting existing directory: {output_dir}{ANSI_RESET}', verbose=verbose)
             shutil.rmtree(output_dir)
         else:
-            print(f' {ANSI_ORANGE} {output_dir} already exists.{ANSI_RESET}')
+            vprint(f' {ANSI_ORANGE} {output_dir} already exists.{ANSI_RESET}', verbose=verbose)
             return
 
-    print(f' {ANSI_GREEN}* Output directory: {output_dir}{ANSI_RESET}')
+    vprint(f' {ANSI_GREEN}* Output directory: {output_dir}{ANSI_RESET}', verbose=verbose)
     os.mkdir(output_dir)
 
     total_slices = len(dicom_slices)
@@ -230,10 +243,11 @@ def save_dicom_from_nifti_image(ref_dir, nifti_path, output_dir, vendor="ux", se
             for idx, future in enumerate(futures):
                 future.result()
                 progress.update(task, advance=1,
-                                description=f"[cyan] Writing DICOM slices... [{idx + 1}/{total_slices}]")
+                                description=f"[white] Writing DICOM slices... [{idx + 1}/{total_slices}]")
 
 
-def save_dicom_from_nifti_seg(nifti_file: str, ref_dicom_series_dir: str, output_path: str, ORGAN_INDEX: dict) -> None:
+def save_dicom_from_nifti_seg(nifti_file: str, ref_dicom_series_dir: str, output_path: str, ORGAN_INDEX: dict,
+                              verbose=False) -> None:
     """
     Convert a NIFTI segmentation image to a DICOM Segmentation object.
     :param nifti_file: Path to the NIFTI segmentation file.
@@ -244,15 +258,19 @@ def save_dicom_from_nifti_seg(nifti_file: str, ref_dicom_series_dir: str, output
     :type output_path: str
     :param ORGAN_INDEX: Dictionary containing the organ index.
     :type ORGAN_INDEX: dict
+    :param verbose: If True, print messages during the process
+    :type verbose: bool
+
     """
-    print('')
-    print(f'{ANSI_VIOLET} {emoji.emojize(":magnifying_glass_tilted_left:")} IDENTIFIED DATASETS:{ANSI_RESET}')
-    print('')
+    vprint(verbose=verbose, end='\n')
+    vprint(f'{ANSI_VIOLET} {emoji.emojize(":magnifying_glass_tilted_left:")} IDENTIFIED DATASETS:{ANSI_RESET}',
+           verbose=verbose, end='\n')
+
     # Load the reference DICOM series
     ref_series = [pydicom.dcmread(f) for f in sorted(glob.glob(os.path.join(ref_dicom_series_dir, "*.dcm")))]
-    print(f' {ANSI_GREEN}* Reference DICOM series directory: {ref_dicom_series_dir}{ANSI_RESET}')
+    vprint(f' {ANSI_GREEN}* Reference DICOM series directory: {ref_dicom_series_dir}{ANSI_RESET}', verbose=verbose)
     # Load and preprocess the NIFTI segmentation
-    print(f' {ANSI_GREEN}* Loading NIfTI segmentation: {nifti_file}{ANSI_RESET}')
+    vprint(f' {ANSI_GREEN}* Loading NIfTI segmentation: {nifti_file}{ANSI_RESET}', verbose=verbose)
     multilabel_mask = nib.load(nifti_file).get_fdata().astype(np.uint8)
     multilabel_mask = np.flip(multilabel_mask, (1, 2))
     multilabel_mask = multilabel_mask.T
@@ -336,6 +354,7 @@ def main():
         raise ValueError(f"Please provide a JSON file containing the label to region index.")
 
     elif args.type == 'img':
-        save_dicom_from_nifti_image(args.dicom_dir, args.nifti_path, args.output_dir, args.vendor, args.series_description, args.header_source_dicom_dir)
+        save_dicom_from_nifti_image(args.dicom_dir, args.nifti_path, args.output_dir, args.vendor,
+                                    args.series_description, args.header_source_dicom_dir)
     else:
         raise ValueError(f"Unknown type: {args.type}")
