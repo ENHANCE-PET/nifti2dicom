@@ -77,7 +77,6 @@ def create_rgb_dicom_from_slice(slice_array, series_tag_values, reference_metada
     ds.ImageOrientationPatient = reference_metadata.ImageOrientationPatient if hasattr(reference_metadata,
                                                                                        'ImageOrientationPatient') else ''
     ds.SliceThickness = reference_metadata.SliceThickness if hasattr(reference_metadata, 'SliceThickness') else ''
-    print(ds.SliceThickness)
     ds.PixelSpacing = reference_metadata.PixelSpacing if hasattr(reference_metadata, 'PixelSpacing') else ''
 
     # Set image-specific attributes
