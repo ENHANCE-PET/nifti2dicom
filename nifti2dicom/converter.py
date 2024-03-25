@@ -16,9 +16,11 @@ import glob
 import json
 import os
 import shutil
+import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 
+import SimpleITK as sitk
 import emoji
 import highdicom as hd
 import nibabel as nib
@@ -26,8 +28,132 @@ import numpy as np
 import pydicom
 from nifti2dicom.constants import ANSI_ORANGE, ANSI_GREEN, ANSI_VIOLET, ANSI_RESET, TAGS_TO_EXCLUDE
 from nifti2dicom.display import display_welcome_message
+from pydicom.dataset import Dataset, FileMetaDataset
+from pydicom.filewriter import write_file
 from pydicom.sr.codedict import codes
+from pydicom.uid import ExplicitVRLittleEndian, generate_uid
 from rich.progress import Progress, track
+
+
+def create_rgb_dicom_from_slice(slice_array, series_tag_values, reference_metadata, instance_number):
+    """
+    Create a DICOM dataset from an RGB slice.
+
+    :param slice_array: Numpy array of the RGB slice.
+    :param series_tag_values: Dictionary of DICOM tag values.
+    :param reference_metadata: Reference metadata from the DICOM series.
+    :param instance_number: Instance number for the DICOM image.
+    :return: DICOM dataset.
+    """
+    ds = Dataset()
+
+    # Create and set the file_meta information
+    file_meta = FileMetaDataset()
+    file_meta.MediaStorageSOPClassUID = '1.2.840.10008.5.1.4.1.1.7'  # Secondary Capture Image Storage
+    file_meta.MediaStorageSOPInstanceUID = generate_uid()
+    file_meta.ImplementationClassUID = generate_uid()  # This is a required tag for file_meta
+    file_meta.TransferSyntaxUID = ExplicitVRLittleEndian
+
+    # Assign the file_meta to the dataset
+    ds.file_meta = file_meta
+    ds.is_little_endian = True
+    ds.is_implicit_VR = False
+
+    # Now, set other DICOM tags as before
+    ds.SOPClassUID = file_meta.MediaStorageSOPClassUID
+    ds.SOPInstanceUID = file_meta.MediaStorageSOPInstanceUID
+    ds.StudyInstanceUID = series_tag_values['StudyInstanceUID']
+    ds.SeriesInstanceUID = series_tag_values['SeriesInstanceUID']
+    ds.StudyID = series_tag_values.get('StudyID', '')
+    ds.SeriesNumber = series_tag_values.get('SeriesNumber', '1')
+    ds.InstanceNumber = str(instance_number)
+    ds.PatientName = reference_metadata.PatientName if hasattr(reference_metadata, 'PatientName') else 'Anonymous'
+    ds.PatientID = reference_metadata.PatientID if hasattr(reference_metadata, 'PatientID') else 'ANON'
+    ds.PatientBirthDate = reference_metadata.PatientBirthDate if hasattr(reference_metadata, 'PatientBirthDate') else ''
+    ds.PatientSex = reference_metadata.PatientSex if hasattr(reference_metadata, 'PatientSex') else ''
+    ds.PatientAge = reference_metadata.PatientAge if hasattr(reference_metadata, 'PatientAge') else ''
+    ds.ImagePositionPatient = reference_metadata.ImagePositionPatient if hasattr(reference_metadata,
+                                                                                 'ImagePositionPatient') else ''
+    ds.ImageOrientationPatient = reference_metadata.ImageOrientationPatient if hasattr(reference_metadata,
+                                                                                       'ImageOrientationPatient') else ''
+    ds.SliceThickness = reference_metadata.SliceThickness if hasattr(reference_metadata, 'SliceThickness') else ''
+    print(ds.SliceThickness)
+    ds.PixelSpacing = reference_metadata.PixelSpacing if hasattr(reference_metadata, 'PixelSpacing') else ''
+
+    # Set image-specific attributes
+    ds.Modality = 'OT'
+    ds.PhotometricInterpretation = 'RGB'
+    ds.PixelRepresentation = 0
+    ds.SamplesPerPixel = 3
+    ds.Rows, ds.Columns, _ = slice_array.shape
+    ds.BitsAllocated = 8
+    ds.BitsStored = 8
+    ds.HighBit = 7
+
+    # Convert the numpy array to bytes and assign to PixelData
+    ds.PixelData = slice_array.tobytes()
+
+    # Additional metadata
+    ds.ImageType = ["DERIVED", "SECONDARY"]
+    ds.ConversionType = "WSD"
+    ds.InstanceCreationDate = time.strftime("%Y%m%d")
+    ds.InstanceCreationTime = time.strftime("%H%M%S")
+    ds.file_meta.TransferSyntaxUID = ExplicitVRLittleEndian
+
+    return ds
+
+
+def get_metadata_from_dicom_series(dicom_series_dir):
+    """
+    Get metadata from a DICOM series.
+
+    :param dicom_series_dir: Path to the directory containing the DICOM series.
+    :return: Metadata from the DICOM series.
+    """
+    dicom_files = [f for f in glob.glob(os.path.join(dicom_series_dir, '*')) if is_dicom_file(f)]
+    if not dicom_files:
+        raise FileNotFoundError(f"No DICOM files found in {dicom_series_dir}")
+
+    metadata = pydicom.dcmread(dicom_files[0])
+    return metadata
+
+
+def write_rgb_dicom_from_nifti(nifti_file_path, reference_dicom_series, output_directory):
+    """
+    Convert an RGB NIfTI image to DICOM series.
+
+    :param nifti_file_path: Path to the NIfTI file.
+    :param reference_dicom_series: Path to the directory containing the reference DICOM series.
+    :param output_directory: Directory where DICOM files will be saved.
+    """
+
+    if not os.path.exists(output_directory):
+        os.makedirs(output_directory)
+
+    metadata = get_metadata_from_dicom_series(reference_dicom_series)
+
+    rgb_img = sitk.ReadImage(nifti_file_path)
+    arr = sitk.GetArrayFromImage(rgb_img)
+    arr = arr[:, :, :, :3]  # Ensure only RGB, no alpha
+
+    modification_time = time.strftime("%H%M%S")
+    modification_date = time.strftime("%Y%m%d")
+
+    # Define DICOM series and study attributes
+    series_tag_values = {
+        'StudyInstanceUID': f"1.2.826.0.1.3680043.8.498.{modification_date}.1",
+        'SeriesInstanceUID': f"1.2.826.0.1.3680043.8.498.{modification_date}{modification_time}",
+        'SeriesNumber': '1',
+        'StudyID': '1',
+    }
+    total_slices = len(arr)
+    with Progress() as progress:
+        task = progress.add_task("[cyan]Writing DICOM slices...", total=total_slices)
+        for i, slice_array in enumerate(arr, start=1):
+            ds = create_rgb_dicom_from_slice(slice_array, series_tag_values, metadata, i)
+            dicom_filename = os.path.join(output_directory, f"slice_{i}.dcm")
+            write_file(dicom_filename, ds, write_like_original=False)
+            progress.update(task, advance=1, description=f"[white] Writing RGB DICOM slices... [{i}/{total_slices}]")
 
 
 def check_directory_exists(directory: str) -> None:
