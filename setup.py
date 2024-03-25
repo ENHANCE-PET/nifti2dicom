@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='nifti2dicom',
-    version='1.1.9',
+    version='1.1.10',
     packages=find_packages(),
     install_requires=[
         'pydicom',
