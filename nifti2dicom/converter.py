@@ -94,7 +94,6 @@ def create_rgb_dicom_from_slice(slice_array, series_tag_values, reference_metada
 
     # Additional metadata
     ds.ImageType = ["DERIVED", "SECONDARY"]
-    ds.ConversionType = "WSD"
     ds.InstanceCreationDate = time.strftime("%Y%m%d")
     ds.InstanceCreationTime = time.strftime("%H%M%S")
     ds.file_meta.TransferSyntaxUID = ExplicitVRLittleEndian
