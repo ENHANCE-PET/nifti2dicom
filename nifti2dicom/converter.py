@@ -80,7 +80,7 @@ def create_rgb_dicom_from_slice(slice_array, series_tag_values, reference_metada
     ds.PixelSpacing = reference_metadata.PixelSpacing if hasattr(reference_metadata, 'PixelSpacing') else ''
 
     # Set image-specific attributes
-    ds.Modality = 'OT'
+    ds.Modality = 'SC'
     ds.PhotometricInterpretation = 'RGB'
     ds.PixelRepresentation = 0
     ds.SamplesPerPixel = 3
