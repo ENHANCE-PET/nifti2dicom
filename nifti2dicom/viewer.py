@@ -34,14 +34,11 @@ def view_medical_images_pair(dicom_path, nifti_path):
             image = reader.Execute()
         elif image_type == 'nifti':
             image = sitk.ReadImage(path)
+            image = sitk.Flip(image, [False, True, False])  # Flip the image to make it left to right
         else:
             raise ValueError("Unsupported image type. Use 'dicom' or 'nifti'.")
 
         image_array = sitk.GetArrayFromImage(image)
-
-        # For nifti image, flip it to make it left to right
-        if image_type == 'nifti':
-            image_array = np.flip(image_array, axis=1)
 
         spacing = image.GetSpacing()  # Physical spacing between pixels
         return image_array, spacing
