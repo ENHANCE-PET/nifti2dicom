@@ -434,9 +434,9 @@ def save_dicom_from_nifti_image(ref_dir, nifti_path, output_dir, vendor="ux",
 
 
 def nifti_to_dicom_with_resampling(nifti_image_path: str, original_dicom_directory: str, dicom_output_directory: str,
-                                     spatial_info_dicom_directory: str,
+                                   spatial_info_dicom_directory: str,
                                    series_description: str = "converted by nifti2dicom",
-                                     verbose=False) -> None:
+                                   verbose=False) -> None:
     """
     Convert a nifti image which has a different size/spatial information to its original dicom series.
     :param nifti_image_path: Path to the NIFTI file.
