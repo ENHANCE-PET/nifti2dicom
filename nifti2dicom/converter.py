@@ -511,7 +511,7 @@ def nifti_to_dicom_with_resampling(nifti_image_path: str, original_dicom_directo
             image_array_slice = sitk.GetArrayFromImage(nifti_img)[idx]
             filename = f"slice_{idx}.dcm"
             save_slice(slice, image_array_slice, series_description, filename, output_dir, slice.Modality)
-            progress.update(task, advance=1, description=f"[white] Writing RGB DICOM slices... [{idx}/{total_slices}]")
+            progress.update(task, advance=1, description=f"[white] Writing DICOM slices... [{idx}/{total_slices}]")
 
         with ThreadPoolExecutor() as executor:
             for idx, slice in enumerate(dicom_slices):
