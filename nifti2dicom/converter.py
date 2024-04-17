@@ -193,7 +193,14 @@ def write_rgb_dicom_from_nifti(nifti_file_path, reference_dicom_series, output_d
 
     metadata = get_metadata_from_dicom_series(reference_dicom_series)
 
+    # Load the dicom series
+
+    dicom_reference_img = load_image(reference_dicom_series, 'dicom')
+
     rgb_img = sitk.ReadImage(nifti_file_path)
+    # set rgb_img origin and direction to match the dicom series
+    rgb_img.SetOrigin(dicom_reference_img.GetOrigin())
+    rgb_img.SetDirection(dicom_reference_img.GetDirection())
     arr = sitk.GetArrayFromImage(rgb_img)
     arr = arr[:, :, :, :3]  # Ensure only RGB, no alpha
 
@@ -213,6 +220,11 @@ def write_rgb_dicom_from_nifti(nifti_file_path, reference_dicom_series, output_d
         for i, slice_array in enumerate(arr, start=1):
             ds = create_rgb_dicom_from_slice(slice_array, series_tag_values, metadata, i)
             dicom_filename = os.path.join(output_directory, f"slice_{i}.dcm")
+            ds.ImageOrientationPatient = metadata.ImageOrientationPatient
+            ds.ImagePositionPatient = list(rgb_img.TransformIndexToPhysicalPoint((0, 0, i)))
+            ds.PatientName = metadata.PatientName
+            ds.PatientID = metadata.PatientID
+            ds.PatientBirthDate = metadata.PatientBirthDate
             write_file(dicom_filename, ds, write_like_original=False)
             progress.update(task, advance=1, description=f"[white] Writing RGB DICOM slices... [{i}/{total_slices}]")
 
