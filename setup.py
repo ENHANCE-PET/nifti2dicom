@@ -13,7 +13,7 @@ setup(
         'numpy',
         'emoji',
         'rich',
-        'pydicom',
+        'pydicom<3.0',
         'highdicom',
         'pyfiglet'
     ],
