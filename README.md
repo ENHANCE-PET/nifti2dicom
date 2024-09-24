@@ -17,7 +17,7 @@ Hello there, brave soul! 🌟 Welcome to **Nifti2Dicom** - a project born out of
 ## Prerequisites 📋
 
 - **OS**: Universal - because we don't discriminate. 🌍
-- **Python**: Version 3.9 is required because even we have our limits. 🐍
+- **Python**: Version 3.10 is required because even we have our limits. 🐍
 
 ## Installation 🔧
 
@@ -25,7 +25,7 @@ We highly recommend using a different realm (virtual environment) for installing
 
 ### Linux
 ```bash
-python3 -m venv nifti2dicom
+python3.10 -m venv nifti2dicom
 source nifti2dicom/bin/activate
 ```
 
