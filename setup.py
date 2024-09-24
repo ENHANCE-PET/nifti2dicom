@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name='nifti2dicom',
-    version='1.2.4',
+    version='1.2.5',
     packages=find_packages(),
     install_requires=[
         'nibabel',
