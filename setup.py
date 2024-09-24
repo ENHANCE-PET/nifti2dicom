@@ -8,7 +8,6 @@ setup(
     version='1.2.4',
     packages=find_packages(),
     install_requires=[
-        'pydicom',
         'nibabel',
         'numpy',
         'emoji',
