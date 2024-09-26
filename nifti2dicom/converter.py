@@ -29,7 +29,7 @@ import pydicom
 from nifti2dicom.constants import ANSI_ORANGE, ANSI_GREEN, ANSI_VIOLET, ANSI_RESET, TAGS_TO_EXCLUDE
 from nifti2dicom.display import display_welcome_message
 from pydicom.dataset import Dataset, FileMetaDataset
-from pydicom.filewriter import write_file
+from pydicom.filewriter import dcmwrite
 from pydicom.sr.codedict import codes
 from pydicom.uid import ExplicitVRLittleEndian, generate_uid
 from rich.progress import Progress, track
@@ -225,7 +225,7 @@ def write_rgb_dicom_from_nifti(nifti_file_path, reference_dicom_series, output_d
             ds.PatientName = metadata.PatientName
             ds.PatientID = metadata.PatientID
             ds.PatientBirthDate = metadata.PatientBirthDate
-            write_file(dicom_filename, ds, write_like_original=False)
+            dcmwrite(dicom_filename, ds, write_like_original=False)
             progress.update(task, advance=1, description=f"[white] Writing RGB DICOM slices... [{i}/{total_slices}]")
 
 
