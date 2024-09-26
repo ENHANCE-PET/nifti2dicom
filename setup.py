@@ -10,10 +10,8 @@ setup(
     install_requires=[
         'nibabel',
         'SimpleITK',
-        'numpy',
         'emoji',
         'rich',
-        'pydicom<3.0',
         'highdicom',
         'pyfiglet'
     ],
