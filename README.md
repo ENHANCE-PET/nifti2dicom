@@ -1,4 +1,7 @@
 ![nifti2dicom-logo](/Nifti2dicom-logo.png)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 
 ## Nifti2Dicom 🧠💽
@@ -143,3 +146,25 @@ This project is licensed under the MIT License. Check out the `LICENSE` file to 
 Dear adventurous user, while Nifti2Dicom is sprinkled with a generous dose of magic and wizardry, it's essential to remember that no spell is perfect. Just like the age-old "turn a frog into a prince" trick, sometimes things don't pan out (ask any fairy tale princess). For example our segmentation conversion was tested on slicer 3D with QuantitativeReporting plugin, and we are not sure if it will work on everything.
 
 If you ever find yourself uttering "It doesn't work!" take a deep breath, consider the vastness of the cosmos, and remember — our tool isn't the answer to every cosmic conundrum. It's not a magic bullet (or wand) that'll work wonders in every scenario. But fret not, intrepid one! Reach out, and together, let's see if we can make a tad more magic happen.
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/franzmaliszt"><img src="https://avatars.githubusercontent.com/u/32265629?v=4?s=100" width="100px;" alt="franzmaliszt"/><br /><sub><b>franzmaliszt</b></sub></a><br /><a href="https://github.com/ENHANCE-PET/nifti2dicom/commits?author=franzmaliszt" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
