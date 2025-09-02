@@ -304,10 +304,9 @@ def save_slice(slice_data, normalized_data, series_description, filename, output
     if is_dicom_compressed(slice_data):
         slice_data.decompress()
 
-    if modality == "CT":
-        # Reverse the rescaling to get back to the original stored values
-        slice_data.PixelData = (normalized_data - float(slice_data.RescaleIntercept)) / float(slice_data.RescaleSlope)
-    elif modality == "PT":
+    np_dtype = np.int16 if slice_data.PixelRepresentation == 1 else np.uint16
+
+    if modality == "PT":
         # Don't ask me why there are different rescaling methods for both vendors
         max_value = np.max(normalized_data)
         if max_value > 65535:
@@ -315,11 +314,12 @@ def save_slice(slice_data, normalized_data, series_description, filename, output
             # fix the rescale slope and intercept accordingly
             slice_data.RescaleSlope = max_value / 65535
             slice_data.RescaleIntercept = 0
-        # Reverse the rescaling to get back to the original stored values
-        slice_data.PixelData = (normalized_data - float(slice_data.RescaleIntercept)) / float(slice_data.RescaleSlope)
-    else:
-        raise ValueError(f"Unknown modality: {modality}")
-    slice_data.PixelData = slice_data.PixelData.astype(np.int16).tobytes()
+    elif modality != "CT":
+        print(f"{modality} is not officially supported. Check output!")
+
+    slice_array = (normalized_data - float(slice_data.RescaleIntercept)) / float(slice_data.RescaleSlope)
+    slice_array = slice_array.astype(np_dtype)
+    slice_data.set_pixel_data(slice_array, slice_data.PhotometricInterpretation, slice_data.BitsStored)
 
     if reference_header_data is not None:
         for tag in slice_data:
