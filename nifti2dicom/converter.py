@@ -306,15 +306,7 @@ def save_slice(slice_data, normalized_data, series_description, filename, output
 
     np_dtype = np.int16 if slice_data.PixelRepresentation == 1 else np.uint16
 
-    if modality == "PT":
-        # Don't ask me why there are different rescaling methods for both vendors
-        max_value = np.max(normalized_data)
-        if max_value > 65535:
-            slice_data.PixelData = normalized_data * (65535 / max_value)
-            # fix the rescale slope and intercept accordingly
-            slice_data.RescaleSlope = max_value / 65535
-            slice_data.RescaleIntercept = 0
-    elif modality != "CT":
+    if modality not in ("CT", 'PT'):
         print(f"{modality} is not officially supported. Check output!")
 
     slice_array = (normalized_data - float(slice_data.RescaleIntercept)) / float(slice_data.RescaleSlope)
@@ -351,98 +343,81 @@ def vprint(*args, verbose=False, **kwargs):
 
 
 def save_dicom_from_nifti_image(ref_dir, nifti_path, output_dir, vendor="ux",
-                                series_description="converted by nifti2dicom", header_dir=None, force_overwrite=False,
-                                verbose=False):
+                                series_description="", header_dir=None, force_overwrite=True,
+                                verbose=True):
     """
-    Convert a NIfTI image to a DICOM series, with optional verbose output.
-    :param ref_dir: DICOM series directory which serves as a reference for the conversion
-    :param nifti_path: Path to the nifti file
-    :param output_dir: Output directory to store the converted DICOM series
-    :param series_description: Series description to be added to the DICOM header
-    :param vendor: The vendor from which the DICOM series was obtained (ux or sms)
-    :param header_dir: The path to the header reference directory
-    :param force_overwrite: Force overwrite of the output directory if it already exists
-    :param verbose: If True, print messages during the process
-    :return:
+    Convert a NIfTI image to a DICOM series using spatial metadata from a reference DICOM series.
     """
-    vprint(verbose=verbose, end='\n')
-    vprint(f'{ANSI_VIOLET} {emoji.emojize(":magnifying_glass_tilted_left:")} IDENTIFIED DATASETS:{ANSI_RESET}',
-           verbose=verbose, end='\n')
 
-    nifti_image = nib.load(nifti_path)
-    image_data = nifti_image.get_fdata()
-    num_dims = len(image_data.shape)
-    vprint(f' {ANSI_ORANGE}* Image dimensions: {num_dims}{ANSI_RESET}', verbose=verbose)
-    vprint(f' {ANSI_GREEN}* Loading NIfTI image: {nifti_path}{ANSI_RESET}', verbose=verbose)
+    vprint(verbose=verbose)
+    vprint(f'{ANSI_VIOLET} 🔍 IDENTIFIED DATASETS:{ANSI_RESET}', verbose=verbose)
 
-    # if the vendor is sms or ux and a 3d image use the following
-    if num_dims == 3:
-        image_data = np.flip(image_data, (1, 2))
-        image_data = image_data.T
-        image_data = image_data.reshape((-1,) + image_data.shape[-2:])
-    # if the vendor is ux and a 4d image use the following
-    elif vendor == 'ux' and num_dims == 4:
-        image_data = np.flip(image_data, (1, 2))
-        image_data = image_data.T
-        image_data = image_data.reshape((-1,) + image_data.shape[-2:])
-    # if the vendor is sms and a 4d image use the following
-    elif vendor == 'sms' and num_dims == 4:
-        image_data = np.flip(image_data, (1, 3))
-        image_data = np.flip(image_data, (3,))  # Flip along the time axis
-        image_data = image_data.T
-        image_data = image_data.reshape((-1,) + image_data.shape[-2:])
-    else:
-        raise ValueError(f"Unknown vendor: {vendor}")
+    # Load NIfTI image using SimpleITK
+    nifti_img = load_image(nifti_path, image_type='nifti')
 
-    header_slice_data = None
-    if header_dir is not None:
-        vprint(f' {ANSI_GREEN}* Header data will be copied from: {header_dir}{ANSI_RESET}', verbose=verbose)
-        vprint(f' {ANSI_GREEN}* Spatial information will be taken from: {ref_dir}{ANSI_RESET}', verbose=verbose)
-        parameter_dicom_slices, _ = load_dicom_series(header_dir)
-        header_slice_data = parameter_dicom_slices[0]
-    else:
-        vprint(f' {ANSI_GREEN}* Reference DICOM series directory: {ref_dir}{ANSI_RESET}', verbose=verbose)
+    # Flip Y-axis to match DICOM coordinate system
+    nifti_img = sitk.Flip(nifti_img, [False, True, False])
 
+    # Load reference DICOM series
+    vprint(f'{ANSI_GREEN}* Reference DICOM series: {ref_dir}{ANSI_RESET}', verbose=verbose)
+    ref_dicom_img = load_image(ref_dir, image_type='dicom')
     dicom_slices, filenames = load_dicom_series(ref_dir)
     reference_slice = dicom_slices[0]
-    if is_dicom_compressed(reference_slice):
-        vprint(f' {ANSI_ORANGE}* DICOM is compressed. Will decompress to convert.{ANSI_RESET}', verbose=verbose)
+
+    # Set origin and direction to match DICOM
+    nifti_img.SetOrigin(ref_dicom_img.GetOrigin())
+    nifti_img.SetDirection(ref_dicom_img.GetDirection())
 
     modality = reference_slice.Modality
 
-    expected_shape = (len(dicom_slices), reference_slice.Columns, reference_slice.Rows)
-    if expected_shape != image_data.shape:
-        vprint(f' {ANSI_ORANGE}* Expected data shape: {expected_shape}, but got: {image_data.shape}{ANSI_RESET}',
-               verbose=verbose)
-        return
+    if is_dicom_compressed(reference_slice):
+        vprint(f'{ANSI_ORANGE}* DICOM is compressed. Will decompress.{ANSI_RESET}', verbose=verbose)
 
+    # Optionally load header reference
+    header_slice_data = None
+    if header_dir:
+        vprint(f'{ANSI_GREEN}* Header data from: {header_dir}{ANSI_RESET}', verbose=verbose)
+        parameter_dicom_slices, _ = load_dicom_series(header_dir)
+        header_slice_data = parameter_dicom_slices[0]
+
+    # Output prep
     if os.path.exists(output_dir):
         if force_overwrite and os.path.isdir(output_dir):
-            vprint(f' {ANSI_ORANGE} Deleting existing directory: {output_dir}{ANSI_RESET}', verbose=verbose)
+            vprint(f'{ANSI_ORANGE}* Deleting existing directory: {output_dir}{ANSI_RESET}', verbose=verbose)
             shutil.rmtree(output_dir)
         else:
-            vprint(f' {ANSI_ORANGE} {output_dir} already exists.{ANSI_RESET}', verbose=verbose)
+            vprint(f'{ANSI_ORANGE}* Output already exists: {output_dir}{ANSI_RESET}', verbose=verbose)
             return
-
-    vprint(f' {ANSI_GREEN}* Output directory: {output_dir}{ANSI_RESET}', verbose=verbose)
     os.mkdir(output_dir)
 
     total_slices = len(dicom_slices)
+    image_array = sitk.GetArrayFromImage(nifti_img)
+
+    vprint(f'{ANSI_GREEN}* Saving DICOM to: {output_dir}{ANSI_RESET}', verbose=verbose)
     with Progress() as progress:
         task = progress.add_task("[cyan] Writing DICOM slices:", total=total_slices)
 
         with ThreadPoolExecutor() as executor:
             futures = []
             for idx, (slice_data, filename) in enumerate(zip(dicom_slices, filenames)):
-                normalized_data = image_data[idx]
+                normalized_data = image_array[idx]
+                slice_data.ImagePositionPatient = list(nifti_img.TransformIndexToPhysicalPoint((0, 0, idx)))
                 futures.append(
-                    executor.submit(save_slice, slice_data, normalized_data, series_description, filename, output_dir,
-                                    modality, header_slice_data))
+                    executor.submit(save_slice,
+                                    slice_data,
+                                    normalized_data,
+                                    series_description,
+                                    filename,
+                                    output_dir,
+                                    modality,
+                                    header_slice_data)
+                )
 
-            for idx, future in enumerate(futures):
-                future.result()
+            for idx, f in enumerate(futures):
+                f.result()
                 progress.update(task, advance=1,
                                 description=f"[white] Writing DICOM slices... [{idx + 1}/{total_slices}]")
+
 
 
 def nifti_to_dicom_with_resampling(nifti_image_path: str, original_dicom_directory: str, dicom_output_directory: str,
@@ -531,7 +506,7 @@ def nifti_to_dicom_with_resampling(nifti_image_path: str, original_dicom_directo
 
 
 def save_dicom_from_nifti_seg(nifti_file: str, ref_dicom_series_dir: str, output_path: str, ORGAN_INDEX: dict,
-                              verbose=False) -> None:
+                              verbose=True) -> None:
     """
     Convert a NIFTI segmentation image to a DICOM Segmentation object.
     :param nifti_file: Path to the NIFTI segmentation file.
@@ -612,7 +587,7 @@ def main():
                         help="Path to the NIfTI file to be converted.")
     parser.add_argument("-o", "--output_dir", type=str, required=True,
                         help="Path to the directory where the converted DICOM files will  be saved.")
-    parser.add_argument("-desc", "--series_description", required=False, default='converted by nifti2dicom',
+    parser.add_argument("-desc", "--series_description", required=False, default='',
                         type=str, help="Series description to be added to the DICOM header.")
     parser.add_argument("-t", "--type", type=str, choices=['img', 'seg'], required=True,
                         help="Are you converting an image or a segmentation?")
