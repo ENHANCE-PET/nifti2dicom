@@ -1,8 +1,7 @@
 """NIfTI → DICOM SEG conversion.
 
-Fixes:
-  - Scans all files (not just ``*.dcm``)
-  - Configurable manufacturer / model name
+Uses SimpleITK to resample the NIfTI segmentation onto the reference
+DICOM geometry so the mask is pixel-aligned with the source images.
 """
 
 from __future__ import annotations
@@ -11,13 +10,11 @@ from datetime import datetime
 from pathlib import Path
 
 import highdicom as hd
-import nibabel as nib
-import numpy as np
+import SimpleITK as sitk
 from pydicom.sr.codedict import codes
 
 from nifti2dicom import cli_theme as theme
 from nifti2dicom.dicom_io import load_dicom_series
-from nifti2dicom.orientation import orient_nifti
 
 
 def _normalize_organ_index(raw: dict) -> dict[str, str]:
@@ -107,10 +104,25 @@ def convert_nifti_seg_to_dicom(
     # Load reference DICOM — scan all files, not just *.dcm
     ref_slices, _ = load_dicom_series(ref_dir)
 
-    # Load and orient the segmentation
-    img: nib.Nifti1Image = nib.load(str(nifti_path))  # type: ignore[assignment]
-    data, _, _ = orient_nifti(img)
-    multilabel_mask = data.astype(np.uint8)
+    # Load reference DICOM geometry via SimpleITK
+    reader = sitk.ImageSeriesReader()
+    dicom_names = reader.GetGDCMSeriesFileNames(str(ref_dir))
+    reader.SetFileNames(dicom_names)
+    ref_sitk = reader.Execute()
+
+    # Load NIfTI segmentation and resample onto reference geometry.
+    # SimpleITK handles the RAS↔LPS mapping; nearest-neighbour
+    # preserves integer labels.
+    seg_sitk = sitk.ReadImage(str(nifti_path), sitk.sitkUInt8)
+    resampled = sitk.Resample(
+        seg_sitk,
+        ref_sitk,
+        sitk.Transform(),
+        sitk.sitkNearestNeighbor,
+        0,  # background value
+    )
+    # GetArrayFromImage → (Z, Y, X) matching DICOM pixel order
+    multilabel_mask = sitk.GetArrayFromImage(resampled)
 
     theme.info(f"Mask shape: {multilabel_mask.shape}, labels: {len(organ_index)}")
 
