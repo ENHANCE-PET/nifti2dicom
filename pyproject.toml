@@ -1,0 +1,61 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "nifti2dicom"
+version = "2.0.0"
+description = "Convert NIfTI images to DICOM format using a reference DICOM series."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Lalith Kumar Shiyam Sundar" },
+    { name = "Aaron Selfridge" },
+    { name = "Siqi Li" },
+]
+keywords = ["nifti", "dicom", "converter", "medical-imaging"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Medical Science Apps.",
+]
+dependencies = [
+    "pydicom>=3.0",
+    "nibabel",
+    "numpy",
+    "SimpleITK",
+    "highdicom",
+    "rich",
+    "click",
+    "python-cfonts",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7",
+    "pytest-cov",
+    "ruff",
+    "mypy",
+]
+
+[project.scripts]
+nifti2dicom = "nifti2dicom.cli:cli"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "C4", "UP"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
