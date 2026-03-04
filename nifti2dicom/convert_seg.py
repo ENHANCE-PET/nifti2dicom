@@ -20,11 +20,55 @@ from nifti2dicom.dicom_io import load_dicom_series
 from nifti2dicom.orientation import orient_nifti
 
 
+def _normalize_organ_index(raw: dict) -> dict[str, str]:
+    """Normalize label JSON into a flat ``{label: name}`` dict.
+
+    Accepted formats
+    ----------------
+    Flat::
+
+        {"1": "liver", "2": "spleen"}
+
+    MOOSE-nested::
+
+        {"organ_indices": {"1": {"name": "liver", "SNOMED": {...}}, ...}}
+
+    Raises
+    ------
+    ValueError
+        If the structure is unrecognised or empty.
+    """
+    if not isinstance(raw, dict):
+        raise ValueError(
+            f"Label JSON must be a dict, got {type(raw).__name__}"
+        )
+
+    # Unwrap MOOSE wrapper
+    if "organ_indices" in raw and isinstance(raw["organ_indices"], dict):
+        raw = raw["organ_indices"]
+
+    if not raw:
+        raise ValueError("Label JSON is empty — no organ labels found")
+
+    organ_index: dict[str, str] = {}
+    for label, value in raw.items():
+        if isinstance(value, str):
+            organ_index[label] = value
+        elif isinstance(value, dict) and isinstance(value.get("name"), str):
+            organ_index[label] = value["name"]
+        else:
+            raise ValueError(
+                f"Unrecognized format for label '{label}': "
+                f"expected a string or a dict with a 'name' string"
+            )
+    return organ_index
+
+
 def convert_nifti_seg_to_dicom(
     ref_dir: str | Path,
     nifti_path: str | Path,
     output_path: str | Path,
-    organ_index: dict[str, str],
+    organ_index: dict,
     *,
     manufacturer: str = "Quantitative Imaging and Medical Physics",
     manufacturer_model_name: str = "nifti2dicom",
@@ -40,8 +84,9 @@ def convert_nifti_seg_to_dicom(
         Path to the multilabel NIfTI segmentation file.
     output_path : path
         Output directory for the DICOM SEG file.
-    organ_index : dict[str, str]
-        Mapping of ``{label_int: organ_name}``.
+    organ_index : dict
+        Label mapping — accepts both flat ``{"1": "liver"}`` and
+        MOOSE-nested ``{"organ_indices": {"1": {"name": ...}}}`` formats.
     manufacturer : str
         DICOM Manufacturer tag.
     manufacturer_model_name : str
@@ -49,6 +94,8 @@ def convert_nifti_seg_to_dicom(
     software_versions : str
         DICOM SoftwareVersions tag.
     """
+    organ_index = _normalize_organ_index(organ_index)
+
     ref_dir = Path(ref_dir)
     nifti_path = Path(nifti_path)
     output_path = Path(output_path)
