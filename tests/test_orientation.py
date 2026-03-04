@@ -49,13 +49,15 @@ class TestOrientNifti:
             orient_nifti(img, vendor="ux")
 
     def test_identity_affine_lps(self, sample_nifti_3d: Path) -> None:
-        """With identity affine, RAS→LPS should negate first two IPP components."""
+        """With identity affine (4x4x3), verify IPP and IOP in LPS."""
         img = nib.load(str(sample_nifti_3d))
-        _, ipp_list, _ = orient_nifti(img)
-        # Identity affine: voxel (0,0,k) → RAS (0,0,k) → LPS (0,0,k)
-        # The first two components should be negated (but 0 negated is still 0)
-        # The Z (S→S) component should equal k
+        _, ipp_list, iop = orient_nifti(img)
+        # No flip: output (s,0,0) maps to canonical (0,0,s) →
+        # RAS (0,0,s) → LPS (0,0,s).
         for k in range(ipp_list.shape[0]):
             assert ipp_list[k, 0] == pytest.approx(0.0)
             assert ipp_list[k, 1] == pytest.approx(0.0)
             assert ipp_list[k, 2] == pytest.approx(float(k))
+        # IOP: row (along c) = RAS +X → LPS -L = [-1,0,0]
+        #      col (along r) = RAS +Y → LPS -P = [0,-1,0]
+        np.testing.assert_allclose(iop, [-1, 0, 0, 0, -1, 0], atol=1e-10)

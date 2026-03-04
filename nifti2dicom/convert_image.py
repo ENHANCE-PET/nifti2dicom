@@ -66,8 +66,8 @@ def convert_nifti_to_dicom(
     reference_slice = dicom_slices[0]
     modality = getattr(reference_slice, "Modality", "OT")
 
-    # Validate shapes
-    expected = (len(dicom_slices), reference_slice.Columns, reference_slice.Rows)
+    # Validate shapes — data is (slices, rows, cols)
+    expected = (len(dicom_slices), reference_slice.Rows, reference_slice.Columns)
     if expected != data.shape:
         raise ShapeMismatchError(expected, data.shape)
 

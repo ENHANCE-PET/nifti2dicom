@@ -1,13 +1,14 @@
 """Affine-based NIfTI → DICOM orientation.
 
 Replaces the old vendor-specific ``np.flip`` hacks with deterministic
-affine decomposition:
+affine decomposition.  **No data flips** — only a transpose to
+(slice, row, col).  IPP and IOP are derived from a single composed
+affine so data and geometry can never diverge.
 
 1. ``nib.as_closest_canonical(img)`` → data in RAS+ order
-2. ``np.flip(data, axis=(0, 1))`` → RAS → LPS
-3. ``data.transpose(2, 1, 0)`` → (slice, row, col)
-4. Per-slice IPP from ``affine @ [0, 0, k, 1]`` with RAS→LPS negation
-5. IOP from affine column vectors with RAS→LPS negation
+2. ``data.transpose(2, 1, 0)`` → (slice, row, col)
+3. Compose ``_RAS_TO_LPS @ canonical_affine @ _TRANSPOSE`` once
+4. IPP / IOP read directly from that composed affine
 
 The ``vendor`` parameter is accepted but ignored (deprecation warning).
 """
@@ -21,6 +22,15 @@ import numpy as np
 
 # RAS→LPS sign flip: negate R→L (axis 0) and A→P (axis 1)
 _RAS_TO_LPS = np.diag([-1.0, -1.0, 1.0, 1.0])
+
+# Maps output indices (s, r, c) back to canonical (i, j, k):
+#   i = c,  j = r,  k = s   (inverse of transpose(2,1,0))
+_TRANSPOSE = np.array([
+    [0, 0, 1, 0],
+    [0, 1, 0, 0],
+    [1, 0, 0, 0],
+    [0, 0, 0, 1],
+], dtype=float)
 
 
 def orient_nifti(
@@ -64,34 +74,38 @@ def orient_nifti(
     data = np.asarray(canonical.dataobj)
     affine = canonical.affine
 
-    # Step 2 — RAS → LPS (flip first two spatial axes)
-    data = np.flip(data, axis=(0, 1))
-
-    # Step 3 — transpose to (slice, row, col, ...) for DICOM
+    # Step 2 — transpose to (slice, row, col).  No flip needed;
+    # the composed affine handles the RAS→LPS sign change.
     if data.ndim == 3:
         data = data.transpose(2, 1, 0)
+        nz_slices = data.shape[0]
+        n_timepoints = 1
     elif data.ndim == 4:
-        # (X, Y, Z, T) → (Z, Y, X, T) → collapse time into slice axis
-        data = data.transpose(2, 1, 0, 3)
-        nz, ny, nx, nt = data.shape
-        data = data.reshape(nz * nt, ny, nx)
+        # (X, Y, Z, T) → (T, Z, Y, X) → collapse to (T*Z, Y, X)
+        data = data.transpose(3, 2, 1, 0)
+        n_timepoints, nz_slices = data.shape[0], data.shape[1]
+        data = data.reshape(
+            n_timepoints * nz_slices, data.shape[2], data.shape[3],
+        )
     else:
         raise ValueError(f"Unsupported NIfTI dimensionality: {data.ndim}")
 
-    # Step 4 — compute LPS affine for IPP / IOP
-    lps_affine = _RAS_TO_LPS @ affine
+    # Step 3 — single composed LPS affine for the output index space
+    #   output (s,r,c) → canonical (i,j,k) → RAS mm → LPS mm
+    lps_affine = _RAS_TO_LPS @ affine @ _TRANSPOSE
 
     # Per-slice Image Position (Patient)
     num_slices = data.shape[0]
-    k_indices = np.arange(num_slices)
-    # Build homogeneous coordinates for (0, 0, k) voxels
+    z_indices = np.tile(np.arange(nz_slices), n_timepoints)
     coords = np.zeros((num_slices, 4))
-    coords[:, 2] = k_indices
+    coords[:, 0] = z_indices
     coords[:, 3] = 1.0
     ipp_list = (lps_affine @ coords.T).T[:, :3]
 
-    # Step 5 — Image Orientation (Patient) from column vectors
-    row_cosine = lps_affine[:3, 0]
+    # Image Orientation (Patient)
+    # Row direction = along increasing column (col 2 of lps_affine)
+    # Col direction = along increasing row    (col 1 of lps_affine)
+    row_cosine = lps_affine[:3, 2]
     row_cosine = row_cosine / np.linalg.norm(row_cosine)
     col_cosine = lps_affine[:3, 1]
     col_cosine = col_cosine / np.linalg.norm(col_cosine)
