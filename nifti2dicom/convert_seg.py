@@ -11,6 +11,7 @@ from pathlib import Path
 
 import highdicom as hd
 import SimpleITK as sitk
+from pydicom.filewriter import dcmwrite
 from pydicom.sr.codedict import codes
 
 from nifti2dicom import cli_theme as theme
@@ -169,6 +170,6 @@ def convert_nifti_seg_to_dicom(
 
     output_path.mkdir(parents=True, exist_ok=True)
     out_file = output_path / (nifti_path.name + ".dcm")
-    seg.save_as(str(out_file))
+    dcmwrite(str(out_file), seg, write_like_original=False)
 
     theme.ok(f"Wrote DICOM SEG to {out_file}")
