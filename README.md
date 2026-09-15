@@ -1,170 +1,256 @@
-![nifti2dicom-logo](/Nifti2dicom-logo.png)
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+# nifti2dicom
 
+Convert NIfTI images and masks into DICOM with a reference scan.
 
-## Nifti2Dicom 🧠💽
+- Scalar **2D, 3D and 4D** images → classic CT, MR or PET series.
+- **Binary and multilabel** masks → one multi-segment DICOM SEG.
+- **2D/3D RGB** images → Secondary Capture.
+- Physical-coordinate geometry, quantitative pixel encoding, structured errors,
+  and output validation before publication.
 
-[![PyPI version](https://badge.fury.io/py/nifti2dicom.svg)](https://pypi.org/project/nifti2dicom/) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://www.gnu.org/licenses/MIT)
-
-
-Hello there, brave soul! 🌟 Welcome to **Nifti2Dicom** - a project born out of sheer determination, despair, pain and probably a smidge too much caffeine. ☕️ Ever felt like converting NIfTI to DICOM was akin to summoning a minor demon from the pandora's box? 😈 So did we. Which is why we created this snazzy tool to prevent any more unplanned infernal conferences.
-
-
-## Magic Powers (Features) 🌟
-
-🌌 Dimensional Doorways - Step into our magical portal! Whether you're jumping into a 3D realm or a more mysterious 4D time-warp, we've got you covered. Convert both 3D and 4D nifti images to DICOM. So, if you're clutching a 4D motion-corrected series in nifti, don't fret. We're your dimensional travel agency!
-🎨 The Colorful Canvas of Segmentations - Ever dreamt of painting the universe with multilabel nifti segmentations? Well, maybe not. But hey, we can convert those vibrant dreams into 3D DICOM for you. Just hand over your brush, or in this case, your label to region mapping (tutorial brewing in our cauldron), and watch the masterpiece unfold!
-
-## Prerequisites 📋
-
-- **OS**: Universal - because we don't discriminate. 🌍
-- **Python**: Version 3.10 is required because even we have our limits. 🐍
-
-## Installation 🔧
-
-We highly recommend using a different realm (virtual environment) for installing nifti2dicom (or any other Python package, really).
-
-### Linux
-```bash
-python3.10 -m venv nifti2dicom
-source nifti2dicom/bin/activate
-```
-
-### Windows
-```bash
-python -m venv nifti2dicom
-nifti2dicom\Scripts\activate.bat  
-```
-
-And now, wave a magic wand... just kidding. Do this:
+## Quick start
 
 ```bash
 pip install nifti2dicom
+nifti2dicom scan.nii.gz --reference ./dicom
 ```
 
-## Usage 🚀
+Output goes to `scan_dicom/` beside the input. It contains DICOM files and a
+`conversion.json` report with warnings, geometry and label mapping. Supply
+`-o ./converted` to choose another location.
 
-Using the mighty **Nifti2Dicom** is (thankfully) less complicated than its origin story:
+The NIfTI's dimensions, orientation and spacing are read automatically. The
+reference provides patient/study and modality metadata; it does not need the
+same dimensions or number of slices for CT/MR. PET requires matching frames
+to preserve acquisition timing and correction metadata. A reference may be a file or a directory
+containing a single series, including nested folders.
 
-
-1. Open your command line or terminal. 💻
-2. Enter the following command, replacing the placeholders with your actual paths and desired series description:
-
-### Converting 3d/4d images 
-#### For 3d
 ```bash
-   nifti2dicom \
-       -d <dicom_dir>               # Directory containing reference DICOM series
-       -n <nifti_path>              # Path to the NIFTI file to be converted
-       -o <output_dir>              # Directory where the converted DICOM files will be saved
-       -desc "<series_description>" # Description for the DICOM series
-       -t img                       # Specifies the type of conversion (image in this case)
-```
-#### For 4d
-```bash
-   nifti2dicom \
-       -d <dicom_dir>               # Directory containing reference DICOM series
-       -n <nifti_path>              # Path to the NIFTI file to be converted
-       -o <output_dir>              # Directory where the converted DICOM files will be saved
-       -desc "<series_description>" # Description for the DICOM series
-       -t img                       # Specifies the type of conversion (image in this case)
-       -v <sms | ux>                # Specifies the vendor, either "sms" or "ux"
-```
-Ignore the vendor tag, if you are working on 3d images. It is just relevant for 4D. The logic is the same for 3D.
+# Inspect inferred meaning and reference geometry without creating output
+nifti2dicom inspect scan.nii.gz --reference ./dicom
 
- ### Converting segmentations single/multilabel segmentations
-```bash
-    nifti2dicom \
-       -d <dicom_dir>               # Directory containing reference DICOM series
-       -n <nifti_path>              # Path to the NIFTI file to be converted
-       -o <output_dir>              # Directory where the converted DICOM files will be saved
-       -desc "<series_description>" # Description for the DICOM series
-       -t seg                       # Specifies the type of conversion (segmentation in this case)
-       -j <path_to_json>            # Path to the JSON file containing the organ index
-```
-For converting nifti segmentations to DICOM, you always need to a pass a json file, which contains the mapping of the labels to the region names. The sample .json file can be found [here](/labels_region.json).
+# Explicitly resample into the reference's physical grid
+nifti2dicom scan.nii.gz --reference ./dicom --geometry reference
 
-### Example:
+# Select a series when a folder contains several
+nifti2dicom scan.nii.gz --reference ./dicom --series-uid 1.2.3.4
 
-#### Segmentation conversion
-  
-```bash
-nifti2dicom \
-    -d ./refDICOM               # Reference directory with DICOM series
-    -n ./brainSegmentation.nii  # Path to the NIFTI segmentation file
-    -o ./convertedSegDICOM      # Output directory for the converted segmentation DICOM
-    -desc "Brain Segmentation"  # Description for the DICOM series
-    -t seg                      # Type of conversion: segmentation
-    -j ./organ_index.json       # Path to the JSON file with organ index
-```   
-
-#### Image conversion
-##### 3d conversion
-```bash
-nifti2dicom \
-    -d ./refDICOM               # Reference directory with DICOM series
-    -n ./brainMRI.nii           # Path to the NIFTI image file
-    -o ./convertedImgDICOM      # Output directory for the converted image DICOM
-    -desc "Fancy Brain Scan"    # Description for the DICOM series
-    -t img                      # Type of conversion: image
-```
-                               
-##### 4d conversion
-```bash
-nifti2dicom \
-    -d ./refDICOM               # Reference directory with DICOM series
-    -n ./brainMRI.nii           # Path to the NIFTI image file
-    -o ./convertedImgDICOM      # Output directory for the converted image DICOM
-    -desc "Fancy Brain Scan"    # Description for the DICOM series
-    -t img                      # Type of conversion: image
-    -v sms                      # Vendor: Siemens (you can replace this with the \
-                                # appropriate vendor name, as of now support for united imaging \
-                                # and siemens is provided. You can choose one of the two (sms or ux), the default value is ux)
+# Machine-readable result or error; no progress text on stdout
+nifti2dicom scan.nii.gz --reference ./dicom --json
 ```
 
- Still confused? You can always type ```nifti2dicom -h``` for help!
+## Segmentations
 
-## Issues & Feedback 🐛🗣
+DICOM `BINARY` describes each segment's pixels, **not the number of segments**.
+Both a binary mask and a multilabel mask can become a BINARY SEG containing
+multiple segments. The encoder uses highdicom and verifies the written masks
+against their source DICOM frames.
 
-If you stumble upon any pesky bugs, or have suggestions to prevent other unforeseen exorcisms, [Open an issue](https://github.com/LalithShiyam/nifti2dicom/issues). Also, if you ever come up with a way to bring peace between NIfTI and DICOM, we're all ears (and eyes 👀)!
+```bash
+# A manually drawn binary mask
+nifti2dicom mask.nii.gz --reference ./dicom --kind seg --algorithm-type manual
 
-## License 📜
+# Multilabel output from a model
+nifti2dicom organs.nii.gz --reference ./dicom --labels labels.json \
+  --algorithm-type automatic --algorithm-name MOOSE --algorithm-version 3.0
+```
 
-This project is licensed under the MIT License. Check out the `LICENSE` file to see the fine print.
+Values must be nonnegative integers: 0 is background. Values such as 5 and 300
+are supported without an 8-bit cast. The conversion report records the mapping
+from input label values to consecutive DICOM segment numbers.
 
-## Acknowledgments 👏
+A simple label mapping:
 
-- To coffee, our eternal ally. ☕️
-- The patience of everyone who ever sat near a developer (me) while they mumbled about DICOM headers.
-- The spirit animal of this project: A platypus, because just like this software, it's unique, unexpected, and gets the job done (to a reasonable extent - we are managing expectations here)!
+```json
+{
+  "5": "Lesion",
+  "300": "Liver"
+}
+```
 
+For semantic interoperability, include coded category and type descriptions.
+Names alone cannot establish anatomy; missing codes use an explicitly
+unspecified local code and produce a warning. Supply real codes from your
+segmentation schema rather than inferring them from pixel values.
 
-## 🎩🔮 A Gentle Wizardly Reminder 🔮🎩
+MOOSE's nested `organ_indices` format and its `SNOMED.ID`/`SNOMED.name` entries
+are accepted. A richer file can also carry algorithm provenance:
 
-Dear adventurous user, while Nifti2Dicom is sprinkled with a generous dose of magic and wizardry, it's essential to remember that no spell is perfect. Just like the age-old "turn a frog into a prince" trick, sometimes things don't pan out (ask any fairy tale princess). For example our segmentation conversion was tested on slicer 3D with QuantitativeReporting plugin, and we are not sure if it will work on everything.
+```json
+{
+  "algorithm": {"type": "automatic", "name": "MyModel", "version": "1.0"},
+  "labels": {
+    "300": {
+      "name": "Liver",
+      "category": {
+        "value": "123037004", "scheme": "SCT", "meaning": "Anatomical Structure"
+      },
+      "type": {"value": "10200004", "scheme": "SCT", "meaning": "Liver"}
+    }
+  }
+}
+```
 
-If you ever find yourself uttering "It doesn't work!" take a deep breath, consider the vastness of the cosmos, and remember — our tool isn't the answer to every cosmic conundrum. It's not a magic bullet (or wand) that'll work wonders in every scenario. But fret not, intrepid one! Reach out, and together, let's see if we can make a tad more magic happen.
+SEG always aligns to the reference grid using nearest-neighbor interpolation.
+Foreground outside that grid, disappearance of a segment during resampling,
+and an entirely empty mask are reported clearly. Masks are never silently
+thresholded. Automatic and semiautomatic masks require their creator's name
+and version; conversion software is not treated as the segmentation algorithm.
 
-## Contributors ✨
+Separate overlapping masks, probability/FRACTIONAL output, newer LABELMAP SEG,
+and time-varying SEG are not yet supported. Do not collapse overlapping masks
+into one integer map: that would discard overlap.
 
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+See [highdicom's SEG guide](https://highdicom.readthedocs.io/en/latest/seg.html)
+and the [DICOM segmentation module](https://dicom.nema.org/medical/dicom/current/output/chtml/part03/sect_C.8.20.2.html).
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/franzmaliszt"><img src="https://avatars.githubusercontent.com/u/32265629?v=4?s=100" width="100px;" alt="franzmaliszt"/><br /><sub><b>franzmaliszt</b></sub></a><br /><a href="https://github.com/ENHANCE-PET/nifti2dicom/commits?author=franzmaliszt" title="Code">💻</a></td>
-    </tr>
-  </tbody>
-</table>
+## RGB
 
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
+```bash
+nifti2dicom color.nii.gz --reference ./dicom --kind rgb
+```
 
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+Explicit RGB supports arrays shaped `(X,Y,3)` or `(X,Y,Z,3)`. Channels must be
+8-bit integer values from 0 to 255. NIfTI's structured RGB datatype is inferred
+automatically. An ordinary fourth axis of length three is treated as three
+scalar volumes unless RGB is explicitly selected.
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+## Python API
+
+```python
+from nifti2dicom import convert, inspect, ConversionError
+
+info = inspect("scan.nii.gz", "./dicom")
+try:
+    result = convert("scan.nii.gz", "./dicom", "./converted")
+except ConversionError as error:
+    print(error.message)
+    print(error.hint)
+    print(error.code)  # Stable identifier for automation
+else:
+    print(result.files)     # Only the DICOM files
+    print(result.warnings)  # Assumptions and conversion notices
+```
+
+Python calls print nothing. Pass `on_progress=callback` to receive typed progress
+events. `result.to_dict()` is JSON-ready.
+
+## Automatic decisions and limits
+
+- Native geometry is preserved by default; resampling is explicit.
+- Reference stacks tolerate scanner coordinate rounding within at most 0.005 mm
+  of the grid spanning their first and last planes, with a warning above 0.001 mm.
+  Every plane is checked; uneven spacing and accumulated drift still fail.
+- Frame matching separately allows bounded NIfTI affine roundoff: exact index
+  correspondence and all eight physical corners must agree, with a 0.001 mm
+  absolute cap. A genuinely shifted or stretched PET grid remains an error.
+- Spatial units are converted to millimeters. Unknown units assume millimeters
+  and are recorded as a warning.
+- Label descriptions or NIfTI label intent select SEG. Integer values alone do not.
+- Multiple reference series require `--series-uid`; patient/study mismatches fail.
+- 4D images retain timepoint identities. Timing comes from explicit NIfTI time
+  units or matching reference frames, never from a made-up acquisition duration.
+  Input time order is preserved; a NIfTI without per-frame provenance cannot
+  reveal whether an upstream tool already scrambled its volumes.
+- A complete, consistently reversed native PET slice index can be recovered
+  with an explicit warning when independent frame timing proves the ordering.
+  Mixed/missing indices and contradictory timing still fail; source files are
+  never rewritten. MR exact reorientation preserves volume-uniform acquisition
+  times even when the output slice planes change. Conflicting plane facts are
+  omitted with warnings, not copied onto unrelated planes.
+- Reference CT/MR/PT acquisition fields must be available where required by the
+  selected output profile. PET values must already use the reference's units:
+  SUV and activity concentration cannot be distinguished from a NIfTI array alone.
+- Classic MR uses a standard-extended rescale mapping; 4D CT uses temporal
+  extensions. The receiving viewer must support these attributes. See the
+  [DICOM output profiles and validation evidence](docs/dicom-conformance.md).
+- Sheared/singular geometry, complex/vector/tensor data, enhanced/multiframe
+  references, temporal RGB, and gated/reprojection PET fail explicitly.
+- Scalar encoding uses 16-bit integers plus rescale parameters. Integer values
+  fitting the selected signed/unsigned representation are exact; other values
+  are quantized. Maximum reconstruction error is recorded in DICOM
+  `DerivationDescription`. PET scales each image independently
+  to preserve low-signal slices/timepoints; consumers must apply each image's
+  own rescale tags. CT/MR retain a shared volume-wide scale.
+  PET signedness stays constant across the series; any negative value selects
+  signed storage, so positive values above 32767 can require quantization.
+- Volumes are loaded into memory. Very large 4D datasets need adequate RAM.
+- SEG omits incomplete optional study codes; PET omits incomplete optional
+  tracer codes within copied isotope metadata. Both use a shared completeness
+  check and record a warning. Complete codes, other isotope fields and source
+  files are preserved; missing codes are never invented.
+
+Validation includes serialized pixel decoding and SEG label/source-frame round
+trips. This is not a blanket DICOM conformance or viewer-compatibility claim:
+external IOD validators and target viewers remain part of release acceptance.
+
+See the [real-data validation report](docs/validation/2026-09-12-lmu-real-data.md)
+for fresh LION/MOOSE inference, independent SEG decoding, and known limitations.
+The [public PET audit](docs/validation/2026-09-13-idc-pet.md) checks genuine
+32- and 45-timepoint acquisitions, spatial/time reversal detection, and all
+output voxels. Its optional tracer-code defect is now fixed: all 3,126
+regenerated files passed current-standard validation. The
+[follow-up report](docs/validation/2026-09-13-pet-metadata-fix.md) records that
+evidence and PET precision concerns from volume-wide 16-bit scaling. The
+[precision follow-up](docs/validation/2026-09-14-pet-precision.md) compares scaling
+policies and validates the per-image PET encoding introduced to address them.
+The [baseline Slicer audit](docs/validation/2026-09-14-slicer.md) exposed receiver
+defects in default dynamic PET import. The optional
+[Slicer PET integration](integrations/slicer/README.md) fixes those paths without
+changing converter output. The [repair acceptance report](docs/validation/2026-09-14-slicer-fix.md)
+passes normal installed import for all 51.2 million public PET voxels, both
+dynamic representations, and binary/multilabel SEG. Stock Slicer without the
+integration still has the baseline defects; compatibility is limited to the
+tested installation and profiles.
+The [expanded IDC repair acceptance](docs/validation/2026-09-15-idc-repair.md)
+adds Philips/Siemens static and 45-frame PET, sagittal 25-frame MR, and ten
+separate CT phases: 291 million source voxels, all 10,910 output files checked
+with dciodvfy, and strict Slicer checks of both dynamic representations. It
+records the PET ordering/MR metadata fixes and remaining profile limitations.
+
+## Errors and output safety
+
+Expected failures explain what happened and how to resolve it. Use `--debug`
+for tracebacks on unexpected failures, `--quiet` to suppress normal output, or
+`--json` for structured automation.
+
+An existing output is an error. With `--overwrite`, old output remains in place
+until the new conversion passes validation. A failed restore preserves a backup
+and reports its path. Input/output overlap is rejected. Interruptions clean up
+staging files; a hard process kill may leave a named lock directory.
+
+## Upgrading from earlier versions
+
+Existing `convert`, `segment`, `rgb` and `resample` subcommands still work.
+Python conversion functions and PUMA wrappers delegate to the same pipeline.
+
+Intentional changes:
+
+- Different image/reference dimensions are supported.
+- Existing output errors instead of silently skipping.
+- Vendor-specific flips are gone; the deprecated vendor argument is ignored.
+- SEG requires truthful algorithm provenance, including via the labels JSON.
+- Pixel overflow errors or quantitative rescaling replace silent clipping.
+- Generated filenames are stable `IM_000001.dcm` sequences, not template filenames.
+- Use `result.files` or `*.dcm`; the output also includes a JSON report.
+
+## Development
+
+```bash
+pip install -e '.[dev]'
+pytest
+ruff check nifti2dicom tests integrations/slicer validation
+ruff format --check nifti2dicom tests integrations/slicer validation
+python -m mypy nifti2dicom --ignore-missing-imports
+python -m build
+python -m validation.check_distribution dist/*.tar.gz dist/*.whl
+```
+
+Start with [architecture](docs/architecture.md) and [AGENTS.md](AGENTS.md).
+Tests use asymmetric synthetic data to verify physical coordinates, quantitative
+values, temporal frames, segmentation references and failure recovery.
+Optional reproducible public-data checks are described in
+[validation/README.md](validation/README.md); downloads and viewer tests are
+not dependencies of ordinary unit tests or package installation.
+
+MIT licensed. Authors: Lalith Kumar Shiyam Sundar, Aaron Selfridge and Siqi Li.

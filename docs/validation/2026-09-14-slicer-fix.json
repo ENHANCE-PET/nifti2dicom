@@ -1,0 +1,1817 @@
+{
+  "date": "2026-09-14",
+  "generated_utc": "2026-09-14T21:16:34.807524+00:00",
+  "status": "passed_tested_installed_integration_profiles",
+  "automatic_dynamic_acceptance_passed": true,
+  "stock_slicer_fixed": false,
+  "converter_behavior_changed": false,
+  "converter_source_sha256": "df9fafdf1be03e866d4cee0c01bb0f5ff87f69a554abd65570e6fed00923fa28",
+  "converter_wheel_sha256": "bb51c435402c0e2a6b0a3ac371e08e0702c36cf7f4516a19ab4cde9bb86ddbba",
+  "bundled_reader_source_modified": false,
+  "local_artifact_root": "/private/tmp/nifti2dicom-slicer-fix.nilYDL",
+  "integration": {
+    "directory": "/Users/nutellabear/Library/Application Support/nifti2dicom/slicer/e9cd273542cc8d6a",
+    "source_sha256": "e9cd273542cc8d6a8ec8872685142cd2858e0ad552a7a2765004b2a1fa47ba85",
+    "files": {
+      "Nifti2DicomPET.py": "e0c3ec6acfeff6fb5570af84d1d53a410f9c4beb4bc260b690863bd4a160b2e6",
+      "Nifti2DicomPETLib/__init__.py": "4936ef2afda44c13b0db745871a27e137f077adf9b94f10fe4a3996960aaac58",
+      "Nifti2DicomPETLib/frames.py": "ba6e8f6755b425ab25bdf2ec2ad8b38190e4b20892915756cd5f49e5dc6286d7",
+      "Nifti2DicomPETLib/loader.py": "5447032667a0fb5f1eb8d21ba5438a8abe1a99b01f7f05a5b445be24f2adf98d",
+      "Nifti2DicomPETLib/scene.py": "413472abe598ef93f13b9167d32f87ca0f58149cfc625b48cc8f7578d88d5017"
+    },
+    "installed_files_match_source": true,
+    "startup": {
+      "plugin": "Nifti2DicomPETPlugin",
+      "module_path": "/Users/nutellabear/Library/Application Support/nifti2dicom/slicer/e9cd273542cc8d6a/Nifti2DicomPET.py",
+      "slicer_version": "5.12.0",
+      "startup_script": "/Users/nutellabear/.slicerrc.py",
+      "startup_sha256": "e604859f10ef0934addaa4519887692774c9ce70168007ef935686d985dc5656",
+      "settings_arguments_used": false,
+      "additional_module_path_argument_used": false,
+      "revision_settings": "/Applications/Slicer.app/Contents/slicer.org/Slicer-34621.ini"
+    },
+    "registration": "supported user startup script and module factory; revision settings inside app bundle are unwritable",
+    "preexisting_user_startup_script": false,
+    "uninstall": "remove the nifti2dicom block from /Users/nutellabear/.slicerrc.py and restart",
+    "user_settings_backup": "/private/tmp/nifti2dicom-slicer-fix.nilYDL/Slicer.ini.before-install"
+  },
+  "app_installation_limits": [
+    "Slicer revision settings point inside the application bundle and still emit write errors; this does not block the tested import path.",
+    "Strict code-signature verification failed before registration due to extra runtime/settings files. No bundled reader source or signature was edited."
+  ],
+  "bundled_reader_sha256": {
+    "MultiVolumeImporterPlugin.py": "68f222d1608cd9ac818d314bfd539a50c26192723d8ccacb2e301a20d6b9ac09",
+    "DICOMScalarVolumePlugin.py": "6646bc542e4ce72bdb9ab01dda80f9b2e167b5c43b82a50dddeeefa784f9b2b6"
+  },
+  "cases": [
+    {
+      "alias": "pet_static_rider",
+      "files": 47,
+      "timepoints": 1,
+      "slices": 47,
+      "unchanged_since_prior_validator": true,
+      "prior_validator_report_sha256": "bda5066b5c141251c8624d31d0131319040eb159de680ea0b9d07fb13a577867",
+      "truth_sha256": "aafe248bb6df1882a12949c1d61a6dc73c4a06c2bea4c07c11bf0bbd9aec0e36"
+    },
+    {
+      "alias": "pet_dynamic_rider",
+      "files": 1504,
+      "timepoints": 32,
+      "slices": 47,
+      "unchanged_since_prior_validator": true,
+      "prior_validator_report_sha256": "a5c332135ea6c5abccd45ea2a7d7d17c8d79c551536cbc3343a8970b60748f20",
+      "truth_sha256": "60729c26ea6262029097cbef849769a37697e236222fbbfda838f18f02489fcd"
+    },
+    {
+      "alias": "pet_dynamic_flt",
+      "files": 1575,
+      "timepoints": 45,
+      "slices": 35,
+      "unchanged_since_prior_validator": true,
+      "prior_validator_report_sha256": "6ec7e35ef7008d3104a4bb3ad55911346772c694937eddb25cae3f2256e35f20",
+      "truth_sha256": "3687533d91f31b8fc01cc248a10f96b907e7ead85d9fc6943b8998b3d9b19bc7"
+    }
+  ],
+  "runs": [
+    {
+      "run": "pet_static_rider-installed",
+      "case": "pet_static_rider",
+      "status": "passed",
+      "mode": "default",
+      "representation": "scalar",
+      "slicer_version": "5.12.0",
+      "revision": "a5df714",
+      "raw_report": "/private/tmp/nifti2dicom-slicer-fix.nilYDL/pet_static_rider-installed-acceptance.json",
+      "raw_report_sha256": "bdf2b027b970c586b70fd740cc1af1ef3af11534ad2ba43e50f10286b54c42cf",
+      "script_sha256": "1778e891c31cc8545088d25caa2fec39bbe5d57e1d7f585451635fdd54c2c2d0",
+      "timepoints": 1,
+      "voxels_checked": 770048,
+      "maximum_serialized_value_error_BQML": 0.0,
+      "maximum_original_value_error_BQML": 0.4573653711086081,
+      "maximum_world_error_mm": 9.536742595628311e-07,
+      "precision_bound_violations": 0,
+      "timepoints_evidence": [
+        {
+          "timepoint": 0,
+          "frame_reference_time_ms": 0.0,
+          "actual_frame_duration_ms": 300000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "85172547988213f3a1a5be25d50cf9f63af7a15f38c2f6cb718faf73220c6eab",
+          "source_instance_count": 47
+        }
+      ],
+      "selected_loadables": [
+        {
+          "plugin": "DICOMScalarVolumePluginClass",
+          "name": "1402: NIfTI conversion",
+          "confidence": 0.5,
+          "selected": true,
+          "warning": "",
+          "files": 47
+        },
+        {
+          "plugin": "DICOMSegmentationPluginClass",
+          "name": "QA binary geometric mask; not clinical",
+          "confidence": 0.95,
+          "selected": true,
+          "warning": "",
+          "files": 1
+        },
+        {
+          "plugin": "DICOMSegmentationPluginClass",
+          "name": "QA multilabel geometric mask; not clinical",
+          "confidence": 0.95,
+          "selected": true,
+          "warning": "",
+          "files": 1
+        }
+      ],
+      "segmentations": [
+        {
+          "kind": "binary",
+          "synthetic_not_clinical": true,
+          "segments": [
+            {
+              "name": "QA sphere A",
+              "nifti_label": 1,
+              "foreground_voxels": 3267,
+              "differing_voxels": 0
+            }
+          ],
+          "referenced_source_instances": 47
+        },
+        {
+          "kind": "multilabel",
+          "synthetic_not_clinical": true,
+          "segments": [
+            {
+              "name": "QA sphere A",
+              "nifti_label": 5,
+              "foreground_voxels": 3267,
+              "differing_voxels": 0
+            },
+            {
+              "name": "QA box B",
+              "nifti_label": 300,
+              "foreground_voxels": 864,
+              "differing_voxels": 0
+            },
+            {
+              "name": "QA asymmetric C",
+              "nifti_label": 1024,
+              "foreground_voxels": 480,
+              "differing_voxels": 0
+            }
+          ],
+          "referenced_source_instances": 47
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "pet_static_rider-installed-binary-seg-windowed.png",
+          "sha256": "085f266364e6f0a370c3bcbd9d15554264c5ed3e21ee5c81d6fbf62f8969b434"
+        },
+        {
+          "file": "pet_static_rider-installed-binary-seg.png",
+          "sha256": "c35553e92272287eca650ca38165e956aa0752a29a00a53cab9e76522b2a7152"
+        },
+        {
+          "file": "pet_static_rider-installed-multilabel-seg-windowed.png",
+          "sha256": "ed12c30e83c41eb20f39b4a34e0236d1c2adf2bb5c951fff5fde70d7f628ebca"
+        },
+        {
+          "file": "pet_static_rider-installed-multilabel-seg.png",
+          "sha256": "9aeed2c390c0bfbd27e3e06751eb59f4d92217ac028c9dfbcc6f6e50162ccf9b"
+        },
+        {
+          "file": "pet_static_rider-installed-pet-windowed.png",
+          "sha256": "e47cfb549b1c3b687f3465bf003446fa7ae60cd5f4d07ea4a70dd8c31896f773"
+        },
+        {
+          "file": "pet_static_rider-installed-pet.png",
+          "sha256": "2654f78548e48fca7ce147fc376bbbce3ad6a348f703eece124c16c6c27bbbf7"
+        }
+      ]
+    },
+    {
+      "run": "pet_dynamic_rider-installed",
+      "case": "pet_dynamic_rider",
+      "status": "passed",
+      "mode": "default",
+      "representation": "sequence",
+      "slicer_version": "5.12.0",
+      "revision": "a5df714",
+      "raw_report": "/private/tmp/nifti2dicom-slicer-fix.nilYDL/pet_dynamic_rider-installed-acceptance.json",
+      "raw_report_sha256": "483260ce896791bde23b99b4a5369dcf06fe048abfa160fb377c0658444b0731",
+      "script_sha256": "1778e891c31cc8545088d25caa2fec39bbe5d57e1d7f585451635fdd54c2c2d0",
+      "timepoints": 32,
+      "voxels_checked": 24641536,
+      "maximum_serialized_value_error_BQML": 0.0,
+      "maximum_original_value_error_BQML": 27.43764644768089,
+      "maximum_world_error_mm": 9.536699678847076e-07,
+      "precision_bound_violations": 0,
+      "timepoints_evidence": [
+        {
+          "timepoint": 0,
+          "frame_reference_time_ms": 0.0,
+          "actual_frame_duration_ms": 60000.0,
+          "dtype": "uint16",
+          "loaded_voxel_sha256": "ebdeb9b43ed997df2229290cd30829639663f9104895464a4fcf3617780ffec0",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 1,
+          "frame_reference_time_ms": 60000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "uint16",
+          "loaded_voxel_sha256": "ebdeb9b43ed997df2229290cd30829639663f9104895464a4fcf3617780ffec0",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 2,
+          "frame_reference_time_ms": 62000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "4627a3c140c95de4428c28801ce445e4179e344f5ca7a4d7aa8f4ef0fe5e215a",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 3,
+          "frame_reference_time_ms": 64000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "fb3826ededfc83eb5e38888eaa4879be6cc399a50550521aa811a81b771add3d",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 4,
+          "frame_reference_time_ms": 66000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "fd07dfd94d9bbb28c936b008b7ccd74706108a16cbd6b008e4dcacbca6debec3",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 5,
+          "frame_reference_time_ms": 68000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "a70e860ccf965fdc2ccd8bf41c174d318b899af41770f682226943c7e3b2b8ee",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 6,
+          "frame_reference_time_ms": 70000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "5f6b2dab18b0a5152631627b5634bf79fd41690e53edf536449eebf2ba7fe358",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 7,
+          "frame_reference_time_ms": 72000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "ac1b823e4b54cdb0fb8a326779a79728b3f74cd77c0a34d818802604eb297dd8",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 8,
+          "frame_reference_time_ms": 74000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "d24679ffa1135bed61277573e271523d87d6bb9090ab397d924535c7a31858e6",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 9,
+          "frame_reference_time_ms": 76000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "5ccf338d1c643ceaaeab31c5655a61d1c0178bb504486c59240027c9ef3eb519",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 10,
+          "frame_reference_time_ms": 78000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "900cdca4c8df95059fabcab3c3b76016a93adc088d3b1b9c815a6e5ff4c21a7f",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 11,
+          "frame_reference_time_ms": 80000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "c87cde0a1b7424949a90a00afd78df1337e92a7e704f231a5040bf23baa2ce1e",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 12,
+          "frame_reference_time_ms": 82000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "fc4735728c0acb8dae8dac3f4aa9040b8028ac003b18a2ec916ab614e7022cc1",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 13,
+          "frame_reference_time_ms": 84000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "64305dbc2335afbb9ab368ac8eea8bf847809810c1d7274b31a66fa0b09ed1ff",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 14,
+          "frame_reference_time_ms": 86000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "92937a9044a96a1e70026d1c2a6c2cb1fa0a5825b5bb374b55a61873a0a31f0f",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 15,
+          "frame_reference_time_ms": 88000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "05256049e79484a3afb9adf56d9252e01663d01acbbd33953a508960e9e58bb2",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 16,
+          "frame_reference_time_ms": 90000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "a3b878774af8ab155266cf981ded5163204550f93e2f946ceb3dbdf4d1911387",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 17,
+          "frame_reference_time_ms": 95000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "e15048a5c30bfcc95881ca72a51f1ad002c2f23851953e2bfd3001390998e72e",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 18,
+          "frame_reference_time_ms": 100000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "657d930687dcba0d3318378c8642309ded6e66dc7e12a4d098ef33bea78621dc",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 19,
+          "frame_reference_time_ms": 105000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "99a06543e063961cda09bc76fbe5cf431d13b8abaed95a067a12d43236141971",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 20,
+          "frame_reference_time_ms": 110000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "90fb2d58bb7c9beb895aa25317d565080b2bcac5093d83cd5ae67965c88d7d54",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 21,
+          "frame_reference_time_ms": 115000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "640d4aff612611d0624aaf75299bd8ab9809edc1118d8785a94623f9ecb8b4e9",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 22,
+          "frame_reference_time_ms": 120000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "65101ce704a24ffd38b4abbc41b13eccd6f0556dc3f99d422e6da7dd78604afb",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 23,
+          "frame_reference_time_ms": 130000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "da4b1478360ab54040d559d8c76102ffbe65e9dc1fda185c062e0316dd741817",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 24,
+          "frame_reference_time_ms": 140000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "4f954bcf5c4e6b1859f8a66fe1b8a606978638041b116c4943d785ef7bfe8d34",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 25,
+          "frame_reference_time_ms": 150000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "b596bef2ffd8a6b74e622041d5589417205b1805394379b6b3a3509fb233f886",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 26,
+          "frame_reference_time_ms": 160000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "31c909ef1fc14eac127efffd114bf9b9dd8141325ef9f03bad2e38c26ad7933b",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 27,
+          "frame_reference_time_ms": 170000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "27338b57d0290fe7dba67d6cace980ebf5153ed917b974182a0e63abc3766b6a",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 28,
+          "frame_reference_time_ms": 180000.0,
+          "actual_frame_duration_ms": 15000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "fcea8c9e69cd90d3c45ededafec6ea8955d2fdc728fbf4ab3107613c2d8ef910",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 29,
+          "frame_reference_time_ms": 195000.0,
+          "actual_frame_duration_ms": 15000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "c04eb9469ca7cdf5c63923b0bb127a7d1e465a27a572f70265f9b3b34bf02a62",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 30,
+          "frame_reference_time_ms": 210000.0,
+          "actual_frame_duration_ms": 15000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "6f315f7441638dac983963ccec336bf6004754c6c9b27d6d6b2ecb20285a25aa",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 31,
+          "frame_reference_time_ms": 225000.0,
+          "actual_frame_duration_ms": 15000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "af779f54d9ac2097c94c5c5aac317e8c07905e1600c78267bbdc54bfa7ed406a",
+          "source_instance_count": 47
+        }
+      ],
+      "selected_loadables": [
+        {
+          "plugin": "Nifti2DicomPETPlugin",
+          "name": "NIfTI conversion: 32 frames Volume Sequence",
+          "confidence": 1.0,
+          "selected": true,
+          "warning": "",
+          "files": 1504
+        }
+      ],
+      "segmentations": [],
+      "browser_indices_checked": 32,
+      "browser_oracle": "immutable pre-navigation pixel checksum, affine copy and source UID string",
+      "index_name": "FrameReferenceTime",
+      "index_unit": "ms",
+      "index_values": [
+        "0",
+        "60000",
+        "62000",
+        "64000",
+        "66000",
+        "68000",
+        "70000",
+        "72000",
+        "74000",
+        "76000",
+        "78000",
+        "80000",
+        "82000",
+        "84000",
+        "86000",
+        "88000",
+        "90000",
+        "95000",
+        "100000",
+        "105000",
+        "110000",
+        "115000",
+        "120000",
+        "130000",
+        "140000",
+        "150000",
+        "160000",
+        "170000",
+        "180000",
+        "195000",
+        "210000",
+        "225000"
+      ],
+      "original_display_checks": [
+        {
+          "window": 0.0,
+          "level": 0.0,
+          "automatic": true
+        },
+        {
+          "window": 226644.6301218535,
+          "level": 113322.31506092675,
+          "automatic": true
+        },
+        {
+          "window": 106147.71156502943,
+          "level": 53073.855782514715,
+          "automatic": true
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "pet_dynamic_rider-installed-frame-00-windowed.png",
+          "sha256": "f0b34074865b263b9db5d1cd7743f49b99523134e7d0e05a46171e7981638529"
+        },
+        {
+          "file": "pet_dynamic_rider-installed-frame-00.png",
+          "sha256": "f0b34074865b263b9db5d1cd7743f49b99523134e7d0e05a46171e7981638529"
+        },
+        {
+          "file": "pet_dynamic_rider-installed-frame-16-windowed.png",
+          "sha256": "77476df71ce2515bb14ba50a65d86dc28a992ae224c4e5f7293a4e649708e157"
+        },
+        {
+          "file": "pet_dynamic_rider-installed-frame-16.png",
+          "sha256": "03170a9bc3a2828ec0509c83a8a938a059738a019003f1995f6c213f9529aea3"
+        },
+        {
+          "file": "pet_dynamic_rider-installed-frame-31-windowed.png",
+          "sha256": "291b8458688fddd016228bc86b8a783595d42a3919b3423f3151a194c0feb4d7"
+        },
+        {
+          "file": "pet_dynamic_rider-installed-frame-31.png",
+          "sha256": "971d604d2d4c1908977fa523d75910b991921b7de5733fa08c9b594e5d48305b"
+        }
+      ]
+    },
+    {
+      "run": "pet_dynamic_flt-installed",
+      "case": "pet_dynamic_flt",
+      "status": "passed",
+      "mode": "default",
+      "representation": "sequence",
+      "slicer_version": "5.12.0",
+      "revision": "a5df714",
+      "raw_report": "/private/tmp/nifti2dicom-slicer-fix.nilYDL/pet_dynamic_flt-installed-acceptance.json",
+      "raw_report_sha256": "837cd47bc8fa2b84a863a6293e50d4989452445021297bf404a4ba3100067cf1",
+      "script_sha256": "1778e891c31cc8545088d25caa2fec39bbe5d57e1d7f585451635fdd54c2c2d0",
+      "timepoints": 45,
+      "voxels_checked": 25804800,
+      "maximum_serialized_value_error_BQML": 0.0,
+      "maximum_original_value_error_BQML": 7.42566141509451,
+      "maximum_world_error_mm": 4.0194366942304644e-14,
+      "precision_bound_violations": 0,
+      "timepoints_evidence": [
+        {
+          "timepoint": 0,
+          "frame_reference_time_ms": 0.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "9b8b6802eb8e3daab20c49e7a128775cbb2b570d95ef222fe3a6da354ac4566c",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 1,
+          "frame_reference_time_ms": 5000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "69416ba9063f82fce8bb776030538e60816969355a440c20460d863d03813a86",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 2,
+          "frame_reference_time_ms": 10000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "5797108bb0d3708643561b4b37d46d26e139973667729dd0d48df6c700389cc3",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 3,
+          "frame_reference_time_ms": 15000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "9fcbaec704800b5a61d5700a64d484591bd75b782b17dc5e9a338187d5315e17",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 4,
+          "frame_reference_time_ms": 20000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "a3b26fa51918c4e9ecea56f58808b294b83e5bd135b3e8eb80ffc4079f7d1e34",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 5,
+          "frame_reference_time_ms": 25000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "5e422f93fb3a1b458b58d3d1fb3d02600a642ccf1eeb931e114dd8d9950d6ee0",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 6,
+          "frame_reference_time_ms": 30000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "138ab50c3e1173c3e7b3f962bcd5abd2d432fdb091199443e856db744a5aaf0a",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 7,
+          "frame_reference_time_ms": 35000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "038296bd1cad1bccc7dfff6a6f2dd52a76cc5e10d7e0705c10a1000a0cf10d45",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 8,
+          "frame_reference_time_ms": 40000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "227885c0a67dcf2ac8c4af4893cadb6c0b78b112805321834e6e42ecde53eed6",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 9,
+          "frame_reference_time_ms": 45000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "82436ef363b2153a98a713efe09572460903068858772d913b82940432eb5668",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 10,
+          "frame_reference_time_ms": 50000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "925a45e8d1dd556f0a0a57904eacd55b48ca8742086677d1308f5a59357f1216",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 11,
+          "frame_reference_time_ms": 55000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "c39744bb751b98b9466051544c9e60ab94eeabcee8ea03ae06fc20865e5ab9a5",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 12,
+          "frame_reference_time_ms": 60000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "f0e84723a1517382c75dfe9232bc293f6787a94d416f07eb03337603f3068d88",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 13,
+          "frame_reference_time_ms": 65000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "8ff452d76d842740184bf642a18bfc9d071d3db73688470a5b632bd1a284faf6",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 14,
+          "frame_reference_time_ms": 70000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "880aadf6695712abd8512016cf8f117f347ed560ff199df238b6ad628289d3d9",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 15,
+          "frame_reference_time_ms": 75000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "1d6ca2677448ac33732d59c7f2d9b3c3beb57ea215ef988f8ed36858b20d098d",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 16,
+          "frame_reference_time_ms": 80000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "e1a5802f158169d6c5b388b63d89546cb7ec044210308688ef731e1db2c0c676",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 17,
+          "frame_reference_time_ms": 90000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "894e53e60e8cb77abad983e1ac974c0f6d08267432e4af4fcd898c7ebba440b4",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 18,
+          "frame_reference_time_ms": 100000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "9c4ce39d2227b2c485b9309134562c794e83b4114d5da3896fefc9a95187377a",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 19,
+          "frame_reference_time_ms": 110000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "7c84d70cc982e763379d276b404523c6d4ee32023987fcad49e3b393b33cdf62",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 20,
+          "frame_reference_time_ms": 120000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "838f1b8e4b72e03f5a8d7e12cb4b90c5e4d26f6f04deb4439cf58392a4302208",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 21,
+          "frame_reference_time_ms": 130000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "8c0f2031806e8b702ed2aa159c5d7427386a227496eb00c99ad12724f4ff83c7",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 22,
+          "frame_reference_time_ms": 140000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "179ad3d3ad251e63727f2e081cc0c723ea9aac9a16932ec09b648eb44bda45c0",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 23,
+          "frame_reference_time_ms": 150000.0,
+          "actual_frame_duration_ms": 30000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "39e1302be49302d16f0dc0ee4b1031eaffec4ed472d5db4d073b2a482b2525b8",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 24,
+          "frame_reference_time_ms": 180000.0,
+          "actual_frame_duration_ms": 30000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "fd5783461da7946d27ce42b83f203d8d08f97334395e99e72ea0f4b39fd5f9d3",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 25,
+          "frame_reference_time_ms": 210000.0,
+          "actual_frame_duration_ms": 30000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "99ca60bc11bb71da5aa57a44d452e05ea2c5bb780f20a4ef25e32ee75a4ec9f5",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 26,
+          "frame_reference_time_ms": 240000.0,
+          "actual_frame_duration_ms": 30000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "a4ac40eade2dd508aeef75018a75bc88afccf77e5714efb57b37b8971ce14b34",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 27,
+          "frame_reference_time_ms": 270000.0,
+          "actual_frame_duration_ms": 30000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "33357ee30994da0a72d3024de368555c1cce93b10af326824751cdf25ef838f7",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 28,
+          "frame_reference_time_ms": 300000.0,
+          "actual_frame_duration_ms": 60000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "49051977054094d0c3369d87761e9559067c30a3b5e0fdf351f6c55aca9b9ebd",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 29,
+          "frame_reference_time_ms": 360000.0,
+          "actual_frame_duration_ms": 60000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "743ad8096c9d7f2e284d341fc1cf2d4269b95a11a58f8a31a9df144f21cccbfb",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 30,
+          "frame_reference_time_ms": 420000.0,
+          "actual_frame_duration_ms": 60000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "19d1bfa411e58515bb826abc7e73a903fa48e970eab1433ee6370bd8d81c526f",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 31,
+          "frame_reference_time_ms": 480000.0,
+          "actual_frame_duration_ms": 60000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "4ea2cd3ce2908c2c30f871e86ba2f95c31b2648241343007b8e98a583911ebc1",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 32,
+          "frame_reference_time_ms": 540000.0,
+          "actual_frame_duration_ms": 60000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "006b945d5db7be2a3f5de9bc8c32428f4d4f736cf26996fc65084813da67a95b",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 33,
+          "frame_reference_time_ms": 600000.0,
+          "actual_frame_duration_ms": 180000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "7452977e0c0f4adb256b9795fae147e2609aeb526508be65bf6638020b0946c7",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 34,
+          "frame_reference_time_ms": 780000.0,
+          "actual_frame_duration_ms": 180000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "9aec34a0960735f0a2ca65e299c062ad224649c53e947ca96908af6487644dc2",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 35,
+          "frame_reference_time_ms": 960000.0,
+          "actual_frame_duration_ms": 180000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "8fdbb06eeddae50648e806537b9ab4758ebeb46a52d6f555d36a6af8a3ee5b2a",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 36,
+          "frame_reference_time_ms": 1140000.0,
+          "actual_frame_duration_ms": 180000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "3ab8bef868f50562b1d601f7b64509cb47440d2510dfb9f4fb233164a8a6e961",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 37,
+          "frame_reference_time_ms": 1320000.0,
+          "actual_frame_duration_ms": 180000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "3168e87b8a6cfb500292c712a1e8db0db15162c1596f2902db88cd7ff2ed5fc1",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 38,
+          "frame_reference_time_ms": 1500000.0,
+          "actual_frame_duration_ms": 300000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "579fec401c0018032a87a52b529510593554eedc043db77d1abe7797582d4490",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 39,
+          "frame_reference_time_ms": 1800000.0,
+          "actual_frame_duration_ms": 300000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "b4038ca2b2e95a7e7c641b04e69bc59dbde5a4f3db58f9a46f492fc97cb6e011",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 40,
+          "frame_reference_time_ms": 2100000.0,
+          "actual_frame_duration_ms": 300000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "021641e223bb4251872d345ff65d4e8a907b66d87ca20b0cfa6a3c8ed0216866",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 41,
+          "frame_reference_time_ms": 2400000.0,
+          "actual_frame_duration_ms": 300000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "fbae6f1d606b7f0ce771a92e53fbdb94c2c855d7b73b462c1f58d55d26659e0d",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 42,
+          "frame_reference_time_ms": 2700000.0,
+          "actual_frame_duration_ms": 300000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "b06a3e0e79223e91bfefdcdb4d9966c3a94ae7e8770019961963607b4e1f5abb",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 43,
+          "frame_reference_time_ms": 3000000.0,
+          "actual_frame_duration_ms": 300000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "902b265ddf417fafba5e70d9349ecd43773fdd1fe69e8af2bdc08dd2d05074be",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 44,
+          "frame_reference_time_ms": 3300000.0,
+          "actual_frame_duration_ms": 300000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "2b8bcb40eac886f1f963fb052e82de53c04ac2f37450da385d17305b9c49f5be",
+          "source_instance_count": 35
+        }
+      ],
+      "selected_loadables": [
+        {
+          "plugin": "Nifti2DicomPETPlugin",
+          "name": "NIfTI conversion: 45 frames Volume Sequence",
+          "confidence": 1.0,
+          "selected": true,
+          "warning": "",
+          "files": 1575
+        }
+      ],
+      "segmentations": [],
+      "browser_indices_checked": 45,
+      "browser_oracle": "immutable pre-navigation pixel checksum, affine copy and source UID string",
+      "index_name": "FrameReferenceTime",
+      "index_unit": "ms",
+      "index_values": [
+        "0",
+        "5000",
+        "10000",
+        "15000",
+        "20000",
+        "25000",
+        "30000",
+        "35000",
+        "40000",
+        "45000",
+        "50000",
+        "55000",
+        "60000",
+        "65000",
+        "70000",
+        "75000",
+        "80000",
+        "90000",
+        "100000",
+        "110000",
+        "120000",
+        "130000",
+        "140000",
+        "150000",
+        "180000",
+        "210000",
+        "240000",
+        "270000",
+        "300000",
+        "360000",
+        "420000",
+        "480000",
+        "540000",
+        "600000",
+        "780000",
+        "960000",
+        "1140000",
+        "1320000",
+        "1500000",
+        "1800000",
+        "2100000",
+        "2400000",
+        "2700000",
+        "3000000",
+        "3300000"
+      ],
+      "original_display_checks": [
+        {
+          "window": 738.6810465278447,
+          "level": 369.34052326392236,
+          "automatic": true
+        },
+        {
+          "window": 8240.114070000454,
+          "level": 4120.057035000227,
+          "automatic": true
+        },
+        {
+          "window": 11100.842976909109,
+          "level": 5550.4214884545545,
+          "automatic": true
+        }
+      ],
+      "screenshots": [
+        {
+          "file": "pet_dynamic_flt-installed-frame-00-windowed.png",
+          "sha256": "c69a52e164b8225d8466dee0f102c44f43565a51b5e2951b22c9a4b2f3c6cd63"
+        },
+        {
+          "file": "pet_dynamic_flt-installed-frame-00.png",
+          "sha256": "df1704fbbcc69c08162f587e918d2615e650e8a863622c0085b5525655a6fe67"
+        },
+        {
+          "file": "pet_dynamic_flt-installed-frame-22-windowed.png",
+          "sha256": "95e6171a2f0947b473b56fd40379487a90f0095e5cafd091542feb52210ee32d"
+        },
+        {
+          "file": "pet_dynamic_flt-installed-frame-22.png",
+          "sha256": "018ee934a2a00221865ceefb6395fba115edcc3fe41bf44e7294e567dd6057e2"
+        },
+        {
+          "file": "pet_dynamic_flt-installed-frame-44-windowed.png",
+          "sha256": "eb78002810935322a398df9ae6b1c95c510706846d7169a2033d6ed2fd5af8cf"
+        },
+        {
+          "file": "pet_dynamic_flt-installed-frame-44.png",
+          "sha256": "bf5126b42402f5ea5753adcdc33b74334339795cfbd7de4549952bd9216e6251"
+        }
+      ]
+    },
+    {
+      "run": "pet_dynamic_rider-multivolume-installed",
+      "case": "pet_dynamic_rider",
+      "status": "passed",
+      "mode": "default",
+      "representation": "multivolume",
+      "slicer_version": "5.12.0",
+      "revision": "a5df714",
+      "raw_report": "/private/tmp/nifti2dicom-slicer-fix.nilYDL/pet_dynamic_rider-multivolume-installed-acceptance.json",
+      "raw_report_sha256": "5b9c3cd044bd5b68efc6908235ce4f34af8e784396dbe52938c4ea41324064a9",
+      "script_sha256": "1778e891c31cc8545088d25caa2fec39bbe5d57e1d7f585451635fdd54c2c2d0",
+      "timepoints": 32,
+      "voxels_checked": 24641536,
+      "maximum_serialized_value_error_BQML": 0.0,
+      "maximum_original_value_error_BQML": 27.43764644768089,
+      "maximum_world_error_mm": 9.536699678847076e-07,
+      "precision_bound_violations": 0,
+      "timepoints_evidence": [
+        {
+          "timepoint": 0,
+          "frame_reference_time_ms": 0.0,
+          "actual_frame_duration_ms": 60000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "82882ed97417f554dc773e143720daf3e5e934ed44626983e64543247c0a37e0",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 1,
+          "frame_reference_time_ms": 60000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "82882ed97417f554dc773e143720daf3e5e934ed44626983e64543247c0a37e0",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 2,
+          "frame_reference_time_ms": 62000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "4627a3c140c95de4428c28801ce445e4179e344f5ca7a4d7aa8f4ef0fe5e215a",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 3,
+          "frame_reference_time_ms": 64000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "fb3826ededfc83eb5e38888eaa4879be6cc399a50550521aa811a81b771add3d",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 4,
+          "frame_reference_time_ms": 66000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "fd07dfd94d9bbb28c936b008b7ccd74706108a16cbd6b008e4dcacbca6debec3",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 5,
+          "frame_reference_time_ms": 68000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "a70e860ccf965fdc2ccd8bf41c174d318b899af41770f682226943c7e3b2b8ee",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 6,
+          "frame_reference_time_ms": 70000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "5f6b2dab18b0a5152631627b5634bf79fd41690e53edf536449eebf2ba7fe358",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 7,
+          "frame_reference_time_ms": 72000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "ac1b823e4b54cdb0fb8a326779a79728b3f74cd77c0a34d818802604eb297dd8",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 8,
+          "frame_reference_time_ms": 74000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "d24679ffa1135bed61277573e271523d87d6bb9090ab397d924535c7a31858e6",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 9,
+          "frame_reference_time_ms": 76000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "5ccf338d1c643ceaaeab31c5655a61d1c0178bb504486c59240027c9ef3eb519",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 10,
+          "frame_reference_time_ms": 78000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "900cdca4c8df95059fabcab3c3b76016a93adc088d3b1b9c815a6e5ff4c21a7f",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 11,
+          "frame_reference_time_ms": 80000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "c87cde0a1b7424949a90a00afd78df1337e92a7e704f231a5040bf23baa2ce1e",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 12,
+          "frame_reference_time_ms": 82000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "fc4735728c0acb8dae8dac3f4aa9040b8028ac003b18a2ec916ab614e7022cc1",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 13,
+          "frame_reference_time_ms": 84000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "64305dbc2335afbb9ab368ac8eea8bf847809810c1d7274b31a66fa0b09ed1ff",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 14,
+          "frame_reference_time_ms": 86000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "92937a9044a96a1e70026d1c2a6c2cb1fa0a5825b5bb374b55a61873a0a31f0f",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 15,
+          "frame_reference_time_ms": 88000.0,
+          "actual_frame_duration_ms": 2000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "05256049e79484a3afb9adf56d9252e01663d01acbbd33953a508960e9e58bb2",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 16,
+          "frame_reference_time_ms": 90000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "a3b878774af8ab155266cf981ded5163204550f93e2f946ceb3dbdf4d1911387",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 17,
+          "frame_reference_time_ms": 95000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "e15048a5c30bfcc95881ca72a51f1ad002c2f23851953e2bfd3001390998e72e",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 18,
+          "frame_reference_time_ms": 100000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "657d930687dcba0d3318378c8642309ded6e66dc7e12a4d098ef33bea78621dc",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 19,
+          "frame_reference_time_ms": 105000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "99a06543e063961cda09bc76fbe5cf431d13b8abaed95a067a12d43236141971",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 20,
+          "frame_reference_time_ms": 110000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "90fb2d58bb7c9beb895aa25317d565080b2bcac5093d83cd5ae67965c88d7d54",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 21,
+          "frame_reference_time_ms": 115000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "640d4aff612611d0624aaf75299bd8ab9809edc1118d8785a94623f9ecb8b4e9",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 22,
+          "frame_reference_time_ms": 120000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "65101ce704a24ffd38b4abbc41b13eccd6f0556dc3f99d422e6da7dd78604afb",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 23,
+          "frame_reference_time_ms": 130000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "da4b1478360ab54040d559d8c76102ffbe65e9dc1fda185c062e0316dd741817",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 24,
+          "frame_reference_time_ms": 140000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "4f954bcf5c4e6b1859f8a66fe1b8a606978638041b116c4943d785ef7bfe8d34",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 25,
+          "frame_reference_time_ms": 150000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "b596bef2ffd8a6b74e622041d5589417205b1805394379b6b3a3509fb233f886",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 26,
+          "frame_reference_time_ms": 160000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "31c909ef1fc14eac127efffd114bf9b9dd8141325ef9f03bad2e38c26ad7933b",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 27,
+          "frame_reference_time_ms": 170000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "27338b57d0290fe7dba67d6cace980ebf5153ed917b974182a0e63abc3766b6a",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 28,
+          "frame_reference_time_ms": 180000.0,
+          "actual_frame_duration_ms": 15000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "fcea8c9e69cd90d3c45ededafec6ea8955d2fdc728fbf4ab3107613c2d8ef910",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 29,
+          "frame_reference_time_ms": 195000.0,
+          "actual_frame_duration_ms": 15000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "c04eb9469ca7cdf5c63923b0bb127a7d1e465a27a572f70265f9b3b34bf02a62",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 30,
+          "frame_reference_time_ms": 210000.0,
+          "actual_frame_duration_ms": 15000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "6f315f7441638dac983963ccec336bf6004754c6c9b27d6d6b2ecb20285a25aa",
+          "source_instance_count": 47
+        },
+        {
+          "timepoint": 31,
+          "frame_reference_time_ms": 225000.0,
+          "actual_frame_duration_ms": 15000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "af779f54d9ac2097c94c5c5aac317e8c07905e1600c78267bbdc54bfa7ed406a",
+          "source_instance_count": 47
+        }
+      ],
+      "selected_loadables": [
+        {
+          "plugin": "Nifti2DicomPETPlugin",
+          "name": "NIfTI conversion: 32 frames MultiVolume",
+          "confidence": 1.0,
+          "selected": true,
+          "warning": "",
+          "files": 1504
+        }
+      ],
+      "segmentations": [],
+      "display_indices_checked": 32,
+      "storage_dtype": "float64",
+      "screenshots": [
+        {
+          "file": "pet_dynamic_rider-multivolume-installed-frame-00-windowed.png",
+          "sha256": "7e6c4a55a6b3c77f75e5805ece83090526a223ad8e1e88523a64c49256882a42"
+        },
+        {
+          "file": "pet_dynamic_rider-multivolume-installed-frame-00.png",
+          "sha256": "7e6c4a55a6b3c77f75e5805ece83090526a223ad8e1e88523a64c49256882a42"
+        },
+        {
+          "file": "pet_dynamic_rider-multivolume-installed-frame-16-windowed.png",
+          "sha256": "cf4e50a9ce9ee8d6517c68c73a754627253ffcc7511e08acff6cd17ad8823065"
+        },
+        {
+          "file": "pet_dynamic_rider-multivolume-installed-frame-16.png",
+          "sha256": "4826a1ee726b503a2ec35a258e3dde2cb34b8927eb9e542560847432f7f49cfc"
+        },
+        {
+          "file": "pet_dynamic_rider-multivolume-installed-frame-31-windowed.png",
+          "sha256": "d21a619957d27abbaf976fd9d85377ff95ab8464865bb5d1cec1128399ddadd1"
+        },
+        {
+          "file": "pet_dynamic_rider-multivolume-installed-frame-31.png",
+          "sha256": "0da196fd8e11ed74ba8bf276653798711b2d45af471317fa51a969ac14a05680"
+        }
+      ]
+    },
+    {
+      "run": "pet_dynamic_flt-multivolume-installed",
+      "case": "pet_dynamic_flt",
+      "status": "passed",
+      "mode": "default",
+      "representation": "multivolume",
+      "slicer_version": "5.12.0",
+      "revision": "a5df714",
+      "raw_report": "/private/tmp/nifti2dicom-slicer-fix.nilYDL/pet_dynamic_flt-multivolume-installed-acceptance.json",
+      "raw_report_sha256": "2e14617458767b1e6567a5909f1c20c86cb626a75e9df41151e0f30accc6737e",
+      "script_sha256": "1778e891c31cc8545088d25caa2fec39bbe5d57e1d7f585451635fdd54c2c2d0",
+      "timepoints": 45,
+      "voxels_checked": 25804800,
+      "maximum_serialized_value_error_BQML": 0.0,
+      "maximum_original_value_error_BQML": 7.42566141509451,
+      "maximum_world_error_mm": 4.0194366942304644e-14,
+      "precision_bound_violations": 0,
+      "timepoints_evidence": [
+        {
+          "timepoint": 0,
+          "frame_reference_time_ms": 0.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "9b8b6802eb8e3daab20c49e7a128775cbb2b570d95ef222fe3a6da354ac4566c",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 1,
+          "frame_reference_time_ms": 5000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "69416ba9063f82fce8bb776030538e60816969355a440c20460d863d03813a86",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 2,
+          "frame_reference_time_ms": 10000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "5797108bb0d3708643561b4b37d46d26e139973667729dd0d48df6c700389cc3",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 3,
+          "frame_reference_time_ms": 15000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "9fcbaec704800b5a61d5700a64d484591bd75b782b17dc5e9a338187d5315e17",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 4,
+          "frame_reference_time_ms": 20000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "a3b26fa51918c4e9ecea56f58808b294b83e5bd135b3e8eb80ffc4079f7d1e34",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 5,
+          "frame_reference_time_ms": 25000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "5e422f93fb3a1b458b58d3d1fb3d02600a642ccf1eeb931e114dd8d9950d6ee0",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 6,
+          "frame_reference_time_ms": 30000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "138ab50c3e1173c3e7b3f962bcd5abd2d432fdb091199443e856db744a5aaf0a",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 7,
+          "frame_reference_time_ms": 35000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "038296bd1cad1bccc7dfff6a6f2dd52a76cc5e10d7e0705c10a1000a0cf10d45",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 8,
+          "frame_reference_time_ms": 40000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "227885c0a67dcf2ac8c4af4893cadb6c0b78b112805321834e6e42ecde53eed6",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 9,
+          "frame_reference_time_ms": 45000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "82436ef363b2153a98a713efe09572460903068858772d913b82940432eb5668",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 10,
+          "frame_reference_time_ms": 50000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "925a45e8d1dd556f0a0a57904eacd55b48ca8742086677d1308f5a59357f1216",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 11,
+          "frame_reference_time_ms": 55000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "c39744bb751b98b9466051544c9e60ab94eeabcee8ea03ae06fc20865e5ab9a5",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 12,
+          "frame_reference_time_ms": 60000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "f0e84723a1517382c75dfe9232bc293f6787a94d416f07eb03337603f3068d88",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 13,
+          "frame_reference_time_ms": 65000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "8ff452d76d842740184bf642a18bfc9d071d3db73688470a5b632bd1a284faf6",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 14,
+          "frame_reference_time_ms": 70000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "880aadf6695712abd8512016cf8f117f347ed560ff199df238b6ad628289d3d9",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 15,
+          "frame_reference_time_ms": 75000.0,
+          "actual_frame_duration_ms": 5000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "1d6ca2677448ac33732d59c7f2d9b3c3beb57ea215ef988f8ed36858b20d098d",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 16,
+          "frame_reference_time_ms": 80000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "e1a5802f158169d6c5b388b63d89546cb7ec044210308688ef731e1db2c0c676",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 17,
+          "frame_reference_time_ms": 90000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "894e53e60e8cb77abad983e1ac974c0f6d08267432e4af4fcd898c7ebba440b4",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 18,
+          "frame_reference_time_ms": 100000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "9c4ce39d2227b2c485b9309134562c794e83b4114d5da3896fefc9a95187377a",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 19,
+          "frame_reference_time_ms": 110000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "7c84d70cc982e763379d276b404523c6d4ee32023987fcad49e3b393b33cdf62",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 20,
+          "frame_reference_time_ms": 120000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "838f1b8e4b72e03f5a8d7e12cb4b90c5e4d26f6f04deb4439cf58392a4302208",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 21,
+          "frame_reference_time_ms": 130000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "8c0f2031806e8b702ed2aa159c5d7427386a227496eb00c99ad12724f4ff83c7",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 22,
+          "frame_reference_time_ms": 140000.0,
+          "actual_frame_duration_ms": 10000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "179ad3d3ad251e63727f2e081cc0c723ea9aac9a16932ec09b648eb44bda45c0",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 23,
+          "frame_reference_time_ms": 150000.0,
+          "actual_frame_duration_ms": 30000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "39e1302be49302d16f0dc0ee4b1031eaffec4ed472d5db4d073b2a482b2525b8",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 24,
+          "frame_reference_time_ms": 180000.0,
+          "actual_frame_duration_ms": 30000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "fd5783461da7946d27ce42b83f203d8d08f97334395e99e72ea0f4b39fd5f9d3",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 25,
+          "frame_reference_time_ms": 210000.0,
+          "actual_frame_duration_ms": 30000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "99ca60bc11bb71da5aa57a44d452e05ea2c5bb780f20a4ef25e32ee75a4ec9f5",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 26,
+          "frame_reference_time_ms": 240000.0,
+          "actual_frame_duration_ms": 30000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "a4ac40eade2dd508aeef75018a75bc88afccf77e5714efb57b37b8971ce14b34",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 27,
+          "frame_reference_time_ms": 270000.0,
+          "actual_frame_duration_ms": 30000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "33357ee30994da0a72d3024de368555c1cce93b10af326824751cdf25ef838f7",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 28,
+          "frame_reference_time_ms": 300000.0,
+          "actual_frame_duration_ms": 60000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "49051977054094d0c3369d87761e9559067c30a3b5e0fdf351f6c55aca9b9ebd",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 29,
+          "frame_reference_time_ms": 360000.0,
+          "actual_frame_duration_ms": 60000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "743ad8096c9d7f2e284d341fc1cf2d4269b95a11a58f8a31a9df144f21cccbfb",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 30,
+          "frame_reference_time_ms": 420000.0,
+          "actual_frame_duration_ms": 60000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "19d1bfa411e58515bb826abc7e73a903fa48e970eab1433ee6370bd8d81c526f",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 31,
+          "frame_reference_time_ms": 480000.0,
+          "actual_frame_duration_ms": 60000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "4ea2cd3ce2908c2c30f871e86ba2f95c31b2648241343007b8e98a583911ebc1",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 32,
+          "frame_reference_time_ms": 540000.0,
+          "actual_frame_duration_ms": 60000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "006b945d5db7be2a3f5de9bc8c32428f4d4f736cf26996fc65084813da67a95b",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 33,
+          "frame_reference_time_ms": 600000.0,
+          "actual_frame_duration_ms": 180000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "7452977e0c0f4adb256b9795fae147e2609aeb526508be65bf6638020b0946c7",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 34,
+          "frame_reference_time_ms": 780000.0,
+          "actual_frame_duration_ms": 180000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "9aec34a0960735f0a2ca65e299c062ad224649c53e947ca96908af6487644dc2",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 35,
+          "frame_reference_time_ms": 960000.0,
+          "actual_frame_duration_ms": 180000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "8fdbb06eeddae50648e806537b9ab4758ebeb46a52d6f555d36a6af8a3ee5b2a",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 36,
+          "frame_reference_time_ms": 1140000.0,
+          "actual_frame_duration_ms": 180000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "3ab8bef868f50562b1d601f7b64509cb47440d2510dfb9f4fb233164a8a6e961",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 37,
+          "frame_reference_time_ms": 1320000.0,
+          "actual_frame_duration_ms": 180000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "3168e87b8a6cfb500292c712a1e8db0db15162c1596f2902db88cd7ff2ed5fc1",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 38,
+          "frame_reference_time_ms": 1500000.0,
+          "actual_frame_duration_ms": 300000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "579fec401c0018032a87a52b529510593554eedc043db77d1abe7797582d4490",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 39,
+          "frame_reference_time_ms": 1800000.0,
+          "actual_frame_duration_ms": 300000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "b4038ca2b2e95a7e7c641b04e69bc59dbde5a4f3db58f9a46f492fc97cb6e011",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 40,
+          "frame_reference_time_ms": 2100000.0,
+          "actual_frame_duration_ms": 300000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "021641e223bb4251872d345ff65d4e8a907b66d87ca20b0cfa6a3c8ed0216866",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 41,
+          "frame_reference_time_ms": 2400000.0,
+          "actual_frame_duration_ms": 300000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "fbae6f1d606b7f0ce771a92e53fbdb94c2c855d7b73b462c1f58d55d26659e0d",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 42,
+          "frame_reference_time_ms": 2700000.0,
+          "actual_frame_duration_ms": 300000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "b06a3e0e79223e91bfefdcdb4d9966c3a94ae7e8770019961963607b4e1f5abb",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 43,
+          "frame_reference_time_ms": 3000000.0,
+          "actual_frame_duration_ms": 300000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "902b265ddf417fafba5e70d9349ecd43773fdd1fe69e8af2bdc08dd2d05074be",
+          "source_instance_count": 35
+        },
+        {
+          "timepoint": 44,
+          "frame_reference_time_ms": 3300000.0,
+          "actual_frame_duration_ms": 300000.0,
+          "dtype": "float64",
+          "loaded_voxel_sha256": "2b8bcb40eac886f1f963fb052e82de53c04ac2f37450da385d17305b9c49f5be",
+          "source_instance_count": 35
+        }
+      ],
+      "selected_loadables": [
+        {
+          "plugin": "Nifti2DicomPETPlugin",
+          "name": "NIfTI conversion: 45 frames MultiVolume",
+          "confidence": 1.0,
+          "selected": true,
+          "warning": "",
+          "files": 1575
+        }
+      ],
+      "segmentations": [],
+      "display_indices_checked": 45,
+      "storage_dtype": "float64",
+      "screenshots": [
+        {
+          "file": "pet_dynamic_flt-multivolume-installed-frame-00-windowed.png",
+          "sha256": "2de55e40b6adce4766fb9d7139b853d9d2c616d9a8d9e7e1f0cbbc4fff04c659"
+        },
+        {
+          "file": "pet_dynamic_flt-multivolume-installed-frame-00.png",
+          "sha256": "57181a7dde498a9256db71d1f2afba314493270ecf36b9273273e76ec9fc0584"
+        },
+        {
+          "file": "pet_dynamic_flt-multivolume-installed-frame-22-windowed.png",
+          "sha256": "5320ce21ea55a4cea1a2c720abd82f764b6a262dfdf274d570beb40e22a96a91"
+        },
+        {
+          "file": "pet_dynamic_flt-multivolume-installed-frame-22.png",
+          "sha256": "b9a448a1c69af015a13db99ee6fd2779f560c16e3588cba48ff46f46fb5bb7ce"
+        },
+        {
+          "file": "pet_dynamic_flt-multivolume-installed-frame-44-windowed.png",
+          "sha256": "a86bd9cf96ccda70e10e6f182eab057902cb059e288b8f01efd57e8d62a645e9"
+        },
+        {
+          "file": "pet_dynamic_flt-multivolume-installed-frame-44.png",
+          "sha256": "f60d5d4d7191e9ed3d963da335d1d10d21de408450186f5c4332e7607b836961"
+        }
+      ]
+    }
+  ],
+  "tests": {
+    "package": 730,
+    "pure_parser": 109,
+    "native_slicer": 15,
+    "red_before_fix": "Seven original tests failed in native Slicer; additional geometry, view-state and malformed-header regressions also observed failing before their fixes.",
+    "logs": {
+      "package-tests-final.log": "95ceb4300e91c6aa35fb3c528f10b874b012aaeabda13107431ee03cda390dcb",
+      "parser-tests-final.log": "30b24739ae6a7fac54bd7e2845072af02a8a018510b959720aec8b40bf457a1f",
+      "tests-installed-normal-startup.log": "a61b01329a378f5fce12ed51f887f520ece2033f0c31a26485bbaeabbf276474",
+      "ruff-final.log": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "format-final.log": "dde06e21cf5db6168f920332c9667435d5fd2ab41bccc4a890a89e4e5610926a",
+      "mypy-final.log": "81b8a767756bd649de91d7b0c104614fe1e706bce451b754a92161491825cfde",
+      "build-final.log": "11b4bd47588b82f64dde4361cd443e62855246e1ccc629b8aaae13af2109200c"
+    },
+    "sources": {
+      "tests/check_public.py": "1778e891c31cc8545088d25caa2fec39bbe5d57e1d7f585451635fdd54c2c2d0",
+      "tests/check_slicer.py": "dabd95b2dc193d7719734559412c203d1dcb236ff3fdc750383c2e76cdee6367",
+      "tests/fixtures.py": "917057674a778687ad656c849618ffdb62dc2aa75b785eb27895a66207e8312e",
+      "tests/test_frames.py": "024273f2b1fc3b4bfde7569c89516210847ed54f48c0aa9bda41a6d1a15a3dc9"
+    }
+  },
+  "dcmqi": {
+    "version": "dcmqi repository URL: https://github.com/QIICR/dcmqi revision: a102298 tag: v1.5.4\n\n/Applications/Slicer.app/Contents/lib/Python/lib/python3.12/site-packages/dcmqi/bin/segimage2itkimage  version: 1.0",
+    "executable_sha256": "50e79147e04ee201829d7089375344ced207fb09976b25160bbde97f4bbf2e8b"
+  },
+  "iod_validator_rerun": false,
+  "dciodvfy_rerun": false,
+  "limits": [
+    "Three public GE classic PET series; no universal vendor/viewer/PACS or clinical-readiness claim.",
+    "SEG masks are authored binary/multilabel fixtures, not fresh LION/MOOSE inference in this run.",
+    "The supported integration profile excludes gated/enhanced PET, irregular grids and vendor-private timing recovery.",
+    "In-memory loading; no streaming or out-of-core guarantee."
+  ]
+}

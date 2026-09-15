@@ -1,0 +1,1458 @@
+{
+  "checked_at_utc": "2026-09-15T07:55:36.154869+00:00",
+  "scope": "IDC index and complete per-instance source metadata audit only; no pixel downloads or conversion validation",
+  "idc_version": "v24",
+  "idc_index_version": "0.12.5",
+  "queried_series_count": 16,
+  "retrieved_instance_headers": 6619,
+  "retrieved_metadata_bytes": 64809855,
+  "positive_and_edge_case_image_download_estimate_MB": 608.342814,
+  "checks_not_run": [
+    "pixel decoding or comparison",
+    "NIfTI-to-DICOM conversion",
+    "Slicer/viewer import",
+    "dciodvfy",
+    "DICOM IOD validator"
+  ],
+  "findings": {
+    "pet_philips_dynamic": "45 times x 45 slices; complete native ImageIndex; increasing FrameReferenceTime. Sorting InstanceNumber alone reverses temporal blocks. Source ActualFrameDuration is uniformly 4996 ms despite varying FrameReferenceTime intervals; do not invent durations.",
+    "pet_siemens_dynamic": "45 times x 74 slices; complete native ImageIndex; increasing FrameReferenceTime. Native slice traversal is descending LPS Z (minus 3 mm), unlike the previously tested GE cases. Reader compatibility must be tested; not claimed here.",
+    "mr_qin_breast_dynamic": "25 explicit temporal positions x 20 sagittal slices, identical grid and increasing acquisition times; 69.45 s gap among mostly 17.49 s intervals. Do not encode a fabricated uniform elapsed-time axis.",
+    "ct_respiratory": "Ten classic CT series, 0 through 90 percent respiratory phases, 50 slices each. Coordinate grids match, but there are two FrameOfReferenceUID values. No TemporalPositionIdentifier, TriggerTime or NominalPercentageOfRespiratoryPhase in these headers. Phase percentages come from SeriesDescription plus collection provenance, not a measured time axis. Do not silently merge or rewrite spatial identity.",
+    "ct_dynamic_description_only": "Negative selection example: nine unique positions, each imaged once; DYNAMIC MODE description does not establish 4D acquisition."
+  },
+  "ct_cross_series_evidence": {
+    "phase_count": 10,
+    "slices_per_phase": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "max_sorted_position_difference_mm": 0.0,
+    "frame_of_reference_uids": [
+      "1.3.6.1.4.1.14519.5.2.1.6834.5010.127646172073420881981969917548",
+      "1.3.6.1.4.1.14519.5.2.1.6834.5010.517040973994167485222033549504"
+    ]
+  },
+  "queries": {
+    "pet_non_ge_dynamic": "\n        SELECT i.collection_id, i.PatientID, i.StudyInstanceUID, i.SeriesInstanceUID,\ni.SeriesDescription, i.Manufacturer, i.ManufacturerModelName, i.SOPClassUID,\ni.instanceCount, i.series_size_MB, i.license_short_name, i.source_DOI,\ni.series_aws_url, i.series_revised_idc_version, p.SeriesType, p.Units, p.DecayCorrection,\n               p.NumberOfSlices, p.NumberOfTimeSlices, p.ActualFrameDuration,\n               p.Rows, p.Columns\n        FROM index i JOIN pt_index p USING (SeriesInstanceUID)\n        WHERE i.Manufacturer IN ('SIEMENS', 'Philips Medical Systems')\n          AND p.SeriesType='DYNAMIC/IMAGE' AND p.NumberOfTimeSlices > 1\n          AND p.Units='BQML'\n        ORDER BY i.Manufacturer, i.series_size_MB, i.SeriesInstanceUID\n    ",
+    "pet_non_ge_3d": "\n        SELECT i.collection_id, i.PatientID, i.StudyInstanceUID, i.SeriesInstanceUID,\ni.SeriesDescription, i.Manufacturer, i.ManufacturerModelName, i.SOPClassUID,\ni.instanceCount, i.series_size_MB, i.license_short_name, i.source_DOI,\ni.series_aws_url, i.series_revised_idc_version, p.SeriesType, p.Units, p.DecayCorrection,\n               p.NumberOfSlices, p.NumberOfTimeSlices, p.Rows, p.Columns\n        FROM index i JOIN pt_index p USING (SeriesInstanceUID)\n        WHERE i.Manufacturer IN ('SIEMENS', 'Siemens', 'Philips Medical Systems')\n          AND p.SeriesType IN ('STATIC/IMAGE', 'WHOLE BODY/IMAGE')\n          AND p.Units='BQML' AND i.instanceCount>=40\n          AND i.license_short_name IN ('CC BY 3.0', 'CC BY 4.0')\n        QUALIFY row_number() OVER (PARTITION BY i.Manufacturer ORDER BY i.series_size_MB, i.SeriesInstanceUID)<=3\n        ORDER BY i.Manufacturer, i.series_size_MB\n    ",
+    "mr_dynamic_candidates": "\n        SELECT i.collection_id, i.PatientID, i.StudyInstanceUID, i.SeriesInstanceUID,\ni.SeriesDescription, i.Manufacturer, i.ManufacturerModelName, i.SOPClassUID,\ni.instanceCount, i.series_size_MB, i.license_short_name, i.source_DOI,\ni.series_aws_url, i.series_revised_idc_version, m.NumberOfTemporalPositions, m.EchoTime,\n               m.DiffusionBValue, m.Rows, m.Columns, m.MRAcquisitionType,\n               m.ScanningSequence, m.SequenceName\n        FROM index i JOIN mr_index m USING (SeriesInstanceUID)\n        JOIN collections_index c ON i.collection_id=c.collection_id\n        WHERE m.NumberOfTemporalPositions >= 3 AND m.Rows>=64 AND m.Columns>=64\n          AND i.instanceCount>=m.NumberOfTemporalPositions*10\n          AND i.instanceCount % m.NumberOfTemporalPositions=0\n          AND i.license_short_name IN ('CC BY 3.0', 'CC BY 4.0')\n          AND c.species='Human'\n        ORDER BY i.series_size_MB, i.SeriesInstanceUID LIMIT 18\n    ",
+    "ct_4d_inventory": "\n        SELECT i.collection_id, i.PatientID, i.StudyInstanceUID, count(*) series_count,\n               sum(i.instanceCount) instances, sum(i.series_size_MB) total_mb,\n               list(i.SeriesDescription ORDER BY i.SeriesDescription) descriptions,\n               list(distinct i.license_short_name) licenses\n        FROM index i\n        WHERE i.Modality='CT' AND i.collection_id IN ('4d_lung','ct_vs_pet_ventilation_imaging')\n        GROUP BY ALL ORDER BY total_mb LIMIT 15\n    ",
+    "ct_dynamic_candidates": "\n        SELECT i.collection_id, i.PatientID, i.StudyInstanceUID, i.SeriesInstanceUID,\ni.SeriesDescription, i.Manufacturer, i.ManufacturerModelName, i.SOPClassUID,\ni.instanceCount, i.series_size_MB, i.license_short_name, i.source_DOI,\ni.series_aws_url, i.series_revised_idc_version, c.ImageType, c.ScanOptions, c.Rows, c.Columns\n        FROM index i JOIN ct_index c USING (SeriesInstanceUID)\n        WHERE regexp_matches(lower(coalesce(i.SeriesDescription,'')), 'perfusion|dynamic|4d')\n          AND i.license_short_name IN ('CC BY 3.0', 'CC BY 4.0')\n        ORDER BY i.series_size_MB, i.SeriesInstanceUID LIMIT 25\n    ",
+    "mr_dce": "\n        SELECT i.collection_id, i.PatientID, i.StudyInstanceUID, i.SeriesInstanceUID,\ni.SeriesDescription, i.Manufacturer, i.ManufacturerModelName, i.SOPClassUID,\ni.instanceCount, i.series_size_MB, i.license_short_name, i.source_DOI,\ni.series_aws_url, i.series_revised_idc_version, m.NumberOfTemporalPositions, m.EchoTime, m.DiffusionBValue,\n               m.Rows, m.Columns, m.ScanningSequence, m.MRAcquisitionType\n        FROM index i JOIN mr_index m USING (SeriesInstanceUID)\n        WHERE m.NumberOfTemporalPositions >= 4 AND m.Rows>=64 AND m.Columns>=64\n          AND i.instanceCount>=m.NumberOfTemporalPositions*10\n          AND i.instanceCount % m.NumberOfTemporalPositions=0\n          AND i.license_short_name IN ('CC BY 3.0', 'CC BY 4.0')\n          AND regexp_matches(lower(coalesce(i.SeriesDescription,'')), 'dyn|dce|perf')\n          AND coalesce(array_length(m.DiffusionBValue), 0)=0\n          AND array_length(m.EchoTime)=1\n        QUALIFY row_number() OVER (PARTITION BY i.collection_id ORDER BY i.series_size_MB, i.SeriesInstanceUID)<=2\n        ORDER BY i.series_size_MB, i.SeriesInstanceUID LIMIT 16\n    ",
+    "ct_respiratory": "\n        SELECT i.collection_id, i.PatientID, i.StudyInstanceUID, i.SeriesInstanceUID,\ni.SeriesDescription, i.Manufacturer, i.ManufacturerModelName, i.SOPClassUID,\ni.instanceCount, i.series_size_MB, i.license_short_name, i.source_DOI,\ni.series_aws_url, i.series_revised_idc_version FROM index i\n        WHERE i.StudyInstanceUID='1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675'\n          AND i.Modality='CT' ORDER BY i.SeriesDescription\n    ",
+    "pet_philips_3d_complete": "\n        SELECT i.collection_id, i.PatientID, i.StudyInstanceUID, i.SeriesInstanceUID,\ni.SeriesDescription, i.Manufacturer, i.ManufacturerModelName, i.SOPClassUID,\ni.instanceCount, i.series_size_MB, i.license_short_name, i.source_DOI,\ni.series_aws_url, i.series_revised_idc_version, p.SeriesType, p.Units, p.NumberOfSlices, p.Rows, p.Columns\n        FROM index i JOIN pt_index p USING (SeriesInstanceUID)\n        WHERE i.Manufacturer='Philips Medical Systems'\n          AND p.SeriesType='WHOLE BODY/IMAGE' AND p.Units='BQML'\n          AND i.instanceCount=p.NumberOfSlices AND i.instanceCount>=40\n          AND i.license_short_name IN ('CC BY 3.0', 'CC BY 4.0')\n        ORDER BY i.series_size_MB, i.SeriesInstanceUID LIMIT 3\n    "
+  },
+  "series": [
+    {
+      "alias": "ct_dynamic_description_only",
+      "series": {
+        "collection_id": "tcga_luad",
+        "PatientID": "TCGA-50-6673",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6450.9002.825785084373537235569114192497",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6450.9002.321716591633493226343223701561",
+        "SeriesDescription": "DYNAMIC MODE",
+        "Manufacturer": "GE MEDICAL SYSTEMS",
+        "ManufacturerModelName": "HiSpeed CT/i",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 9,
+        "series_size_MB": 4.764956,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.jgnihep5",
+        "series_aws_url": "s3://idc-open-data/7401d2dc-3e22-43a9-8787-3cac34d84fb4/*",
+        "series_revised_idc_version": 1,
+        "ImageType": [
+          "ORIGINAL",
+          "PRIMARY",
+          "AXIAL"
+        ],
+        "ScanOptions": [
+          "DYNAMIC MODE"
+        ],
+        "Rows": 512,
+        "Columns": 512
+      },
+      "metadata_url": "https://proxy.imaging.datacommons.cancer.gov/current/viewer-only-no-downloads-see-tinyurl-dot-com-slash-3j3d9jyp/dicomWeb/studies/1.3.6.1.4.1.14519.5.2.1.6450.9002.825785084373537235569114192497/series/1.3.6.1.4.1.14519.5.2.1.6450.9002.321716591633493226343223701561/metadata",
+      "metadata_sha256": "f68b2aa48842d407f934905883f946274c77a09f6006823009bf910d6c83c27b",
+      "metadata_bytes": 591732,
+      "instances": 9,
+      "header_evidence": {
+        "unique_positions": 9,
+        "instances_per_position": [
+          1
+        ],
+        "temporal_groups": 1,
+        "slices_per_group": [
+          9
+        ],
+        "maximum_regular_grid_residual_mm": 0.0,
+        "physical_grid_max_difference_across_groups_mm": 0.0,
+        "frame_of_reference_uids": [
+          [
+            "1.3.6.1.4.1.14519.5.2.1.6450.9002.332734137189956702181661220328"
+          ]
+        ],
+        "image_orientation_patient": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "temporal_position_identifiers": [
+          []
+        ],
+        "number_of_temporal_positions": [
+          []
+        ],
+        "actual_frame_durations_ms": [
+          []
+        ]
+      }
+    },
+    {
+      "alias": "ct_respiratory_00",
+      "series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.157761568734965241783981770816",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 0.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.407488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/84c623bf-c979-4ee5-80b3-0fa99842eccf/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.157761568734965241783981770816"
+      },
+      "metadata_url": "https://proxy.imaging.datacommons.cancer.gov/current/viewer-only-no-downloads-see-tinyurl-dot-com-slash-3j3d9jyp/dicomWeb/studies/1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675/series/1.3.6.1.4.1.14519.5.2.1.6834.5010.157761568734965241783981770816/metadata",
+      "metadata_sha256": "1f977f4d8a12839394ada1e2b6b58d75b5007f6d26f593cdb71e0bde20829b99",
+      "metadata_bytes": 541329,
+      "instances": 50,
+      "header_evidence": {
+        "unique_positions": 50,
+        "instances_per_position": [
+          1
+        ],
+        "temporal_groups": 1,
+        "slices_per_group": [
+          50
+        ],
+        "maximum_regular_grid_residual_mm": 1.4210854715202004e-14,
+        "physical_grid_max_difference_across_groups_mm": 0.0,
+        "frame_of_reference_uids": [
+          [
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.517040973994167485222033549504"
+          ]
+        ],
+        "image_orientation_patient": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "temporal_position_identifiers": [
+          []
+        ],
+        "number_of_temporal_positions": [
+          []
+        ],
+        "actual_frame_durations_ms": [
+          []
+        ]
+      }
+    },
+    {
+      "alias": "ct_respiratory_01",
+      "series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.434462771470218295650224197262",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 10.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.407588,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/0fcbfe63-31d9-4823-b8a8-464fd7f77e39/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.434462771470218295650224197262"
+      },
+      "metadata_url": "https://proxy.imaging.datacommons.cancer.gov/current/viewer-only-no-downloads-see-tinyurl-dot-com-slash-3j3d9jyp/dicomWeb/studies/1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675/series/1.3.6.1.4.1.14519.5.2.1.6834.5010.434462771470218295650224197262/metadata",
+      "metadata_sha256": "f52c010d3ca525fb8d27bbec110d726c38cd1032aca06f5810f51c21a2437e4a",
+      "metadata_bytes": 541429,
+      "instances": 50,
+      "header_evidence": {
+        "unique_positions": 50,
+        "instances_per_position": [
+          1
+        ],
+        "temporal_groups": 1,
+        "slices_per_group": [
+          50
+        ],
+        "maximum_regular_grid_residual_mm": 1.4210854715202004e-14,
+        "physical_grid_max_difference_across_groups_mm": 0.0,
+        "frame_of_reference_uids": [
+          [
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.517040973994167485222033549504"
+          ]
+        ],
+        "image_orientation_patient": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "temporal_position_identifiers": [
+          []
+        ],
+        "number_of_temporal_positions": [
+          []
+        ],
+        "actual_frame_durations_ms": [
+          []
+        ]
+      }
+    },
+    {
+      "alias": "ct_respiratory_02",
+      "series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.126099425530980963839747986253",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 20.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.405488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/d8079207-c2bd-446a-9d21-3612672ede3c/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.126099425530980963839747986253"
+      },
+      "metadata_url": "https://proxy.imaging.datacommons.cancer.gov/current/viewer-only-no-downloads-see-tinyurl-dot-com-slash-3j3d9jyp/dicomWeb/studies/1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675/series/1.3.6.1.4.1.14519.5.2.1.6834.5010.126099425530980963839747986253/metadata",
+      "metadata_sha256": "7c68fedfcc79648796553f8534777debedb14d3da066533799c554c6c82c2a2d",
+      "metadata_bytes": 532779,
+      "instances": 50,
+      "header_evidence": {
+        "unique_positions": 50,
+        "instances_per_position": [
+          1
+        ],
+        "temporal_groups": 1,
+        "slices_per_group": [
+          50
+        ],
+        "maximum_regular_grid_residual_mm": 1.4210854715202004e-14,
+        "physical_grid_max_difference_across_groups_mm": 0.0,
+        "frame_of_reference_uids": [
+          [
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.127646172073420881981969917548"
+          ]
+        ],
+        "image_orientation_patient": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "temporal_position_identifiers": [
+          []
+        ],
+        "number_of_temporal_positions": [
+          []
+        ],
+        "actual_frame_durations_ms": [
+          []
+        ]
+      }
+    },
+    {
+      "alias": "ct_respiratory_03",
+      "series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.101149985359108843115314962607",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 30.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.405488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/3353d491-fff7-48c2-8ae2-67e86f13d29d/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.101149985359108843115314962607"
+      },
+      "metadata_url": "https://proxy.imaging.datacommons.cancer.gov/current/viewer-only-no-downloads-see-tinyurl-dot-com-slash-3j3d9jyp/dicomWeb/studies/1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675/series/1.3.6.1.4.1.14519.5.2.1.6834.5010.101149985359108843115314962607/metadata",
+      "metadata_sha256": "1082692d2b992ff15315e174302689d2737182bd5b256537351b92929ed318e8",
+      "metadata_bytes": 532779,
+      "instances": 50,
+      "header_evidence": {
+        "unique_positions": 50,
+        "instances_per_position": [
+          1
+        ],
+        "temporal_groups": 1,
+        "slices_per_group": [
+          50
+        ],
+        "maximum_regular_grid_residual_mm": 1.4210854715202004e-14,
+        "physical_grid_max_difference_across_groups_mm": 0.0,
+        "frame_of_reference_uids": [
+          [
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.127646172073420881981969917548"
+          ]
+        ],
+        "image_orientation_patient": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "temporal_position_identifiers": [
+          []
+        ],
+        "number_of_temporal_positions": [
+          []
+        ],
+        "actual_frame_durations_ms": [
+          []
+        ]
+      }
+    },
+    {
+      "alias": "ct_respiratory_04",
+      "series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.164304251909335542255203856320",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 40.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.405488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/3bc9b518-22f1-439b-9232-37ea49466caa/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.164304251909335542255203856320"
+      },
+      "metadata_url": "https://proxy.imaging.datacommons.cancer.gov/current/viewer-only-no-downloads-see-tinyurl-dot-com-slash-3j3d9jyp/dicomWeb/studies/1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675/series/1.3.6.1.4.1.14519.5.2.1.6834.5010.164304251909335542255203856320/metadata",
+      "metadata_sha256": "17847b9743df5d265a37e3b7cf6cf1992c1c52a14eac112348e078a79d97eefd",
+      "metadata_bytes": 532779,
+      "instances": 50,
+      "header_evidence": {
+        "unique_positions": 50,
+        "instances_per_position": [
+          1
+        ],
+        "temporal_groups": 1,
+        "slices_per_group": [
+          50
+        ],
+        "maximum_regular_grid_residual_mm": 1.4210854715202004e-14,
+        "physical_grid_max_difference_across_groups_mm": 0.0,
+        "frame_of_reference_uids": [
+          [
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.127646172073420881981969917548"
+          ]
+        ],
+        "image_orientation_patient": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "temporal_position_identifiers": [
+          []
+        ],
+        "number_of_temporal_positions": [
+          []
+        ],
+        "actual_frame_durations_ms": [
+          []
+        ]
+      }
+    },
+    {
+      "alias": "ct_respiratory_05",
+      "series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.253052947614281199389106741253",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 50.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.405488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/1292f63f-4ef6-433e-9724-39fd80fdc088/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.253052947614281199389106741253"
+      },
+      "metadata_url": "https://proxy.imaging.datacommons.cancer.gov/current/viewer-only-no-downloads-see-tinyurl-dot-com-slash-3j3d9jyp/dicomWeb/studies/1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675/series/1.3.6.1.4.1.14519.5.2.1.6834.5010.253052947614281199389106741253/metadata",
+      "metadata_sha256": "9b8513ab2df8f4ad2b74360d6411d246437f215181aed1a5193d89be01f053a4",
+      "metadata_bytes": 532779,
+      "instances": 50,
+      "header_evidence": {
+        "unique_positions": 50,
+        "instances_per_position": [
+          1
+        ],
+        "temporal_groups": 1,
+        "slices_per_group": [
+          50
+        ],
+        "maximum_regular_grid_residual_mm": 1.4210854715202004e-14,
+        "physical_grid_max_difference_across_groups_mm": 0.0,
+        "frame_of_reference_uids": [
+          [
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.127646172073420881981969917548"
+          ]
+        ],
+        "image_orientation_patient": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "temporal_position_identifiers": [
+          []
+        ],
+        "number_of_temporal_positions": [
+          []
+        ],
+        "actual_frame_durations_ms": [
+          []
+        ]
+      }
+    },
+    {
+      "alias": "ct_respiratory_06",
+      "series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.572559330334867629888846900478",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 60.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.405488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/294f2d99-9ff0-4730-9102-8b5f648e1c97/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.572559330334867629888846900478"
+      },
+      "metadata_url": "https://proxy.imaging.datacommons.cancer.gov/current/viewer-only-no-downloads-see-tinyurl-dot-com-slash-3j3d9jyp/dicomWeb/studies/1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675/series/1.3.6.1.4.1.14519.5.2.1.6834.5010.572559330334867629888846900478/metadata",
+      "metadata_sha256": "00762fa4411bc91fcbed9065f8498e7cd4fe2f3f71ebd109ad9ac088c8a1722a",
+      "metadata_bytes": 532779,
+      "instances": 50,
+      "header_evidence": {
+        "unique_positions": 50,
+        "instances_per_position": [
+          1
+        ],
+        "temporal_groups": 1,
+        "slices_per_group": [
+          50
+        ],
+        "maximum_regular_grid_residual_mm": 1.4210854715202004e-14,
+        "physical_grid_max_difference_across_groups_mm": 0.0,
+        "frame_of_reference_uids": [
+          [
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.127646172073420881981969917548"
+          ]
+        ],
+        "image_orientation_patient": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "temporal_position_identifiers": [
+          []
+        ],
+        "number_of_temporal_positions": [
+          []
+        ],
+        "actual_frame_durations_ms": [
+          []
+        ]
+      }
+    },
+    {
+      "alias": "ct_respiratory_07",
+      "series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.274987695069017848173269995124",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 70.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.405488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/a14e00b4-c8cd-48a0-ae9c-230ba02f85bf/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.274987695069017848173269995124"
+      },
+      "metadata_url": "https://proxy.imaging.datacommons.cancer.gov/current/viewer-only-no-downloads-see-tinyurl-dot-com-slash-3j3d9jyp/dicomWeb/studies/1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675/series/1.3.6.1.4.1.14519.5.2.1.6834.5010.274987695069017848173269995124/metadata",
+      "metadata_sha256": "a7d027c3fd7b4ad3952a282bf7dbe859d7469c208416f33685024d06af297068",
+      "metadata_bytes": 532779,
+      "instances": 50,
+      "header_evidence": {
+        "unique_positions": 50,
+        "instances_per_position": [
+          1
+        ],
+        "temporal_groups": 1,
+        "slices_per_group": [
+          50
+        ],
+        "maximum_regular_grid_residual_mm": 1.4210854715202004e-14,
+        "physical_grid_max_difference_across_groups_mm": 0.0,
+        "frame_of_reference_uids": [
+          [
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.127646172073420881981969917548"
+          ]
+        ],
+        "image_orientation_patient": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "temporal_position_identifiers": [
+          []
+        ],
+        "number_of_temporal_positions": [
+          []
+        ],
+        "actual_frame_durations_ms": [
+          []
+        ]
+      }
+    },
+    {
+      "alias": "ct_respiratory_08",
+      "series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.109924046592639009037308115627",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 80.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.405488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/d12ee01d-85a4-43c4-b499-22cde121dfd0/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.109924046592639009037308115627"
+      },
+      "metadata_url": "https://proxy.imaging.datacommons.cancer.gov/current/viewer-only-no-downloads-see-tinyurl-dot-com-slash-3j3d9jyp/dicomWeb/studies/1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675/series/1.3.6.1.4.1.14519.5.2.1.6834.5010.109924046592639009037308115627/metadata",
+      "metadata_sha256": "bce4a1415ed641a6531ef56f3dda7ada79bc966671bea0807d4bc62b09dc762a",
+      "metadata_bytes": 532779,
+      "instances": 50,
+      "header_evidence": {
+        "unique_positions": 50,
+        "instances_per_position": [
+          1
+        ],
+        "temporal_groups": 1,
+        "slices_per_group": [
+          50
+        ],
+        "maximum_regular_grid_residual_mm": 1.4210854715202004e-14,
+        "physical_grid_max_difference_across_groups_mm": 0.0,
+        "frame_of_reference_uids": [
+          [
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.127646172073420881981969917548"
+          ]
+        ],
+        "image_orientation_patient": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "temporal_position_identifiers": [
+          []
+        ],
+        "number_of_temporal_positions": [
+          []
+        ],
+        "actual_frame_durations_ms": [
+          []
+        ]
+      }
+    },
+    {
+      "alias": "ct_respiratory_09",
+      "series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.343750046728758832421627429575",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 90.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.405488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/5c08e190-d6ac-44a3-9cdf-64f16df12555/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.343750046728758832421627429575"
+      },
+      "metadata_url": "https://proxy.imaging.datacommons.cancer.gov/current/viewer-only-no-downloads-see-tinyurl-dot-com-slash-3j3d9jyp/dicomWeb/studies/1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675/series/1.3.6.1.4.1.14519.5.2.1.6834.5010.343750046728758832421627429575/metadata",
+      "metadata_sha256": "6e1d515097728cb153bde7aac02b469fb08e861078587408ff716322f384aff7",
+      "metadata_bytes": 532779,
+      "instances": 50,
+      "header_evidence": {
+        "unique_positions": 50,
+        "instances_per_position": [
+          1
+        ],
+        "temporal_groups": 1,
+        "slices_per_group": [
+          50
+        ],
+        "maximum_regular_grid_residual_mm": 1.4210854715202004e-14,
+        "physical_grid_max_difference_across_groups_mm": 0.0,
+        "frame_of_reference_uids": [
+          [
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.127646172073420881981969917548"
+          ]
+        ],
+        "image_orientation_patient": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "temporal_position_identifiers": [
+          []
+        ],
+        "number_of_temporal_positions": [
+          []
+        ],
+        "actual_frame_durations_ms": [
+          []
+        ]
+      }
+    },
+    {
+      "alias": "mr_qin_breast_dynamic",
+      "series": {
+        "collection_id": "qin_breast",
+        "PatientID": "QIN-BREAST-01-0037",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.8162.7003.338470268607511395624128344084",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.8162.7003.157674113130700982498045336575",
+        "SeriesDescription": "dynamic",
+        "Manufacturer": "Philips Medical Systems",
+        "ManufacturerModelName": "Achieva",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.4",
+        "instanceCount": 500,
+        "series_size_MB": 39.36645,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.21juebh0",
+        "series_aws_url": "s3://idc-open-data/84355561-7001-4adf-b66c-810e6a2fc59a/*",
+        "series_revised_idc_version": 2,
+        "NumberOfTemporalPositions": 25,
+        "EchoTime": [
+          4.604
+        ],
+        "DiffusionBValue": [],
+        "Rows": 192,
+        "Columns": 192,
+        "ScanningSequence": [
+          "GR"
+        ],
+        "MRAcquisitionType": "3D",
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.8162.7003.338470268607511395624128344084&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.8162.7003.157674113130700982498045336575"
+      },
+      "metadata_url": "https://proxy.imaging.datacommons.cancer.gov/current/viewer-only-no-downloads-see-tinyurl-dot-com-slash-3j3d9jyp/dicomWeb/studies/1.3.6.1.4.1.14519.5.2.1.8162.7003.338470268607511395624128344084/series/1.3.6.1.4.1.14519.5.2.1.8162.7003.157674113130700982498045336575/metadata",
+      "metadata_sha256": "45382cac15d12c6c6276bbdf92cf7291d3e28029c8780fd0b55176f538358fb6",
+      "metadata_bytes": 6458816,
+      "instances": 500,
+      "header_evidence": {
+        "unique_positions": 20,
+        "instances_per_position": [
+          25
+        ],
+        "temporal_groups": 25,
+        "slices_per_group": [
+          20
+        ],
+        "maximum_regular_grid_residual_mm": 5.115907697472721e-13,
+        "physical_grid_max_difference_across_groups_mm": 0.0,
+        "frame_of_reference_uids": [
+          [
+            "1.3.6.1.4.1.14519.5.2.1.8162.7003.923307846614546731555784629739"
+          ]
+        ],
+        "image_orientation_patient": [
+          [
+            0,
+            1,
+            0,
+            0,
+            0,
+            -1
+          ]
+        ],
+        "temporal_position_identifiers": [
+          [
+            1
+          ],
+          [
+            10
+          ],
+          [
+            11
+          ],
+          [
+            12
+          ],
+          [
+            13
+          ],
+          [
+            14
+          ],
+          [
+            15
+          ],
+          [
+            16
+          ],
+          [
+            17
+          ],
+          [
+            18
+          ],
+          [
+            19
+          ],
+          [
+            2
+          ],
+          [
+            20
+          ],
+          [
+            21
+          ],
+          [
+            22
+          ],
+          [
+            23
+          ],
+          [
+            24
+          ],
+          [
+            25
+          ],
+          [
+            3
+          ],
+          [
+            4
+          ],
+          [
+            5
+          ],
+          [
+            6
+          ],
+          [
+            7
+          ],
+          [
+            8
+          ],
+          [
+            9
+          ]
+        ],
+        "number_of_temporal_positions": [
+          [
+            25
+          ]
+        ],
+        "actual_frame_durations_ms": [
+          []
+        ],
+        "acquisition_times_in_temporal_position_order": [
+          "152306.48",
+          "152323.97",
+          "152341.46",
+          "152450.91",
+          "152508.40",
+          "152525.89",
+          "152543.38",
+          "152600.87",
+          "152618.36",
+          "152635.85",
+          "152653.34",
+          "152710.83",
+          "152728.32",
+          "152745.81",
+          "152803.30",
+          "152820.80",
+          "152838.29",
+          "152855.78",
+          "152913.27",
+          "152930.76",
+          "152948.25",
+          "153005.74",
+          "153023.23",
+          "153040.72",
+          "153058.21"
+        ],
+        "acquisition_time_intervals_seconds": [
+          17.49,
+          17.49,
+          69.45,
+          17.49,
+          17.49,
+          17.49,
+          17.49,
+          17.49,
+          17.49,
+          17.49,
+          17.49,
+          17.49,
+          17.49,
+          17.49,
+          17.5,
+          17.49,
+          17.49,
+          17.49,
+          17.49,
+          17.49,
+          17.49,
+          17.49,
+          17.49,
+          17.49
+        ],
+        "acquisition_times_strictly_increase": true
+      }
+    },
+    {
+      "alias": "pet_philips_3d",
+      "series": {
+        "collection_id": "naf_prostate",
+        "PatientID": "NaF-PROSTATE-01-0005",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.9823.8001.501277577260273770770155919373",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.9823.8001.130493142498857127909478901084",
+        "SeriesDescription": "[WB_CTAC]   Total Body 3",
+        "Manufacturer": "Philips Medical Systems",
+        "ManufacturerModelName": "GEMINI TF TOF 16",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.128",
+        "instanceCount": 213,
+        "series_size_MB": 9.568798,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2015.isoqthko",
+        "series_aws_url": "s3://idc-open-data/63a61f5a-4b41-4e16-a3b9-de2c8f34c9a3/*",
+        "series_revised_idc_version": 2,
+        "SeriesType": "WHOLE BODY/IMAGE",
+        "Units": "BQML",
+        "NumberOfSlices": 213,
+        "Rows": 144,
+        "Columns": 144,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.9823.8001.501277577260273770770155919373&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.9823.8001.130493142498857127909478901084"
+      },
+      "metadata_url": "https://proxy.imaging.datacommons.cancer.gov/current/viewer-only-no-downloads-see-tinyurl-dot-com-slash-3j3d9jyp/dicomWeb/studies/1.3.6.1.4.1.14519.5.2.1.9823.8001.501277577260273770770155919373/series/1.3.6.1.4.1.14519.5.2.1.9823.8001.130493142498857127909478901084/metadata",
+      "metadata_sha256": "33e98e31a36e639647a9d61bb4fd8c54dbad76e1609d31599b2435a616e5f701",
+      "metadata_bytes": 1820010,
+      "instances": 213,
+      "header_evidence": {
+        "unique_positions": 213,
+        "instances_per_position": [
+          1
+        ],
+        "temporal_groups": 1,
+        "slices_per_group": [
+          213
+        ],
+        "maximum_regular_grid_residual_mm": 8.047169842484436e-06,
+        "physical_grid_max_difference_across_groups_mm": 0.0,
+        "frame_of_reference_uids": [
+          [
+            "1.3.6.1.4.1.14519.5.2.1.9823.8001.337491797950544144896583499628"
+          ]
+        ],
+        "image_orientation_patient": [
+          [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ]
+        ],
+        "temporal_position_identifiers": [
+          []
+        ],
+        "number_of_temporal_positions": [
+          []
+        ],
+        "actual_frame_durations_ms": [
+          [
+            120000
+          ],
+          [
+            120007
+          ]
+        ]
+      }
+    },
+    {
+      "alias": "pet_philips_dynamic",
+      "series": {
+        "collection_id": "acrin_flt_breast",
+        "PatientID": "ACRIN-FLT-Breast_040",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.7009.2401.135403859214769422340824322215",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.7009.2401.238322003272781246971069461592",
+        "SeriesDescription": "PET-CT SERIES",
+        "Manufacturer": "Philips Medical Systems",
+        "ManufacturerModelName": "GEMINI TF TOF 16",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.128",
+        "instanceCount": 2025,
+        "series_size_MB": 92.413602,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2017.ol20zmxg",
+        "series_aws_url": "s3://idc-open-data/31cf1374-38a3-497d-982c-821e713ab796/*",
+        "series_revised_idc_version": 2,
+        "SeriesType": "DYNAMIC/IMAGE",
+        "Units": "BQML",
+        "DecayCorrection": "START",
+        "NumberOfSlices": 45,
+        "NumberOfTimeSlices": 45,
+        "ActualFrameDuration": [
+          4996.0
+        ],
+        "Rows": 144,
+        "Columns": 144
+      },
+      "metadata_url": "https://proxy.imaging.datacommons.cancer.gov/current/viewer-only-no-downloads-see-tinyurl-dot-com-slash-3j3d9jyp/dicomWeb/studies/1.3.6.1.4.1.14519.5.2.1.7009.2401.135403859214769422340824322215/series/1.3.6.1.4.1.14519.5.2.1.7009.2401.238322003272781246971069461592/metadata",
+      "metadata_sha256": "e61744be9a51a612d0777d4104fbf453100add74f189b59b01d4a9d4fb872c1f",
+      "metadata_bytes": 19857077,
+      "instances": 2025,
+      "header_evidence": {
+        "unique_positions": 45,
+        "instances_per_position": [
+          45
+        ],
+        "temporal_groups": 45,
+        "slices_per_group": [
+          45
+        ],
+        "maximum_regular_grid_residual_mm": 0.0,
+        "physical_grid_max_difference_across_groups_mm": 0.0,
+        "frame_of_reference_uids": [
+          [
+            "1.3.6.1.4.1.14519.5.2.1.7009.2401.131299305475428436935124401806"
+          ]
+        ],
+        "image_orientation_patient": [
+          [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ]
+        ],
+        "temporal_position_identifiers": [
+          []
+        ],
+        "number_of_temporal_positions": [
+          []
+        ],
+        "actual_frame_durations_ms": [
+          [
+            4996
+          ]
+        ],
+        "native_pet_indices_complete": true,
+        "pet_native_order": {
+          "shape_tz": [
+            45,
+            45
+          ],
+          "same_index_grid_max_residual_mm": 0.0,
+          "time_strictly_increasing_per_slice": true,
+          "within_timepoint_frt_spread_ms": 0.0,
+          "frame_reference_times_ms": [
+            95996,
+            100996,
+            105996,
+            110996,
+            115996,
+            120996,
+            125996,
+            130996,
+            135996,
+            140996,
+            145996,
+            150996,
+            155996,
+            160996,
+            165996,
+            170996,
+            175996,
+            185996,
+            195996,
+            205996,
+            215996,
+            225996,
+            235996,
+            245996,
+            275996,
+            305996,
+            335996,
+            365996,
+            395996,
+            455996,
+            515996,
+            575996,
+            635996,
+            695996,
+            875996,
+            1055996,
+            1235996,
+            1415996,
+            1595996,
+            1895996,
+            2195996,
+            2495996,
+            2795996,
+            3095996,
+            3395996
+          ],
+          "first_instance_number_by_time": [
+            1981,
+            1936,
+            1891,
+            1846,
+            1801,
+            1756,
+            1711,
+            1666,
+            1621,
+            1576,
+            1531,
+            1486,
+            1441,
+            1396,
+            1351,
+            1306,
+            1261,
+            1216,
+            1171,
+            1126,
+            1081,
+            1036,
+            991,
+            946,
+            901,
+            856,
+            811,
+            766,
+            721,
+            676,
+            631,
+            586,
+            541,
+            496,
+            451,
+            406,
+            361,
+            316,
+            271,
+            226,
+            181,
+            136,
+            91,
+            46,
+            1
+          ],
+          "first_last_ipp_first_time": [
+            [
+              -286.585938,
+              -216.585938,
+              987.5
+            ],
+            [
+              -286.585938,
+              -216.585938,
+              1163.5
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "alias": "pet_siemens_3d",
+      "series": {
+        "collection_id": "cmb_lca",
+        "PatientID": "MSB-00556",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.213654205372391181384581668351120583768",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.92924847524321231684161430642644844708",
+        "SeriesDescription": "PET WB AC",
+        "Manufacturer": "SIEMENS",
+        "ManufacturerModelName": "Biograph Horizon",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.128",
+        "instanceCount": 42,
+        "series_size_MB": 2.898826,
+        "license_short_name": "CC BY 4.0",
+        "source_DOI": "10.7937/3cx3-s132",
+        "series_aws_url": "s3://idc-open-data/c83d6abc-e4cf-4ef8-9a72-c7b81b35e3b0/*",
+        "series_revised_idc_version": 23,
+        "SeriesType": "WHOLE BODY/IMAGE",
+        "Units": "BQML",
+        "DecayCorrection": "START",
+        "NumberOfSlices": 42,
+        "NumberOfTimeSlices": null,
+        "Rows": 180,
+        "Columns": 180
+      },
+      "metadata_url": "https://proxy.imaging.datacommons.cancer.gov/current/viewer-only-no-downloads-see-tinyurl-dot-com-slash-3j3d9jyp/dicomWeb/studies/1.3.6.1.4.1.14519.5.2.1.213654205372391181384581668351120583768/series/1.3.6.1.4.1.14519.5.2.1.92924847524321231684161430642644844708/metadata",
+      "metadata_sha256": "85eb9125ab89a3950eb7765d85aeae3c88173b160f103fb8aaf71ca449f97805",
+      "metadata_bytes": 429635,
+      "instances": 42,
+      "header_evidence": {
+        "unique_positions": 42,
+        "instances_per_position": [
+          1
+        ],
+        "temporal_groups": 1,
+        "slices_per_group": [
+          42
+        ],
+        "maximum_regular_grid_residual_mm": 0.0,
+        "physical_grid_max_difference_across_groups_mm": 0.0,
+        "frame_of_reference_uids": [
+          [
+            "1.3.6.1.4.1.14519.5.2.1.287084453939179403461179972213648011024"
+          ]
+        ],
+        "image_orientation_patient": [
+          [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ]
+        ],
+        "temporal_position_identifiers": [
+          []
+        ],
+        "number_of_temporal_positions": [
+          []
+        ],
+        "actual_frame_durations_ms": [
+          [
+            120000
+          ]
+        ]
+      }
+    },
+    {
+      "alias": "pet_siemens_dynamic",
+      "series": {
+        "collection_id": "acrin_flt_breast",
+        "PatientID": "ACRIN-FLT-Breast_062",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.7009.2401.201707307253869830909450020890",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.7009.2401.154881232282101954752345873528",
+        "SeriesDescription": "PET-CT SERIES",
+        "Manufacturer": "SIEMENS",
+        "ManufacturerModelName": "1094",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.128",
+        "instanceCount": 3330,
+        "series_size_MB": 200.036158,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2017.ol20zmxg",
+        "series_aws_url": "s3://idc-open-data/c63e6b6b-46b6-44aa-9f1b-cf05769f89e7/*",
+        "series_revised_idc_version": 2,
+        "SeriesType": "DYNAMIC/IMAGE",
+        "Units": "BQML",
+        "DecayCorrection": "START",
+        "NumberOfSlices": 74,
+        "NumberOfTimeSlices": 45,
+        "ActualFrameDuration": [
+          5000.0,
+          10000.0,
+          30000.0,
+          60000.0,
+          180000.0,
+          300000.0
+        ],
+        "Rows": 168,
+        "Columns": 168
+      },
+      "metadata_url": "https://proxy.imaging.datacommons.cancer.gov/current/viewer-only-no-downloads-see-tinyurl-dot-com-slash-3j3d9jyp/dicomWeb/studies/1.3.6.1.4.1.14519.5.2.1.7009.2401.201707307253869830909450020890/series/1.3.6.1.4.1.14519.5.2.1.7009.2401.154881232282101954752345873528/metadata",
+      "metadata_sha256": "ffacfc94eb7e02056322291a830c7a31d14ec41ca21a867a7d2fc18ad0b78d87",
+      "metadata_bytes": 30307595,
+      "instances": 3330,
+      "header_evidence": {
+        "unique_positions": 74,
+        "instances_per_position": [
+          45
+        ],
+        "temporal_groups": 45,
+        "slices_per_group": [
+          74
+        ],
+        "maximum_regular_grid_residual_mm": 0.0,
+        "physical_grid_max_difference_across_groups_mm": 0.0,
+        "frame_of_reference_uids": [
+          [
+            "1.3.6.1.4.1.14519.5.2.1.7009.2401.177760060648965923337834859063"
+          ]
+        ],
+        "image_orientation_patient": [
+          [
+            1,
+            0,
+            0,
+            0,
+            1,
+            0
+          ]
+        ],
+        "temporal_position_identifiers": [
+          []
+        ],
+        "number_of_temporal_positions": [
+          []
+        ],
+        "actual_frame_durations_ms": [
+          [
+            10000
+          ],
+          [
+            180000
+          ],
+          [
+            30000
+          ],
+          [
+            300000
+          ],
+          [
+            5000
+          ],
+          [
+            60000
+          ]
+        ],
+        "native_pet_indices_complete": true,
+        "pet_native_order": {
+          "shape_tz": [
+            45,
+            74
+          ],
+          "same_index_grid_max_residual_mm": 0.0,
+          "time_strictly_increasing_per_slice": true,
+          "within_timepoint_frt_spread_ms": 0.0,
+          "frame_reference_times_ms": [
+            2500.0,
+            7500.0,
+            11500.0,
+            17500.0,
+            22500.0,
+            26500.0,
+            32500.0,
+            37500.0,
+            41500.0,
+            47500.0,
+            52500.0,
+            56500.0,
+            62500.0,
+            67500.0,
+            71500.0,
+            77500.0,
+            85000.0,
+            94000.0,
+            104000.0,
+            115000.0,
+            124000.0,
+            135000.0,
+            145000.0,
+            164000.0,
+            194000.0,
+            224000.0,
+            254000.0,
+            284000.0,
+            329000.0,
+            390000.0,
+            450000.0,
+            510000.0,
+            570000.0,
+            689857.92324928,
+            868857.92324928,
+            1048857.9232493,
+            1229857.9232493,
+            1409857.9232493,
+            1648605.3444573,
+            1949605.3444573,
+            2249605.3444573,
+            2549605.3444573,
+            2849605.3444573,
+            3148605.3444573,
+            3449605.3444573
+          ],
+          "first_instance_number_by_time": [
+            1,
+            75,
+            149,
+            223,
+            297,
+            371,
+            445,
+            519,
+            593,
+            667,
+            741,
+            815,
+            889,
+            963,
+            1037,
+            1111,
+            1185,
+            1259,
+            1333,
+            1407,
+            1481,
+            1555,
+            1629,
+            1703,
+            1777,
+            1851,
+            1925,
+            1999,
+            2073,
+            2147,
+            2221,
+            2295,
+            2369,
+            2443,
+            2517,
+            2591,
+            2665,
+            2739,
+            2813,
+            2887,
+            2961,
+            3035,
+            3109,
+            3183,
+            3257
+          ],
+          "first_last_ipp_first_time": [
+            [
+              -341.94771999821,
+              -534.43772005245,
+              -574.0
+            ],
+            [
+              -341.94771999821,
+              -534.43772005245,
+              -793.0
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}

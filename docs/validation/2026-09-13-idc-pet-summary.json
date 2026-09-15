@@ -1,0 +1,89 @@
+{
+  "date": "2026-09-13",
+  "idc_version": "v24",
+  "idc_index_version": "0.12.5",
+  "license": "CC BY 3.0",
+  "total_frames": 3126,
+  "total_voxels": 51216384,
+  "original_sources_unchanged": true,
+  "production_code_changed": false,
+  "package_source_sha256": "ecfdd3eb7460f98e03cf983808bb9fcc84a81de29081d3f95635de52cc4dd5a7",
+  "package_hash_method": "SHA256 of sorted nifti2dicom/**/*.py paths: each repository-relative POSIX path, NUL, file bytes, NUL",
+  "source_aggregate_hash_method": "SHA256 of UTF-8 json.dumps(filename_to_sha256, sort_keys=True) using default separators",
+  "cases": [
+    {
+      "alias": "pet_static_rider",
+      "collection_id": "rider_lung_pet_ct",
+      "SeriesInstanceUID": "1.3.6.1.4.1.9328.50.17.294334834487040944282189170865267767718",
+      "source_DOI": "10.7937/k9/tcia.2015.ofip7tvm",
+      "shape_TZYX": [1, 47, 128, 128],
+      "voxels_checked": 770048,
+      "max_intensity_error_BQML": 0.4577692558975741,
+      "half_quantization_step_BQML": 0.457770514763105,
+      "max_world_coordinate_error_mm": 0.000003337860007945892,
+      "source_files_aggregate_sha256": "ba0b470b06c5a2c41f8bde156f4bf36518c9bc2b3f135f27907b66018ea06ce4",
+      "nifti_sha256": "9201e3f38718f9942075b222965c290e5a22cab164b9bda01d5869ea332bf306",
+      "spatial_mutations_detected": ["left_right", "anterior_posterior", "inferior_superior"],
+      "external_validator": {"files": 47, "passed": 0, "errors": 94}
+    },
+    {
+      "alias": "pet_dynamic_rider",
+      "collection_id": "rider_lung_pet_ct",
+      "SeriesInstanceUID": "1.3.6.1.4.1.9328.50.17.6911118773075816549698191732956359004",
+      "source_DOI": "10.7937/k9/tcia.2015.ofip7tvm",
+      "shape_TZYX": [32, 47, 128, 128],
+      "voxels_checked": 24641536,
+      "max_intensity_error_BQML": 27.765563012131906,
+      "half_quantization_step_BQML": 27.765576317998,
+      "max_world_coordinate_error_mm": 0.000014781959976062353,
+      "source_files_aggregate_sha256": "1eff22d0a84f569f325906afbcbf7aec14080e4f1e20396c82b97a6ee0d83dee",
+      "nifti_sha256": "05597f962b0e54d2d5e3a10a08906e4f74102274f497e5c88852ab8be8252beb",
+      "spatial_mutations_detected": ["left_right", "anterior_posterior", "inferior_superior"],
+      "time_reversal_mismatched_voxels": 17836800,
+      "wrong_uniform_timing_rejected_without_publication": true,
+      "external_validator": {"files": 1504, "passed": 1504, "errors": 0}
+    },
+    {
+      "alias": "pet_dynamic_flt",
+      "collection_id": "acrin_flt_breast",
+      "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.7009.2401.644907425191838618941441902072",
+      "source_DOI": "10.7937/k9/tcia.2017.ol20zmxg",
+      "shape_TZYX": [45, 35, 128, 128],
+      "voxels_checked": 25804800,
+      "max_intensity_error_BQML": 7.840826209544501,
+      "half_quantization_step_BQML": 7.84083035477225,
+      "max_world_coordinate_error_mm": 0.0,
+      "source_files_aggregate_sha256": "125f29c96b70550ccbfaa1e4058a0ee6a62ca2664de74470b5afe634825c2144",
+      "nifti_sha256": "94aab94178f81676ec14a02887798ea45389a928714fe50c01cf897cf41eb129",
+      "spatial_mutations_detected": ["left_right", "anterior_posterior", "inferior_superior"],
+      "time_reversal_mismatched_voxels": 18758138,
+      "wrong_uniform_timing_rejected_without_publication": true,
+      "external_validator": {"files": 1575, "passed": 0, "errors": 1575}
+    }
+  ],
+  "roundtrip_environment": {"python": "3.13.3", "numpy": "2.4.2", "nibabel": "5.4.0", "pydicom": "3.0.1"},
+  "validator": {
+    "name": "dicom-validator",
+    "version": "0.9.0",
+    "edition": "2026c",
+    "python": "3.12.11",
+    "pydicom": "3.0.2",
+    "specification_or_validator_modified": false,
+    "standard_definition_sha256": {
+      "dict_info.json": "790df6fba413a0c7673f05de28774eec2f40e95132bd4512b3cbbc00ce065a95",
+      "iod_info.json": "e07b4e2fee0ebe5cb1f4e80f28018302102d583bfcc31b48569e5a02c5bc0f86",
+      "module_info.json": "d78a08c185cc7a14e1e12bc33eb6d7eefadfda8f55ed14fc41f5e9d45b6ffbb3"
+    }
+  },
+  "scripts_sha256": {
+    "pet_roundtrip.py": "f6c44dbcb9cb1482752b60c58067ff8642f1be9e0e5bc06e4b5aecabe6d81b5c",
+    "validate_pet.py": "f03f122cbb0b6e219e21aef55910876fab2b4576ba79963c2619fca6078527ce",
+    "download_pet.py": "d14d31a413734a9fe1ed302a962f8fa80dbbe37069980c983e336ede6dbfa977",
+    "select_candidates.py": "45bee8616377ac6ddebdb0e3044b512c6abe9a4a4b2df69130f4bdd166321c17"
+  },
+  "orientation_regressions": {"spatial_encodings": 48, "dimensions": [3, 4], "modalities": ["CT", "MR", "PT"], "positive_cases": 288, "corruption_detection_cases": 5},
+  "tests_passed": 597,
+  "dciodvfy_run_on_these_cases": false,
+  "target_viewer_acceptance": false,
+  "unresolved_defect": "Incomplete optional reference RadiopharmaceuticalCodeSequence items are copied into two output cases; internal publication validation does not detect them."
+}

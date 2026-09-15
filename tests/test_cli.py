@@ -22,6 +22,12 @@ class TestCli:
         assert "segment" in result.output
         assert "rgb" in result.output
         assert "resample" in result.output
+        assert "inspect" in result.output
+        assert "--reference" in result.output
+        assert "--kind" in result.output
+        assert "--json" in result.output
+        assert "--version" in result.output
+        assert "\x1b[" not in result.output
 
     def test_convert_help(self) -> None:
         runner = CliRunner()
@@ -46,3 +52,14 @@ class TestCli:
         result = runner.invoke(cli, ["resample", "--help"])
         assert result.exit_code == 0
         assert "--spatial-dir" in result.output
+
+    def test_no_arguments_prints_help_without_error(self) -> None:
+        result = CliRunner().invoke(cli, [])
+        assert result.exit_code == 0
+        assert "--reference" in result.output
+
+    def test_direct_input_missing_reference_has_actionable_error(self) -> None:
+        result = CliRunner().invoke(cli, ["input.nii.gz"])
+        assert result.exit_code == 2
+        assert "--reference" in result.stderr
+        assert "Traceback" not in result.output

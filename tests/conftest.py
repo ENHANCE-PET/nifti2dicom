@@ -6,7 +6,6 @@ from pathlib import Path
 
 import nibabel as nib
 import numpy as np
-import pydicom
 import pytest
 from pydicom.dataset import Dataset, FileMetaDataset
 from pydicom.filewriter import dcmwrite
@@ -112,6 +111,6 @@ def sample_dicom_dir(tmp_path: Path) -> Path:
         ds = _make_dicom_slice(i, rows=4, cols=4)
         ds.StudyInstanceUID = study_uid
         ds.SeriesInstanceUID = series_uid
-        dcmwrite(str(dicom_dir / f"slice_{i:04d}.dcm"), ds, write_like_original=False)
+        dcmwrite(str(dicom_dir / f"slice_{i:04d}.dcm"), ds, enforce_file_format=True)
 
     return dicom_dir

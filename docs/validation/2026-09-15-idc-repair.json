@@ -1,0 +1,2504 @@
+{
+  "date": "2026-09-15",
+  "status": "supported-profile acceptance passed",
+  "scope": "Public scalar PET/MR/CT conversion and installed Slicer acceptance; not clinical certification",
+  "idc_version": "v24",
+  "source_manifest_sha256": "2bdb2341edcad45075d6f6bc6479fd7169fb2b835f3f8467221a76b939a58baa",
+  "source_download_MB": 608.342814,
+  "totals": {
+    "source_series": 15,
+    "source_instances": 6610,
+    "output_instances": 10910,
+    "voxels": 291257888,
+    "dciodvfy_errors": 0,
+    "strict_base_iod_errors": 9600,
+    "strict_base_iod_error_interpretation": "Only the two declared MR rescale extensions per instance",
+    "primary_slicer_voxels": 160185888
+  },
+  "platform": "macOS-15.7.7-arm64-arm-64bit-Mach-O",
+  "conversion_provenance": {
+    "package_source_sha256": {
+      "nifti2dicom/__init__.py": "819a152ec09475b4c43f3ee92b35db8aa6a8e201be7d7f8fc9e8507b4ee18b06",
+      "nifti2dicom/__main__.py": "eb820c7b42b19e3e2d38ec8e5e66ec7771dcd8191a3d40fc662e2de97f97e859",
+      "nifti2dicom/api.py": "51d407effd4d7d33617d8758bc4c5840d26c130a1d6e4eefb3a404f5679d876b",
+      "nifti2dicom/cli/__init__.py": "89cccd8841d90ae311acaa5b8acb5544d3941f82700452fa663327ae8d42c207",
+      "nifti2dicom/cli/commands.py": "b76576ce83a12ee0086050619dc4df5b17ee9d38b84a4af4d5e8a3437bd07ac1",
+      "nifti2dicom/cli/presentation.py": "ae24c0c364d9132390895de6cf3cf3b0d627aca41d6fbcd8302cfba2210a7a15",
+      "nifti2dicom/convert_image.py": "05e0c5329dabedfe8cc209d9fc100fd44fd3de8a08b6e02d83aa60974118036b",
+      "nifti2dicom/convert_rgb.py": "5eeb23c3c6347416276a6c5747fa4fdd11b0be9904c090d7b76871db608e9764",
+      "nifti2dicom/convert_seg.py": "107fcd2ea11a958701197bba30bcf8f52108babe4aa36e7efea3388c1c4fc573",
+      "nifti2dicom/converter.py": "90e7898ce1fd122e141a88e90cd7f06cb59187290590df18f8b690a37398f0f8",
+      "nifti2dicom/dicom_io.py": "ed354626748d25e6062f6aee9accf453f1120df3ae97d4b95d3dffc6e8650b32",
+      "nifti2dicom/errors.py": "12fdfdd4de8cdb82b8f8c5870a2b99788e2875c87b51de802dee3bd827e4987b",
+      "nifti2dicom/exceptions.py": "c1af3e1c78a2db757c6b330112d7082ae5e35620ef63c27685f167c811d663a9",
+      "nifti2dicom/geometry.py": "6d8cfa763ee569dd3dffff02ce8cfbc8a5edbf7524823e61da290da52b189686",
+      "nifti2dicom/inference.py": "09668fd8a3f6fd452151ec45d6726ff19b5d9284732db4cc417170b86ccbf240",
+      "nifti2dicom/labels.py": "e383f1536936dd1467018830ae99f166fe40ced9ac57e3bf873930216c697b65",
+      "nifti2dicom/models.py": "8a3cb9af008e10e2f5c1417f08546060be54b3aca5e45eb0ca19e70fdcceec81",
+      "nifti2dicom/orientation.py": "f8df01e75b2746093550b4da0122fdf33df68298db35b8a41fc315da8de65f2f",
+      "nifti2dicom/pipeline.py": "043f7a31f3ffda4caaa54573ee2f500a36772a998f75c947562efbed6092c2d9",
+      "nifti2dicom/pixel.py": "a33274c889e6ffae954c0be28f7cbb402bc493aa906b05b3cdc9ec2164600fb5",
+      "nifti2dicom/pixels.py": "91ef62792276e24bde407ffdfc05133af24f458c2aa21480bf7fd599c58140dc",
+      "nifti2dicom/publication.py": "2f525d54e18e4937f526dc62b315c8d585b2845f83ac9e2208e51faf123f44f6",
+      "nifti2dicom/readers/__init__.py": "6927c9ebaa7fb8c732ec24730d337b98379881bb7e7234c1bd344767666478fa",
+      "nifti2dicom/readers/dicom.py": "1a72ceaa80fdb52df2e63174ea2f5687c513b60c86401ec8f75b5c8f6fa723f1",
+      "nifti2dicom/readers/nifti.py": "59caaf117fc7e22ab79aca5c61ccef9d154fb8a82b48a6c196ec27e8ab357adb",
+      "nifti2dicom/resample.py": "c048c04ea798c34e933cd82bdbd9055ab0a27065394ec074d41a05a72ab06e7a",
+      "nifti2dicom/tags.py": "b1ccdb69702a50b45e9b21899792b5f5c48e777c6586e50bb69519aefeb225b3",
+      "nifti2dicom/writer.py": "8ff81d2fd0009fb78470be68a78e8253bce25f1b2fa33f8b638da51813d3c9cf",
+      "nifti2dicom/writers/__init__.py": "a44d656db6c3f4e17f0cf756c436eb46b456cdcacd55446d012703858af1269f",
+      "nifti2dicom/writers/codes.py": "98449dbbe742705671d2244bdbeaf3a38120ceb4cb9b51478a0f1f73c4e46f02",
+      "nifti2dicom/writers/image.py": "5c6ea9e806cbfeb481bacbe4723cbe43f76ea64c94fb3dd72f70adec02206735",
+      "nifti2dicom/writers/rgb.py": "7dbdbb701ad39abdb3a9ce7d1929f8c936aaae2b587163599dacdba6f63432c3",
+      "nifti2dicom/writers/seg.py": "a9838c8e1797b9bd57d1711f9d18df2ad0bc7c15426690e002f8661119a352b4"
+    },
+    "script_sha256": "e959c6a797b4ddf780e64a596e0c22734af649ff196d7d38d1087d4b27b51edd",
+    "python": "3.13.3",
+    "dependencies": {
+      "numpy": "2.4.2",
+      "nibabel": "5.4.0",
+      "pydicom": "3.0.1"
+    }
+  },
+  "installed_slicer_integration": {
+    "directory": "/Users/nutellabear/Library/Application Support/nifti2dicom/slicer/e9cd273542cc8d6a",
+    "files": {
+      "Nifti2DicomPET.py": "e0c3ec6acfeff6fb5570af84d1d53a410f9c4beb4bc260b690863bd4a160b2e6",
+      "Nifti2DicomPETLib/__init__.py": "4936ef2afda44c13b0db745871a27e137f077adf9b94f10fe4a3996960aaac58",
+      "Nifti2DicomPETLib/frames.py": "ba6e8f6755b425ab25bdf2ec2ad8b38190e4b20892915756cd5f49e5dc6286d7",
+      "Nifti2DicomPETLib/loader.py": "5447032667a0fb5f1eb8d21ba5438a8abe1a99b01f7f05a5b445be24f2adf98d",
+      "Nifti2DicomPETLib/scene.py": "413472abe598ef93f13b9167d32f87ca0f58149cfc625b48cc8f7578d88d5017"
+    },
+    "installed_files_match_source": true
+  },
+  "packaging_configuration_sha256": "6e0ebb85d365f2c4dd03c672f85708ecceb5a24ff572b0021994afacde25cade",
+  "validator_provenance": {
+    "dicom_validator": "0.9.0",
+    "pydicom": "3.0.1",
+    "standard_directory": "/private/tmp/nifti2dicom-dicom-standard/2026c/json",
+    "validators_or_standard_modified": false,
+    "standard_sha256": {
+      "dict_info.json": "790df6fba413a0c7673f05de28774eec2f40e95132bd4512b3cbbc00ce065a95",
+      "iod_info.json": "e07b4e2fee0ebe5cb1f4e80f28018302102d583bfcc31b48569e5a02c5bc0f86",
+      "module_info.json": "d78a08c185cc7a14e1e12bc33eb6d7eefadfda8f55ed14fc41f5e9d45b6ffbb3"
+    },
+    "dciodvfy_version": "dicom3tools Version: 1.00.snapshot.20260901071806\ndicom3tools Platform: Darwin greylast 22.6.0 Darwin Kernel Version 22.6.0: Mon Feb 19 19:48:53 PST 2024; root:xnu-8796.141.3.704.6~1/RELEASE_X86_64 x86_64\ndicom3tools Preprocessor: gcc cpp 4.2.1\ndicom3tools Compiler: gcc g++ Apple LLVM 15.0.0 (clang-1500.0.40.1)\ndicom3tools UID Root: 1.3.6.1.4.1.5962.1\n",
+    "dciodvfy_sha256": "08136be96bf56b36d45dd0fbc6d33a21c78ccb2aaa5a294c888188f7a53c59c9",
+    "script_sha256": "9c62f40c637704982eafc8ed8cd4c5034da443691027a554d2c1cda817ab6f75"
+  },
+  "verification": {
+    "package_tests": 827,
+    "pure_slicer_tests": 135,
+    "native_slicer_tests": 15,
+    "package_log_sha256": "4ab398043275adf18aaf316c23ff6b43c8ec11a4c380a231aa6d367b33d5cfac",
+    "pure_slicer_log_sha256": "69b2fd66a78c49e3bd6719a5d91cfec29494b9842988edf0a02ba196bdc67699",
+    "native_slicer_log_sha256": "dab9e898360b991f8eec8245105d0d67603bca83bbb06a9e918248d1baaffed5"
+  },
+  "cases": [
+    {
+      "files": 50,
+      "source_grid_voxels": 13107200,
+      "timepoints": 1,
+      "coverage_complete": true,
+      "maximum_pixel_error": 0.0,
+      "largest_half_step_plus_numeric_tolerance": 0.5000001,
+      "maximum_world_error_mm": 8.369465746045774e-06,
+      "acquisition_metadata_preserved": true,
+      "reconstructed_array_flip_sensitivity": {
+        "spatial_x": 10275834,
+        "spatial_y": 10280994,
+        "spatial_z": 10277584
+      },
+      "alias": "ct_respiratory_00",
+      "status": "passed",
+      "warnings": [],
+      "nifti_sha256": "1df2e02cf538db8b4fca7bce5818de0f7cb68ad4d55acdc9f495be92d324d0b4",
+      "original_files_unchanged": true,
+      "source_series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.157761568734965241783981770816",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 0.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.407488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/84c623bf-c979-4ee5-80b3-0fa99842eccf/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.157761568734965241783981770816"
+      },
+      "source_file_count": 50,
+      "source_file_manifest_sha256": "fd5215c11cb322abe5ce228c6b53ae40893029f9182143ffa7d179a57912fe3d",
+      "output_file_manifest_sha256": "5b6bf24a2eb75b9683520f3bae6ffa78689020a8775c660889a3bb4e94a06262",
+      "audit_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_00/roundtrip.json",
+      "audit_sha256": "9bf6ef2aea23a614cebfcab734fa46c853e9a8120adcb566e507c4dcf7c6b3b0",
+      "conformance": {
+        "case": "ct_respiratory_00",
+        "files": 50,
+        "iod_errors": 0,
+        "dciodvfy_errors": 0,
+        "dciodvfy_failed_files": 0,
+        "iod_diagnostics": {},
+        "dciodvfy_diagnostics": {
+          "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID": 50,
+          "Warning - Value dubious for this VR - (0x0010,0x0010) PN Patient's Name  PN [1] = <P103> - Retired Person Name form": 50,
+          "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>": 50
+        },
+        "files_unchanged": true
+      },
+      "conformance_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_00/conformance.json",
+      "conformance_sha256": "c369789c8a9795ef25c6bb02c46077260bbf4f3ad22357a45813a977696c13e5"
+    },
+    {
+      "files": 50,
+      "source_grid_voxels": 13107200,
+      "timepoints": 1,
+      "coverage_complete": true,
+      "maximum_pixel_error": 0.0,
+      "largest_half_step_plus_numeric_tolerance": 0.5000001,
+      "maximum_world_error_mm": 8.369465746045774e-06,
+      "acquisition_metadata_preserved": true,
+      "reconstructed_array_flip_sensitivity": {
+        "spatial_x": 10275650,
+        "spatial_y": 10280942,
+        "spatial_z": 10277356
+      },
+      "alias": "ct_respiratory_01",
+      "status": "passed",
+      "warnings": [],
+      "nifti_sha256": "15070bd5beba30e39e7a45965edd0c6f5072d510e25173988c2b3430e9fbb16d",
+      "original_files_unchanged": true,
+      "source_series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.434462771470218295650224197262",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 10.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.407588,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/0fcbfe63-31d9-4823-b8a8-464fd7f77e39/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.434462771470218295650224197262"
+      },
+      "source_file_count": 50,
+      "source_file_manifest_sha256": "204fa5107dedfd5fa80aca212a243b8071ba6a0cd8cd73bd88eba21a0e418cc0",
+      "output_file_manifest_sha256": "e1d8e0f677ac941c4d8d054c8a9d902e0fa05450951b2a0f0d3f37f38045b6f3",
+      "audit_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_01/roundtrip.json",
+      "audit_sha256": "0dee7730b1f855d4fb93ae4c426ba177613b86214b8bcc6814d273afea0a87ba",
+      "conformance": {
+        "case": "ct_respiratory_01",
+        "files": 50,
+        "iod_errors": 0,
+        "dciodvfy_errors": 0,
+        "dciodvfy_failed_files": 0,
+        "iod_diagnostics": {},
+        "dciodvfy_diagnostics": {
+          "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID": 50,
+          "Warning - Value dubious for this VR - (0x0010,0x0010) PN Patient's Name  PN [1] = <P103> - Retired Person Name form": 50,
+          "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>": 50
+        },
+        "files_unchanged": true
+      },
+      "conformance_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_01/conformance.json",
+      "conformance_sha256": "ec2c10d72de108e2fd67e4eb770214fd9274c484fcbab257166d72c5de6fcf4b"
+    },
+    {
+      "files": 50,
+      "source_grid_voxels": 13107200,
+      "timepoints": 1,
+      "coverage_complete": true,
+      "maximum_pixel_error": 0.0,
+      "largest_half_step_plus_numeric_tolerance": 0.5000001,
+      "maximum_world_error_mm": 8.369465746045774e-06,
+      "acquisition_metadata_preserved": true,
+      "reconstructed_array_flip_sensitivity": {
+        "spatial_x": 10274508,
+        "spatial_y": 10280194,
+        "spatial_z": 10276046
+      },
+      "alias": "ct_respiratory_02",
+      "status": "passed",
+      "warnings": [],
+      "nifti_sha256": "3d951a94b7b9f1c285811e3714265f6f0e1b0d400b1ba5be5d636513ad8feb65",
+      "original_files_unchanged": true,
+      "source_series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.126099425530980963839747986253",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 20.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.405488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/d8079207-c2bd-446a-9d21-3612672ede3c/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.126099425530980963839747986253"
+      },
+      "source_file_count": 50,
+      "source_file_manifest_sha256": "eb1bdaf5a0a5a55d54b57f2f098b1440340fee0466394a276ac8bfa48a15eba3",
+      "output_file_manifest_sha256": "f33ba728f5285b99e6b4d380a0890361e4dfe0b52afec6b2dc75997a526c103d",
+      "audit_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_02/roundtrip.json",
+      "audit_sha256": "090a96b165785c7c0eeb33f62ec90d35e48e91c92e15dcd924446943ebb0b6c1",
+      "conformance": {
+        "case": "ct_respiratory_02",
+        "files": 50,
+        "iod_errors": 0,
+        "dciodvfy_errors": 0,
+        "dciodvfy_failed_files": 0,
+        "iod_diagnostics": {},
+        "dciodvfy_diagnostics": {
+          "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID": 50,
+          "Warning - Value dubious for this VR - (0x0010,0x0010) PN Patient's Name  PN [1] = <P103> - Retired Person Name form": 50,
+          "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>": 50
+        },
+        "files_unchanged": true
+      },
+      "conformance_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_02/conformance.json",
+      "conformance_sha256": "c280bb58142bedb4132a9c2f3d398662a21d25d08c91d3f620b3a0e040a15c38"
+    },
+    {
+      "files": 50,
+      "source_grid_voxels": 13107200,
+      "timepoints": 1,
+      "coverage_complete": true,
+      "maximum_pixel_error": 0.0,
+      "largest_half_step_plus_numeric_tolerance": 0.5000001,
+      "maximum_world_error_mm": 8.369465746045774e-06,
+      "acquisition_metadata_preserved": true,
+      "reconstructed_array_flip_sensitivity": {
+        "spatial_x": 10275150,
+        "spatial_y": 10280216,
+        "spatial_z": 10276394
+      },
+      "alias": "ct_respiratory_03",
+      "status": "passed",
+      "warnings": [],
+      "nifti_sha256": "5225d59ae11d3f65e31144cb94bdf25d0e45cf375561b6cc8389c150dbc55cc3",
+      "original_files_unchanged": true,
+      "source_series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.101149985359108843115314962607",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 30.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.405488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/3353d491-fff7-48c2-8ae2-67e86f13d29d/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.101149985359108843115314962607"
+      },
+      "source_file_count": 50,
+      "source_file_manifest_sha256": "a33e68089933674489926eddc785371ea680f629bfc1c3a48f797c40eb1ca6f1",
+      "output_file_manifest_sha256": "cd0f9581a8a85e4a70f212225b05ba0f7f4ae9dd09beef2ecfe7f8209628114c",
+      "audit_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_03/roundtrip.json",
+      "audit_sha256": "ed051b0d0fabe475e0843f354c16f55e9bfae80fd075b05b39e9fb0195ce653f",
+      "conformance": {
+        "case": "ct_respiratory_03",
+        "files": 50,
+        "iod_errors": 0,
+        "dciodvfy_errors": 0,
+        "dciodvfy_failed_files": 0,
+        "iod_diagnostics": {},
+        "dciodvfy_diagnostics": {
+          "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID": 50,
+          "Warning - Value dubious for this VR - (0x0010,0x0010) PN Patient's Name  PN [1] = <P103> - Retired Person Name form": 50,
+          "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>": 50
+        },
+        "files_unchanged": true
+      },
+      "conformance_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_03/conformance.json",
+      "conformance_sha256": "41874b55feb8bba5ef44c0764d9b36bf57d5a45957b07f7ef37c75fba66fcf61"
+    },
+    {
+      "files": 50,
+      "source_grid_voxels": 13107200,
+      "timepoints": 1,
+      "coverage_complete": true,
+      "maximum_pixel_error": 0.0,
+      "largest_half_step_plus_numeric_tolerance": 0.5000001,
+      "maximum_world_error_mm": 8.369465746045774e-06,
+      "acquisition_metadata_preserved": true,
+      "reconstructed_array_flip_sensitivity": {
+        "spatial_x": 10274986,
+        "spatial_y": 10279874,
+        "spatial_z": 10276194
+      },
+      "alias": "ct_respiratory_04",
+      "status": "passed",
+      "warnings": [],
+      "nifti_sha256": "3d6d7af39d8bf530909ba2efc33f1f3d1dbfbe7c8af58f20c7c83025301b596c",
+      "original_files_unchanged": true,
+      "source_series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.164304251909335542255203856320",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 40.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.405488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/3bc9b518-22f1-439b-9232-37ea49466caa/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.164304251909335542255203856320"
+      },
+      "source_file_count": 50,
+      "source_file_manifest_sha256": "8809b4570fc035d51ca7d14bf5369c01f10cd068b76aef55afe3acd2f24fc7a8",
+      "output_file_manifest_sha256": "be62f909b7d0aa213caf92f33800729687e2c87903ceabaeb8d6bfb21ff48f93",
+      "audit_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_04/roundtrip.json",
+      "audit_sha256": "e3ba00cea767597c50c11d0fea7d75ac8ff5a86f7b770a36070ac446a9483c0d",
+      "conformance": {
+        "case": "ct_respiratory_04",
+        "files": 50,
+        "iod_errors": 0,
+        "dciodvfy_errors": 0,
+        "dciodvfy_failed_files": 0,
+        "iod_diagnostics": {},
+        "dciodvfy_diagnostics": {
+          "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID": 50,
+          "Warning - Value dubious for this VR - (0x0010,0x0010) PN Patient's Name  PN [1] = <P103> - Retired Person Name form": 50,
+          "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>": 50
+        },
+        "files_unchanged": true
+      },
+      "conformance_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_04/conformance.json",
+      "conformance_sha256": "c0569366b02132915ded9764251c1eecfb8055c83d8750db94b62ccf7e296975"
+    },
+    {
+      "files": 50,
+      "source_grid_voxels": 13107200,
+      "timepoints": 1,
+      "coverage_complete": true,
+      "maximum_pixel_error": 0.0,
+      "largest_half_step_plus_numeric_tolerance": 0.5000001,
+      "maximum_world_error_mm": 8.369465746045774e-06,
+      "acquisition_metadata_preserved": true,
+      "reconstructed_array_flip_sensitivity": {
+        "spatial_x": 10275290,
+        "spatial_y": 10280246,
+        "spatial_z": 10276442
+      },
+      "alias": "ct_respiratory_05",
+      "status": "passed",
+      "warnings": [],
+      "nifti_sha256": "c33837fecea46d7b92d0f11866f012b4fb676d63cc7dc540722373db7080c6fd",
+      "original_files_unchanged": true,
+      "source_series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.253052947614281199389106741253",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 50.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.405488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/1292f63f-4ef6-433e-9724-39fd80fdc088/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.253052947614281199389106741253"
+      },
+      "source_file_count": 50,
+      "source_file_manifest_sha256": "cd64595a533fb2478e6ab13471c60dab8f6c2855a5b4609d18e609a54f61255b",
+      "output_file_manifest_sha256": "a803203b370c8470a85f743afcb236005ddab887c67d9bcef94ab9440715b875",
+      "audit_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_05/roundtrip.json",
+      "audit_sha256": "3507ece6f3c51dba9a5b8d88c1099e96ec478d5ae3c772b6d143c49000e5fad8",
+      "conformance": {
+        "case": "ct_respiratory_05",
+        "files": 50,
+        "iod_errors": 0,
+        "dciodvfy_errors": 0,
+        "dciodvfy_failed_files": 0,
+        "iod_diagnostics": {},
+        "dciodvfy_diagnostics": {
+          "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID": 50,
+          "Warning - Value dubious for this VR - (0x0010,0x0010) PN Patient's Name  PN [1] = <P103> - Retired Person Name form": 50,
+          "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>": 50
+        },
+        "files_unchanged": true
+      },
+      "conformance_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_05/conformance.json",
+      "conformance_sha256": "6ae9c887c3ac139ac274236472a9f144ff119167693f7738b7a9c2867d2959cd"
+    },
+    {
+      "files": 50,
+      "source_grid_voxels": 13107200,
+      "timepoints": 1,
+      "coverage_complete": true,
+      "maximum_pixel_error": 0.0,
+      "largest_half_step_plus_numeric_tolerance": 0.5000001,
+      "maximum_world_error_mm": 8.369465746045774e-06,
+      "acquisition_metadata_preserved": true,
+      "reconstructed_array_flip_sensitivity": {
+        "spatial_x": 10275534,
+        "spatial_y": 10280464,
+        "spatial_z": 10276466
+      },
+      "alias": "ct_respiratory_06",
+      "status": "passed",
+      "warnings": [],
+      "nifti_sha256": "8b803ceeef76e26ece6405a1984ff731695e3df5dfca37f12b9c735bead06c93",
+      "original_files_unchanged": true,
+      "source_series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.572559330334867629888846900478",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 60.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.405488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/294f2d99-9ff0-4730-9102-8b5f648e1c97/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.572559330334867629888846900478"
+      },
+      "source_file_count": 50,
+      "source_file_manifest_sha256": "3bb93797f9de4ed398dc2004b3cf302a0ca3ff292542833a23f752efae5d4402",
+      "output_file_manifest_sha256": "88bd56409cf25d40b95247ddd3a86dc91d704ef5e7ecd201dcd38d0147aa33cc",
+      "audit_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_06/roundtrip.json",
+      "audit_sha256": "24878aa9221e8b68da5f102b4e27832ca71df31cd049e21428aa3b3176abc2cc",
+      "conformance": {
+        "case": "ct_respiratory_06",
+        "files": 50,
+        "iod_errors": 0,
+        "dciodvfy_errors": 0,
+        "dciodvfy_failed_files": 0,
+        "iod_diagnostics": {},
+        "dciodvfy_diagnostics": {
+          "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID": 50,
+          "Warning - Value dubious for this VR - (0x0010,0x0010) PN Patient's Name  PN [1] = <P103> - Retired Person Name form": 50,
+          "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>": 50
+        },
+        "files_unchanged": true
+      },
+      "conformance_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_06/conformance.json",
+      "conformance_sha256": "787bdef7aa3915ae96ae961c23e4e35419ebbd82cdb2cda59e49c1c991b8fe89"
+    },
+    {
+      "files": 50,
+      "source_grid_voxels": 13107200,
+      "timepoints": 1,
+      "coverage_complete": true,
+      "maximum_pixel_error": 0.0,
+      "largest_half_step_plus_numeric_tolerance": 0.5000001,
+      "maximum_world_error_mm": 8.369465746045774e-06,
+      "acquisition_metadata_preserved": true,
+      "reconstructed_array_flip_sensitivity": {
+        "spatial_x": 10275570,
+        "spatial_y": 10280208,
+        "spatial_z": 10276660
+      },
+      "alias": "ct_respiratory_07",
+      "status": "passed",
+      "warnings": [],
+      "nifti_sha256": "737bb6522f3cc9d2ac65196e9851b58eaa3e6bbf365087faceb10a4f28c9eb28",
+      "original_files_unchanged": true,
+      "source_series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.274987695069017848173269995124",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 70.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.405488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/a14e00b4-c8cd-48a0-ae9c-230ba02f85bf/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.274987695069017848173269995124"
+      },
+      "source_file_count": 50,
+      "source_file_manifest_sha256": "bec9442da951f9bdf317c8602f88b5051cce34c1577041d2d4c552658371aed7",
+      "output_file_manifest_sha256": "bd3d565d501704c2ae5528f74d2f92c0b02c75c855946e4a58e1f254a52e7bc6",
+      "audit_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_07/roundtrip.json",
+      "audit_sha256": "a0e080c0259241b7b7d69e04799de5555759dbf9a559b18fde82a680e5150f66",
+      "conformance": {
+        "case": "ct_respiratory_07",
+        "files": 50,
+        "iod_errors": 0,
+        "dciodvfy_errors": 0,
+        "dciodvfy_failed_files": 0,
+        "iod_diagnostics": {},
+        "dciodvfy_diagnostics": {
+          "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID": 50,
+          "Warning - Value dubious for this VR - (0x0010,0x0010) PN Patient's Name  PN [1] = <P103> - Retired Person Name form": 50,
+          "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>": 50
+        },
+        "files_unchanged": true
+      },
+      "conformance_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_07/conformance.json",
+      "conformance_sha256": "b6e98787f0d7efdd0d8bae233f7969c9991c904b723ec30cd5b77bfdbb3d9f87"
+    },
+    {
+      "files": 50,
+      "source_grid_voxels": 13107200,
+      "timepoints": 1,
+      "coverage_complete": true,
+      "maximum_pixel_error": 0.0,
+      "largest_half_step_plus_numeric_tolerance": 0.5000001,
+      "maximum_world_error_mm": 8.369465746045774e-06,
+      "acquisition_metadata_preserved": true,
+      "reconstructed_array_flip_sensitivity": {
+        "spatial_x": 10275704,
+        "spatial_y": 10280418,
+        "spatial_z": 10276952
+      },
+      "alias": "ct_respiratory_08",
+      "status": "passed",
+      "warnings": [],
+      "nifti_sha256": "fd392f7e6bd92b553b64df53a15f54174262c718e94f4d068ff2269a648090f3",
+      "original_files_unchanged": true,
+      "source_series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.109924046592639009037308115627",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 80.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.405488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/d12ee01d-85a4-43c4-b499-22cde121dfd0/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.109924046592639009037308115627"
+      },
+      "source_file_count": 50,
+      "source_file_manifest_sha256": "5596de15d208e59f104bcf03585d3968db065483cc55960c18ea0cc5a2cc56a6",
+      "output_file_manifest_sha256": "f058e54c1aa6edf4c77b926ed0fa6a7eebb87feb8c95e8be52fc3042c7a4a348",
+      "audit_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_08/roundtrip.json",
+      "audit_sha256": "c25adc07d89d82a638cab9670a4e1766ed96e17f907bc192f5b914e93a5669c8",
+      "conformance": {
+        "case": "ct_respiratory_08",
+        "files": 50,
+        "iod_errors": 0,
+        "dciodvfy_errors": 0,
+        "dciodvfy_failed_files": 0,
+        "iod_diagnostics": {},
+        "dciodvfy_diagnostics": {
+          "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID": 50,
+          "Warning - Value dubious for this VR - (0x0010,0x0010) PN Patient's Name  PN [1] = <P103> - Retired Person Name form": 50,
+          "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>": 50
+        },
+        "files_unchanged": true
+      },
+      "conformance_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_08/conformance.json",
+      "conformance_sha256": "1f40a2a330bc044d55b6efc1c3c6c54d1bff315c6ce18f67f543d23076241241"
+    },
+    {
+      "files": 50,
+      "source_grid_voxels": 13107200,
+      "timepoints": 1,
+      "coverage_complete": true,
+      "maximum_pixel_error": 0.0,
+      "largest_half_step_plus_numeric_tolerance": 0.5000001,
+      "maximum_world_error_mm": 8.369465746045774e-06,
+      "acquisition_metadata_preserved": true,
+      "reconstructed_array_flip_sensitivity": {
+        "spatial_x": 10275072,
+        "spatial_y": 10280688,
+        "spatial_z": 10276736
+      },
+      "alias": "ct_respiratory_09",
+      "status": "passed",
+      "warnings": [],
+      "nifti_sha256": "05d92a453265dbea4eb0fc79b620261b1407b96f1f211fa9ef3be6949ac0dd30",
+      "original_files_unchanged": true,
+      "source_series": {
+        "collection_id": "4d_lung",
+        "PatientID": "103_HM10395",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.6834.5010.343750046728758832421627429575",
+        "SeriesDescription": "P4^P103^S103^I0, Gated, 90.0%",
+        "Manufacturer": "Varian Imaging Laboratories, Switzerland",
+        "ManufacturerModelName": "Trilogy Cone Beam CT",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.2",
+        "instanceCount": 50,
+        "series_size_MB": 26.405488,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.eln8ygle",
+        "series_aws_url": "s3://idc-open-data/5c08e190-d6ac-44a3-9cdf-64f16df12555/*",
+        "series_revised_idc_version": 2,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.6834.5010.533942039821334131939703941675&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.6834.5010.343750046728758832421627429575"
+      },
+      "source_file_count": 50,
+      "source_file_manifest_sha256": "849ea2a347ba7899d11ea5d7c1fb718347a3c0cc71c8cdd751588b07a048fe9b",
+      "output_file_manifest_sha256": "84189ee75ffa3643baa454dda9b0467b3f0777bf3c559411db10a0aa63f841fd",
+      "audit_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_09/roundtrip.json",
+      "audit_sha256": "90d69dd789a3efe9ea13a733006665c4bbeaeda492584ea9658205657bec05fd",
+      "conformance": {
+        "case": "ct_respiratory_09",
+        "files": 50,
+        "iod_errors": 0,
+        "dciodvfy_errors": 0,
+        "dciodvfy_failed_files": 0,
+        "iod_diagnostics": {},
+        "dciodvfy_diagnostics": {
+          "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID": 50,
+          "Warning - Value dubious for this VR - (0x0010,0x0010) PN Patient's Name  PN [1] = <P103> - Retired Person Name form": 50,
+          "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>": 50
+        },
+        "files_unchanged": true
+      },
+      "conformance_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/ct_respiratory_09/conformance.json",
+      "conformance_sha256": "da45503d628b015198ceb217cd788ff97d45a4f83c85673d004d57d5da6a7d4e"
+    },
+    {
+      "files": 4800,
+      "source_grid_voxels": 18432000,
+      "timepoints": 25,
+      "coverage_complete": true,
+      "maximum_pixel_error": 0.09893995630727659,
+      "largest_half_step_plus_numeric_tolerance": 0.098940056307775,
+      "maximum_world_error_mm": 7.64428170784207e-06,
+      "acquisition_metadata_preserved": true,
+      "reconstructed_array_flip_sensitivity": {
+        "spatial_x": 16879688,
+        "spatial_y": 11684972,
+        "spatial_z": 11660498,
+        "time": 10715490
+      },
+      "alias": "mr_qin_breast_dynamic",
+      "status": "passed",
+      "warnings": [
+        "Timepoint order is preserved, but acquisition timing is unknown in the NIfTI header.",
+        "MR output uses a standard-extended rescale mapping to preserve values. The receiving viewer must honor RescaleSlope and RescaleIntercept."
+      ],
+      "nifti_sha256": "7390074840e065150e941d1d5046f24865ae905ec8e168816764f3fb2cdaad24",
+      "original_files_unchanged": true,
+      "source_series": {
+        "collection_id": "qin_breast",
+        "PatientID": "QIN-BREAST-01-0037",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.8162.7003.338470268607511395624128344084",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.8162.7003.157674113130700982498045336575",
+        "SeriesDescription": "dynamic",
+        "Manufacturer": "Philips Medical Systems",
+        "ManufacturerModelName": "Achieva",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.4",
+        "instanceCount": 500,
+        "series_size_MB": 39.36645,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2016.21juebh0",
+        "series_aws_url": "s3://idc-open-data/84355561-7001-4adf-b66c-810e6a2fc59a/*",
+        "series_revised_idc_version": 2,
+        "NumberOfTemporalPositions": 25,
+        "EchoTime": [
+          4.604
+        ],
+        "DiffusionBValue": [],
+        "Rows": 192,
+        "Columns": 192,
+        "ScanningSequence": [
+          "GR"
+        ],
+        "MRAcquisitionType": "3D",
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.8162.7003.338470268607511395624128344084&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.8162.7003.157674113130700982498045336575"
+      },
+      "source_file_count": 500,
+      "source_file_manifest_sha256": "336c2289895a4afaff04edf9cbf62462e9c90336f3cd0b5a7fbc5a5fefd12ee0",
+      "output_file_manifest_sha256": "f6445c54d62868cbc14cd40ff34d8c5edc527b403669b188215be35446a85643",
+      "audit_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/mr_qin_breast_dynamic/roundtrip.json",
+      "audit_sha256": "bac8ec63521a20775e5486c964e6ee0a099d3ca68b8a712d50b2e6fa2a07c06e",
+      "conformance": {
+        "case": "mr_qin_breast_dynamic",
+        "files": 4800,
+        "iod_errors": 9600,
+        "dciodvfy_errors": 0,
+        "dciodvfy_failed_files": 0,
+        "iod_diagnostics": {
+          "General: (0028,1052): TagUnexpected: General": 4800,
+          "General: (0028,1053): TagUnexpected: General": 4800
+        },
+        "dciodvfy_diagnostics": {
+          "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID": 4800,
+          "Warning - Value dubious for this VR - (0x0010,0x0010) PN Patient's Name  PN [1] = <QIN-BREAST-01-0037> - Retired Person Name form": 4800,
+          "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>": 4800,
+          "Warning - Value is zero for value 1 of attribute <Echo Train Length>": 4800,
+          "Warning - Non-identity Modality LUT Module (RescaleSlope and RescaleIntercept) not expected to be present in standard MR IOD - may cause windowing problems - attribute <RescaleIntercept> = <0.0>": 4800,
+          "Warning - Non-identity Modality LUT Module (RescaleSlope and RescaleIntercept) not expected to be present in standard MR IOD - may cause windowing problems - attribute <RescaleSlope> = <0.19787991261555>": 4800,
+          "Warning - Attribute is not present in standard DICOM IOD - (0x0028,0x1052) DS Rescale Intercept ": 4800,
+          "Warning - Attribute is not present in standard DICOM IOD - (0x0028,0x1053) DS Rescale Slope ": 4800,
+          "Warning - Dicom dataset contains attributes not present in standard DICOM IOD - this is a Standard Extended SOP Class": 4800
+        },
+        "files_unchanged": true
+      },
+      "conformance_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/mr_qin_breast_dynamic/conformance.json",
+      "conformance_sha256": "14e8f7ff79f0c0dfde14c21c153d77975378b50ee97fe8f9075c0faba88c15c2"
+    },
+    {
+      "files": 213,
+      "source_grid_voxels": 4416768,
+      "timepoints": 1,
+      "coverage_complete": true,
+      "maximum_pixel_error": 0.18573154831256034,
+      "largest_half_step_plus_numeric_tolerance": 0.18596066379034001,
+      "maximum_world_error_mm": 1.5223461885247341e-05,
+      "acquisition_metadata_preserved": true,
+      "reconstructed_array_flip_sensitivity": {
+        "spatial_x": 1837756,
+        "spatial_y": 2127414,
+        "spatial_z": 1991250
+      },
+      "alias": "pet_philips_3d",
+      "status": "passed",
+      "warnings": [
+        "PET values are interpreted in the reference Units; NIfTI cannot independently verify activity/SUV units."
+      ],
+      "nifti_sha256": "36f6e86967bbe0f3302eae5c343d61402abca607aaab1f3855ecc2d30a8e45f5",
+      "original_files_unchanged": true,
+      "source_series": {
+        "collection_id": "naf_prostate",
+        "PatientID": "NaF-PROSTATE-01-0005",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.9823.8001.501277577260273770770155919373",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.9823.8001.130493142498857127909478901084",
+        "SeriesDescription": "[WB_CTAC]   Total Body 3",
+        "Manufacturer": "Philips Medical Systems",
+        "ManufacturerModelName": "GEMINI TF TOF 16",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.128",
+        "instanceCount": 213,
+        "series_size_MB": 9.568798,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2015.isoqthko",
+        "series_aws_url": "s3://idc-open-data/63a61f5a-4b41-4e16-a3b9-de2c8f34c9a3/*",
+        "series_revised_idc_version": 2,
+        "SeriesType": "WHOLE BODY/IMAGE",
+        "Units": "BQML",
+        "NumberOfSlices": 213,
+        "Rows": 144,
+        "Columns": 144,
+        "viewer_url": "https://viewer.imaging.datacommons.cancer.gov/v3/viewer/?StudyInstanceUIDs=1.3.6.1.4.1.14519.5.2.1.9823.8001.501277577260273770770155919373&initialSeriesInstanceUID=1.3.6.1.4.1.14519.5.2.1.9823.8001.130493142498857127909478901084"
+      },
+      "source_file_count": 213,
+      "source_file_manifest_sha256": "bdb2133285efe560c9fa61b08afa2a1e535e45a880ca74df1151b5d5c0525c9b",
+      "output_file_manifest_sha256": "c142d12b9ba797cf565b4769889ea8d794659d0a10bbd4563c4ef0c982ec05bc",
+      "audit_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_philips_3d/roundtrip.json",
+      "audit_sha256": "01ab893788f007b84ccb6a1cef79c7925a5336feb047ff0eee208fbd674ee291",
+      "conformance": {
+        "case": "pet_philips_3d",
+        "files": 213,
+        "iod_errors": 0,
+        "dciodvfy_errors": 0,
+        "dciodvfy_failed_files": 0,
+        "iod_diagnostics": {},
+        "dciodvfy_diagnostics": {
+          "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID": 213,
+          "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>": 213,
+          "Warning - CodingSchemeDesignator is deprecated - attribute <CodingSchemeDesignator> = <SNM3>": 426,
+          "Warning - CodingSchemeDesignator is deprecated - attribute <CodingSchemeDesignator> = <SRT>": 213,
+          "Warning - CodingSchemeDesignator is deprecated - attribute <CodingSchemeDesignator> = <99SDM>": 639
+        },
+        "files_unchanged": true
+      },
+      "conformance_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_philips_3d/conformance.json",
+      "conformance_sha256": "2dcb38ad16ac27a673a09c3aa433e11eb42b157b14937ade45841c0a79dd4b5f"
+    },
+    {
+      "files": 2025,
+      "source_grid_voxels": 41990400,
+      "timepoints": 45,
+      "coverage_complete": true,
+      "maximum_pixel_error": 4.046538773174689,
+      "largest_half_step_plus_numeric_tolerance": 4.050862098359655,
+      "maximum_world_error_mm": 7.071067794012746e-07,
+      "acquisition_metadata_preserved": true,
+      "reconstructed_array_flip_sensitivity": {
+        "spatial_x": 13226620,
+        "spatial_y": 16185892,
+        "spatial_z": 12684982,
+        "time": 13067880
+      },
+      "alias": "pet_philips_dynamic",
+      "status": "passed",
+      "warnings": [
+        "Timepoint order is preserved, but acquisition timing is unknown in the NIfTI header.",
+        "PET values are interpreted in the reference Units; NIfTI cannot independently verify activity/SUV units."
+      ],
+      "nifti_sha256": "c37017f5708caaf1fe473cfb0f2007d22bc85b235d9ef233f0e0f5a0cf707906",
+      "original_files_unchanged": true,
+      "source_series": {
+        "collection_id": "acrin_flt_breast",
+        "PatientID": "ACRIN-FLT-Breast_040",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.7009.2401.135403859214769422340824322215",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.7009.2401.238322003272781246971069461592",
+        "SeriesDescription": "PET-CT SERIES",
+        "Manufacturer": "Philips Medical Systems",
+        "ManufacturerModelName": "GEMINI TF TOF 16",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.128",
+        "instanceCount": 2025,
+        "series_size_MB": 92.413602,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2017.ol20zmxg",
+        "series_aws_url": "s3://idc-open-data/31cf1374-38a3-497d-982c-821e713ab796/*",
+        "series_revised_idc_version": 2,
+        "SeriesType": "DYNAMIC/IMAGE",
+        "Units": "BQML",
+        "DecayCorrection": "START",
+        "NumberOfSlices": 45,
+        "NumberOfTimeSlices": 45,
+        "ActualFrameDuration": [
+          4996.0
+        ],
+        "Rows": 144,
+        "Columns": 144
+      },
+      "source_file_count": 2025,
+      "source_file_manifest_sha256": "2ffe6c33ac647fc9c74f535d4041034dd4ea909c1015aad76d0bbfbb387ca8cd",
+      "output_file_manifest_sha256": "052403db32d1e63b48fde4dee5c4132655609b5a89f760415e45f85fe4be7005",
+      "audit_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_philips_dynamic/roundtrip.json",
+      "audit_sha256": "3a9ceeeb7c4e2506666c99fb5057383414bbb2e9959226f141a3f7abf6e60365",
+      "conformance": {
+        "case": "pet_philips_dynamic",
+        "files": 2025,
+        "iod_errors": 0,
+        "dciodvfy_errors": 0,
+        "dciodvfy_failed_files": 0,
+        "iod_diagnostics": {},
+        "dciodvfy_diagnostics": {
+          "Warning - Value dubious for this VR - (0x0008,0x0090) PN Referring Physician's Name  PN [1] = <REMOVED> - Retired Person Name form": 2025,
+          "Warning - Value dubious for this VR - (0x0010,0x0010) PN Patient's Name  PN [1] = <ACRIN-FLT-Breast_040> - Retired Person Name form": 2025,
+          "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>": 2025,
+          "Warning - CodingSchemeDesignator is deprecated - attribute <CodingSchemeDesignator> = <SNM3>": 4050,
+          "Warning - CodingSchemeDesignator is deprecated - attribute <CodingSchemeDesignator> = <SRT>": 2025,
+          "Warning - CodingSchemeDesignator is deprecated - attribute <CodingSchemeDesignator> = <99SDM>": 6075
+        },
+        "files_unchanged": true
+      },
+      "conformance_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_philips_dynamic/conformance.json",
+      "conformance_sha256": "3537b5501dfc46d97cafd123c32429ac62635f0c241562372c5ee7dd370dfd48"
+    },
+    {
+      "files": 42,
+      "source_grid_voxels": 1360800,
+      "timepoints": 1,
+      "coverage_complete": true,
+      "maximum_pixel_error": 0.1625341572871548,
+      "largest_half_step_plus_numeric_tolerance": 0.1629171,
+      "maximum_world_error_mm": 6.131051848253034e-05,
+      "acquisition_metadata_preserved": true,
+      "reconstructed_array_flip_sensitivity": {
+        "spatial_x": 849352,
+        "spatial_y": 862650,
+        "spatial_z": 856762
+      },
+      "alias": "pet_siemens_3d",
+      "status": "passed",
+      "warnings": [
+        "PET values are interpreted in the reference Units; NIfTI cannot independently verify activity/SUV units."
+      ],
+      "nifti_sha256": "921a8b2f78c1f4fd0ebe0c33a906258efe111e1d104104e1f33706d925b815b3",
+      "original_files_unchanged": true,
+      "source_series": {
+        "collection_id": "cmb_lca",
+        "PatientID": "MSB-00556",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.213654205372391181384581668351120583768",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.92924847524321231684161430642644844708",
+        "SeriesDescription": "PET WB AC",
+        "Manufacturer": "SIEMENS",
+        "ManufacturerModelName": "Biograph Horizon",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.128",
+        "instanceCount": 42,
+        "series_size_MB": 2.898826,
+        "license_short_name": "CC BY 4.0",
+        "source_DOI": "10.7937/3cx3-s132",
+        "series_aws_url": "s3://idc-open-data/c83d6abc-e4cf-4ef8-9a72-c7b81b35e3b0/*",
+        "series_revised_idc_version": 23,
+        "SeriesType": "WHOLE BODY/IMAGE",
+        "Units": "BQML",
+        "DecayCorrection": "START",
+        "NumberOfSlices": 42,
+        "NumberOfTimeSlices": null,
+        "Rows": 180,
+        "Columns": 180
+      },
+      "source_file_count": 42,
+      "source_file_manifest_sha256": "21be711d027730f56bbf91f7d56253be0b6956ee495b3bd47a78df77d3675431",
+      "output_file_manifest_sha256": "e0dba630f2ea2864cc52d16cf1d8e3a8a4af91a863dd626cef99b8bd86f24542",
+      "audit_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_siemens_3d/roundtrip.json",
+      "audit_sha256": "44004d4ca01f9291900d836dd691619c2fd82b76dc71bc416838214aadb4233e",
+      "conformance": {
+        "case": "pet_siemens_3d",
+        "files": 42,
+        "iod_errors": 0,
+        "dciodvfy_errors": 0,
+        "dciodvfy_failed_files": 0,
+        "iod_diagnostics": {},
+        "dciodvfy_diagnostics": {
+          "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID": 42,
+          "Warning - Value dubious for this VR - (0x0010,0x0010) PN Patient's Name  PN [1] = <MSB-00556> - Retired Person Name form": 42,
+          "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>": 42,
+          "Warning - CodingSchemeDesignator is deprecated - attribute <CodingSchemeDesignator> = <SRT>": 84,
+          "Warning - CodingSchemeDesignator is deprecated - attribute <CodingSchemeDesignator> = <99SDM>": 126
+        },
+        "files_unchanged": true
+      },
+      "conformance_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_siemens_3d/conformance.json",
+      "conformance_sha256": "b4a2a793064ccbb805586bea8ad604c6abf523f9eee10bc9e6d16594f99c10cc"
+    },
+    {
+      "files": 3330,
+      "source_grid_voxels": 93985920,
+      "timepoints": 45,
+      "coverage_complete": true,
+      "maximum_pixel_error": 22.684610885778966,
+      "largest_half_step_plus_numeric_tolerance": 23.3216192294728,
+      "maximum_world_error_mm": 3.850676881230705e-05,
+      "acquisition_metadata_preserved": true,
+      "reconstructed_array_flip_sensitivity": {
+        "spatial_x": 23611342,
+        "spatial_y": 28695226,
+        "spatial_z": 25479936,
+        "time": 26250412
+      },
+      "alias": "pet_siemens_dynamic",
+      "status": "passed",
+      "warnings": [
+        "Reference PET ImageIndex uses nonconformant descending slice order; recovered the consistent reversal in every timepoint. Original source indices and SOP identities are retained.",
+        "Timepoint order is preserved, but acquisition timing is unknown in the NIfTI header.",
+        "PET values are interpreted in the reference Units; NIfTI cannot independently verify activity/SUV units."
+      ],
+      "nifti_sha256": "781bbc8f708f8737e6560ffcb503d702da142ef83014dcfc383148fa6a41ebf4",
+      "original_files_unchanged": true,
+      "source_series": {
+        "collection_id": "acrin_flt_breast",
+        "PatientID": "ACRIN-FLT-Breast_062",
+        "StudyInstanceUID": "1.3.6.1.4.1.14519.5.2.1.7009.2401.201707307253869830909450020890",
+        "SeriesInstanceUID": "1.3.6.1.4.1.14519.5.2.1.7009.2401.154881232282101954752345873528",
+        "SeriesDescription": "PET-CT SERIES",
+        "Manufacturer": "SIEMENS",
+        "ManufacturerModelName": "1094",
+        "SOPClassUID": "1.2.840.10008.5.1.4.1.1.128",
+        "instanceCount": 3330,
+        "series_size_MB": 200.036158,
+        "license_short_name": "CC BY 3.0",
+        "source_DOI": "10.7937/k9/tcia.2017.ol20zmxg",
+        "series_aws_url": "s3://idc-open-data/c63e6b6b-46b6-44aa-9f1b-cf05769f89e7/*",
+        "series_revised_idc_version": 2,
+        "SeriesType": "DYNAMIC/IMAGE",
+        "Units": "BQML",
+        "DecayCorrection": "START",
+        "NumberOfSlices": 74,
+        "NumberOfTimeSlices": 45,
+        "ActualFrameDuration": [
+          5000.0,
+          10000.0,
+          30000.0,
+          60000.0,
+          180000.0,
+          300000.0
+        ],
+        "Rows": 168,
+        "Columns": 168
+      },
+      "source_file_count": 3330,
+      "source_file_manifest_sha256": "24abf15d334fcfc756f4231c54af15ccdb371b5acf2190aa49735b67e796e4e8",
+      "output_file_manifest_sha256": "49403ddb2d18b9e61e819bb8b48155d9adfb6f590c07fc0ff1c7a7744d8959ac",
+      "audit_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_siemens_dynamic/roundtrip.json",
+      "audit_sha256": "bda29d5131b3f1a7ad0680c19f1de8ef248a010f14723891c3997d5fd19d06e3",
+      "conformance": {
+        "case": "pet_siemens_dynamic",
+        "files": 3330,
+        "iod_errors": 0,
+        "dciodvfy_errors": 0,
+        "dciodvfy_failed_files": 0,
+        "iod_diagnostics": {},
+        "dciodvfy_diagnostics": {
+          "Warning - Missing attribute or value that would be needed to build DICOMDIR - Study ID": 3330,
+          "Warning - Value dubious for this VR - (0x0010,0x0010) PN Patient's Name  PN [1] = <ACRIN-FLT-Breast_062> - Retired Person Name form": 3330,
+          "Warning - is only permitted to be empty when actually unknown; should be absent (not empty) if an unpaired body part, and have a value if a paired body part - attribute <Laterality>": 3330,
+          "Warning - CodingSchemeDesignator is deprecated - attribute <CodingSchemeDesignator> = <SNM3>": 3330,
+          "Warning - CodingSchemeDesignator is deprecated - attribute <CodingSchemeDesignator> = <99SDM>": 9990
+        },
+        "files_unchanged": true
+      },
+      "conformance_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_siemens_dynamic/conformance.json",
+      "conformance_sha256": "09ca30eeed7edcc2fde77bd7f1f583317194b92d620cec4f53b2b5b101e5300a"
+    }
+  ],
+  "slicer": [
+    {
+      "case": "mr_qin_breast_dynamic",
+      "representation": "multivolume",
+      "actual_representation": "multivolume",
+      "status": "passed",
+      "frames": 25,
+      "voxels": 18432000,
+      "maximum_serialized_value_error": 0.0,
+      "maximum_world_error_mm": 7.644281480911191e-06,
+      "precision_bound_violations": 0,
+      "frame_voxel_sha256": {
+        "0": "cda51a95c84e18d6339bda03fd7346642a4a9ee219d4d2c042d0e55a5d41c805",
+        "1": "7cc5173ba8cb7daf4001cc912c1e92ee1ec31e4cfee0bda1f66b84b852a5b482",
+        "2": "375b63d0b073356699febd046508ac84a035120c22c557297ad2ee00a411ede9",
+        "3": "8b8f5e5ee8ddea5e7d9e44becb158b33654ce6cb339a6a99bf0701b7bdbddde7",
+        "4": "b3727acef428e2837395a7f0bc27703232ba44485e3b258c949a3806076d3679",
+        "5": "91f0633920ad89d70450f4b87430eb1216dfb170ab635a15975d8f9d22a7c216",
+        "6": "f1120ebbd2f273588371798d3b80b226590f8494629790feab48155e8c31d881",
+        "7": "44b85aa242ead4536e35bd7efb06affacdc9018b005636c8b264661f86d2a102",
+        "8": "fc0546d820ca225c59955fac43f3dffc13dfab09e7c8b0094e9fb4bb37f31894",
+        "9": "8a0cdb5485446cf5a32624f9461d618d7a9da61dc966c00ff022ac066b7be53f",
+        "10": "e2fa29aaa4714029c102388ad6a5ab54885098a112b1e46e44bec8b371ba12b0",
+        "11": "b4bd233204b2bc6bd28ef9444ffacc082f58b18f968aa70bd283af137bd4aa71",
+        "12": "bcb12d500db14a1bb289910336e3a696a45c6613f44c3f7351315c11342deeda",
+        "13": "2ed94759482bb207cfddcac502b34b62c9d961fed8506305d6d8e5b557e1d439",
+        "14": "fcf8b399503778cda4bfe72a93e942f6a9135d00f6bed18fdd184a703eb01be6",
+        "15": "98ade68b6a4825d21a4f44d26fd159f52af916603aec45fc0cc9970e7c1e4e63",
+        "16": "857692b7ee09206c20fadb5686d8b54d2f4b56be566b6a566900d587ab63b6db",
+        "17": "8acc8f352ae7d380a91ddc5de39a9ef659916974ac461ada31b26e17f4667c97",
+        "18": "9530f06ccecc0e31402c5a2988074d8bd1dbec4afa67ed452163a4ea317deb68",
+        "19": "8a68d5806b11788500c15ded6f0a8f9604793a2f6c44dccaea2c3f524e53be53",
+        "20": "39163575af5e933e20691b8b7b885ccf03736cff973a91bd0a6ae1c12ba0f440",
+        "21": "c34c356e80bab503f218e456fa44b0bc1c2dff37f26ef6a62bb44215604f23c3",
+        "22": "c9e15282ebcdc8d5656fd151d5967aba4670abb1cefa6990b6b0de9c5908bdf4",
+        "23": "edb905e8b8dd87ee67c711df3ba7834e6307c4e533f618e35fc4690b4ed2d0de",
+        "24": "a5ddbcce7633df8b8694a3d4df3892846e56dced76e5e432c52e89b60eb0d493"
+      },
+      "selected_imports": [
+        {
+          "plugin": "Nifti2DicomPETPlugin",
+          "name": "1601: MR NIfTI conversion - 25 frames MultiVolume by AcquisitionTime",
+          "confidence": 1.0,
+          "selected": true,
+          "warning": "",
+          "files": 4800
+        }
+      ],
+      "segmentations": [],
+      "slicer_version": "5.12.0",
+      "revision": "a5df714",
+      "script_sha256": "f287fb37b3ca6561d196307f0c0eb108d104a1d020c437b4ebddb85523055e18",
+      "oracle_sha256": "57ba8414e1e269f1158a151bf917fde359e89a85f03119e0438bc903349b9876",
+      "report_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/mr_qin_breast_dynamic/strict-multivolume-acceptance.json",
+      "report_sha256": "986ea6d08f3ab69dab82900d9a98b1d5e9ee405f56b05aa4b0c1af85cd975a06",
+      "finite_pixels_verified": true,
+      "complete_unique_physical_coverage_verified": true,
+      "cases_sha256": "54e775bf31b61b30147b09662327d798c3c11fc8ae97b799636a3de439ae0e45",
+      "truth_sha256": "b3f7c76eeb2a9bed32e4bdbdf7f765387b570f12a55b92d557f31a435e7c42c7",
+      "input_provenance": [
+        {
+          "directory": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/mr_qin_breast_dynamic/dicom",
+          "dicom_file_count": 4800,
+          "dicom_files_sha256": "2f51c869b174472e9194189346ae8b932d6a1d974dff4b3c168268538dfbdf6c",
+          "dicom_files_sha256_after_import": "2f51c869b174472e9194189346ae8b932d6a1d974dff4b3c168268538dfbdf6c",
+          "fingerprint_algorithm": "SHA256 of UTF-8 JSON [[filename,SHA256(file bytes)],...] in filename order; ensure_ascii=True, separators=(',',':')",
+          "messages": [],
+          "load_success": [
+            true
+          ],
+          "roundtrip_report_sha256": "bac8ec63521a20775e5486c964e6ee0a099d3ca68b8a712d50b2e6fa2a07c06e",
+          "files_unchanged_during_import": true
+        }
+      ],
+      "display_indices_checked": 25,
+      "native_time_metadata": {
+        "MultiVolume.FrameIdentifyingDICOMTagName": "AcquisitionTime",
+        "MultiVolume.FrameIdentifyingDICOMTagUnits": "ms",
+        "MultiVolume.FrameLabels": "0.0,17490.0,34980.0,104430.0,121920.0,139410.0,156900.0,174390.0,191880.0,209370.0,226860.0,244350.0,261840.0,279330.0,296820.0,314320.0,331810.0,349300.0,366790.0,384280.0,401770.0,419260.0,436750.0,454240.0,471730.0"
+      }
+    },
+    {
+      "case": "mr_qin_breast_dynamic",
+      "representation": "sequence",
+      "actual_representation": "sequence",
+      "status": "passed",
+      "frames": 25,
+      "voxels": 18432000,
+      "maximum_serialized_value_error": 0.0,
+      "maximum_world_error_mm": 7.644281480911191e-06,
+      "precision_bound_violations": 0,
+      "frame_voxel_sha256": {
+        "0": "cda51a95c84e18d6339bda03fd7346642a4a9ee219d4d2c042d0e55a5d41c805",
+        "1": "7cc5173ba8cb7daf4001cc912c1e92ee1ec31e4cfee0bda1f66b84b852a5b482",
+        "2": "375b63d0b073356699febd046508ac84a035120c22c557297ad2ee00a411ede9",
+        "3": "8b8f5e5ee8ddea5e7d9e44becb158b33654ce6cb339a6a99bf0701b7bdbddde7",
+        "4": "b3727acef428e2837395a7f0bc27703232ba44485e3b258c949a3806076d3679",
+        "5": "91f0633920ad89d70450f4b87430eb1216dfb170ab635a15975d8f9d22a7c216",
+        "6": "f1120ebbd2f273588371798d3b80b226590f8494629790feab48155e8c31d881",
+        "7": "44b85aa242ead4536e35bd7efb06affacdc9018b005636c8b264661f86d2a102",
+        "8": "fc0546d820ca225c59955fac43f3dffc13dfab09e7c8b0094e9fb4bb37f31894",
+        "9": "8a0cdb5485446cf5a32624f9461d618d7a9da61dc966c00ff022ac066b7be53f",
+        "10": "e2fa29aaa4714029c102388ad6a5ab54885098a112b1e46e44bec8b371ba12b0",
+        "11": "b4bd233204b2bc6bd28ef9444ffacc082f58b18f968aa70bd283af137bd4aa71",
+        "12": "bcb12d500db14a1bb289910336e3a696a45c6613f44c3f7351315c11342deeda",
+        "13": "2ed94759482bb207cfddcac502b34b62c9d961fed8506305d6d8e5b557e1d439",
+        "14": "fcf8b399503778cda4bfe72a93e942f6a9135d00f6bed18fdd184a703eb01be6",
+        "15": "98ade68b6a4825d21a4f44d26fd159f52af916603aec45fc0cc9970e7c1e4e63",
+        "16": "857692b7ee09206c20fadb5686d8b54d2f4b56be566b6a566900d587ab63b6db",
+        "17": "8acc8f352ae7d380a91ddc5de39a9ef659916974ac461ada31b26e17f4667c97",
+        "18": "9530f06ccecc0e31402c5a2988074d8bd1dbec4afa67ed452163a4ea317deb68",
+        "19": "8a68d5806b11788500c15ded6f0a8f9604793a2f6c44dccaea2c3f524e53be53",
+        "20": "39163575af5e933e20691b8b7b885ccf03736cff973a91bd0a6ae1c12ba0f440",
+        "21": "c34c356e80bab503f218e456fa44b0bc1c2dff37f26ef6a62bb44215604f23c3",
+        "22": "c9e15282ebcdc8d5656fd151d5967aba4670abb1cefa6990b6b0de9c5908bdf4",
+        "23": "edb905e8b8dd87ee67c711df3ba7834e6307c4e533f618e35fc4690b4ed2d0de",
+        "24": "a5ddbcce7633df8b8694a3d4df3892846e56dced76e5e432c52e89b60eb0d493"
+      },
+      "selected_imports": [
+        {
+          "plugin": "Nifti2DicomPETPlugin",
+          "name": "1601: MR NIfTI conversion - 25 frames Volume Sequence by AcquisitionTime",
+          "confidence": 1.0,
+          "selected": true,
+          "warning": "",
+          "files": 4800
+        }
+      ],
+      "segmentations": [],
+      "slicer_version": "5.12.0",
+      "revision": "a5df714",
+      "script_sha256": "f287fb37b3ca6561d196307f0c0eb108d104a1d020c437b4ebddb85523055e18",
+      "oracle_sha256": "57ba8414e1e269f1158a151bf917fde359e89a85f03119e0438bc903349b9876",
+      "report_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/mr_qin_breast_dynamic/strict-sequence-acceptance.json",
+      "report_sha256": "d31f8f0038f2e6c1dc13562180ea28c158e986cefacf071b7f2709420c8e266c",
+      "finite_pixels_verified": true,
+      "complete_unique_physical_coverage_verified": true,
+      "cases_sha256": "54e775bf31b61b30147b09662327d798c3c11fc8ae97b799636a3de439ae0e45",
+      "truth_sha256": "b3f7c76eeb2a9bed32e4bdbdf7f765387b570f12a55b92d557f31a435e7c42c7",
+      "input_provenance": [
+        {
+          "directory": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/mr_qin_breast_dynamic/dicom",
+          "dicom_file_count": 4800,
+          "dicom_files_sha256": "2f51c869b174472e9194189346ae8b932d6a1d974dff4b3c168268538dfbdf6c",
+          "dicom_files_sha256_after_import": "2f51c869b174472e9194189346ae8b932d6a1d974dff4b3c168268538dfbdf6c",
+          "fingerprint_algorithm": "SHA256 of UTF-8 JSON [[filename,SHA256(file bytes)],...] in filename order; ensure_ascii=True, separators=(',',':')",
+          "messages": [],
+          "load_success": [
+            true
+          ],
+          "roundtrip_report_sha256": "bac8ec63521a20775e5486c964e6ee0a099d3ca68b8a712d50b2e6fa2a07c06e",
+          "files_unchanged_during_import": true
+        }
+      ],
+      "sequence_indices": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24"
+      ],
+      "sequence_index_unit": "",
+      "browser_indices_checked": 25,
+      "native_time_metadata": {
+        "MultiVolume.FrameIdentifyingDICOMTagName": "AcquisitionTime",
+        "MultiVolume.FrameIdentifyingDICOMTagUnits": "ms",
+        "MultiVolume.FrameLabels": "0.0,17490.0,34980.0,104430.0,121920.0,139410.0,156900.0,174390.0,191880.0,209370.0,226860.0,244350.0,261840.0,279330.0,296820.0,314320.0,331810.0,349300.0,366790.0,384280.0,401770.0,419260.0,436750.0,454240.0,471730.0"
+      }
+    },
+    {
+      "case": "pet_philips_3d",
+      "representation": "sequence",
+      "actual_representation": "scalar",
+      "status": "passed",
+      "frames": 1,
+      "voxels": 4416768,
+      "maximum_serialized_value_error": 0.0,
+      "maximum_world_error_mm": 1.1229316587462133e-05,
+      "precision_bound_violations": 0,
+      "frame_voxel_sha256": {
+        "0": "99dab5d45470dbd8636672e5b52e6de283d8ab29abaa3c7511f37450a12a2447"
+      },
+      "selected_imports": [
+        {
+          "plugin": "DICOMScalarVolumePluginClass",
+          "name": "362200: NIfTI conversion",
+          "confidence": 0.5,
+          "selected": true,
+          "warning": "",
+          "files": 213
+        }
+      ],
+      "segmentations": [],
+      "slicer_version": "5.12.0",
+      "revision": "a5df714",
+      "script_sha256": "f287fb37b3ca6561d196307f0c0eb108d104a1d020c437b4ebddb85523055e18",
+      "oracle_sha256": "57ba8414e1e269f1158a151bf917fde359e89a85f03119e0438bc903349b9876",
+      "report_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_philips_3d/strict-sequence-acceptance.json",
+      "report_sha256": "67f3079833491b62f6786d9172da721d240000ab9ecadf89867aae3aead60fe2",
+      "finite_pixels_verified": true,
+      "complete_unique_physical_coverage_verified": true,
+      "cases_sha256": "74a51c72ad1cc81fa6bce33033d080fdb9b12ccf443a2575854cafdbe5bce3bd",
+      "truth_sha256": "fdb9029633af4247ceae5d0785393a14b4ac3729111d16e48ca5f1da8f5f5f7c",
+      "input_provenance": [
+        {
+          "directory": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_philips_3d/dicom",
+          "dicom_file_count": 213,
+          "dicom_files_sha256": "c18140463760354b431c9002e0cc0908cfe65bfe1105fe7380cd467b1672ebd6",
+          "dicom_files_sha256_after_import": "c18140463760354b431c9002e0cc0908cfe65bfe1105fe7380cd467b1672ebd6",
+          "fingerprint_algorithm": "SHA256 of UTF-8 JSON [[filename,SHA256(file bytes)],...] in filename order; ensure_ascii=True, separators=(',',':')",
+          "messages": [],
+          "load_success": [
+            true
+          ],
+          "roundtrip_report_sha256": "01ab893788f007b84ccb6a1cef79c7925a5336feb047ff0eee208fbd674ee291",
+          "files_unchanged_during_import": true
+        }
+      ],
+      "native_time_metadata": {}
+    },
+    {
+      "case": "pet_philips_dynamic",
+      "representation": "multivolume",
+      "actual_representation": "multivolume",
+      "status": "passed",
+      "frames": 45,
+      "voxels": 41990400,
+      "maximum_serialized_value_error": 0.0,
+      "maximum_world_error_mm": 7.071067794012746e-07,
+      "precision_bound_violations": 0,
+      "frame_voxel_sha256": {
+        "0": "0a5f9457fc9b5675d8c576e1c2e6b7e4316efff049cfa36f76f5be71c948ad1b",
+        "1": "96bd12c68bffc0a4c948dd844617c64290d816d0009c0ef77e14b6ccfef0953c",
+        "2": "c86057a494537f272bfe3e639ab1e2791c2d2d3da2b87d9edbe937f413ad3b54",
+        "3": "0ed5e944885da86cf816fbedf71c8eba22b512701a6dd20d59f824ad4bf298c4",
+        "4": "e3ff5da2d5e662c0b97883abebf5e3f71463ebafae4783a79009dee5af00b015",
+        "5": "0fdad16c494b8d3ec8f003175b0287a6104c276afa5277f4ed5a891e7fe24deb",
+        "6": "19171660b14b6d01f3210852d48a6c34aa663fe0b65d6a2aeb942b94e958d8fa",
+        "7": "725a113d6ef8d322032fc961f54ba81a8c4f4eef443d046abcd02cfbbe5d4a23",
+        "8": "48754d7115882e5fc1db151afc87da05cbfe04c3309a23c36b7cefa2b7d179f1",
+        "9": "9b1d4832332723633a2b5a2dd79eacb7e48cf57b2be3ced889fdf6799c4213fc",
+        "10": "34815fc6d9f36f939b91d9b510209b213c1ff0cff3a1d536b3f7fabf56b0a53d",
+        "11": "489b42139456b1efcd4a7eb17c77215ba11612bd16fb0dcaf951076e0081fec1",
+        "12": "073659d1e074edf7b50b43253c68838d7879dda252c6b46ef1ea9c0898defa67",
+        "13": "a4a12440c4f5225ddcc9862d63f0e6e39a5d7e75c6e7387b5eaa9fdedac7ba02",
+        "14": "6b37f8846bba2972def7129424eb7a0e752aa0c1a514300c86c6f6e28664b1c5",
+        "15": "e0e9559b3246c9b068464f2136dfd910d2220acd70765716857e1abe46db2ad3",
+        "16": "03e99432ce621ffa62b5074d6d6a34ace089283c430428199b3a1ccb2cc13a4b",
+        "17": "d8f48bcfe0e07916cdf0256770c5bb79ee14caa8d601e47a2e54ea908d714655",
+        "18": "fcbf0e66d62929b1ec960894d915ae79ad01856d398059b9624b2c713b66e4ac",
+        "19": "047af90493645ed701eedd6513a4abb20c31c7675856db1a9df703bdaa09aa38",
+        "20": "1ec9669ad8325ad659df5d97ab1912ee15f2026bbc77bf6c593920f8183a42f8",
+        "21": "aa3a703da19c6277c493dc12aacb3ec5de2558b5d1549c60a270d2fd7d894aa8",
+        "22": "bfae157075cfa48742d35c5451e13743bcfcc0123649df8574074e3c05db6001",
+        "23": "0dbe434df3a493fe039f7e82ce81eb296da1d2c1a02132f8a8e27144ef4507bc",
+        "24": "882cac44d6d995ae4ea1fc28a98618af45c1c214184708bcad7ea9188bb65b9d",
+        "25": "1c810eae7730b5b1fcf14c4757a8a6c53d3f0653b51b069540351e7f21510ddf",
+        "26": "eff4f2e3ed281188e1582c713deef3ebf3ff82c7d4115a9d62896a86cae1be81",
+        "27": "34ab30f69aa5695d1aa0203c75fb4a287e99c6e68327008152ed639d9230de39",
+        "28": "0ed3b3167980f47d239219a97c31ddda0c55eae7249d74e518f461ac05702cc4",
+        "29": "944f4a2ab9b89068b0304730e386719a23d795fdca7ed7df517bd6ef42d9654f",
+        "30": "c1c648e076e01056b4f9e47f5c79373eec5dbb9659a52b719dc12405b5abf913",
+        "31": "fbe07211ee38389065c4d004147d61a73f28835ad5bf8e1b14ab3a1611f91b84",
+        "32": "f162bfcf4076c9adaf77c01997fb5bc2602ae21774f30e4473ac9e798664df24",
+        "33": "6d1dd16283f9cfc84b32f74410b3479bcd7486ba6ffc784138a2b16e41cfc5cf",
+        "34": "644c16c23217252d2728e56aea4f457dbece72dffa234f8f32b08e96369e1b68",
+        "35": "7d4e91bca1549d46ec2b6284e5865f1e97eb9e65d8ccf49d6b2277afa727dbf3",
+        "36": "feb8ab8573695e4f4f8594db2efe9852100968a5cb0fcedfb272dcc8b10a7a96",
+        "37": "2edab33730d4334e986f413b0894d82ba021d776b217a59d06ec21e699e2fd43",
+        "38": "4271f375b7c220492f7433ab3a78d40e7cf0c1dbffd4a11adccc453371e87232",
+        "39": "880fad705d73b4d6380697bd7ca35ec210e29ef8218ac725982916fce90ce3e3",
+        "40": "50efaeb9ff3f0636c492946cfca35c1e71e64ee10406019a0883f70a49fe02af",
+        "41": "1def1bd6f3f5a27860ca4a2cb8b660b297b180513b0b0a7c6a66b8c409c1baca",
+        "42": "eb4b2b302d48c3402a4ae0cfefa126aee8c062ea87ce93db36c7fccebc1cca37",
+        "43": "b6777b7be6cbb944afdce80c526ffcc5c9b49dc692482d95f737fda7407597f1",
+        "44": "3efd7293fcc50e842c7305c99204465b6915a63b6562c5072d59938d49e49f7b"
+      },
+      "selected_imports": [
+        {
+          "plugin": "Nifti2DicomPETPlugin",
+          "name": "NIfTI conversion: 45 frames MultiVolume",
+          "confidence": 1.0,
+          "selected": true,
+          "warning": "",
+          "files": 2025
+        }
+      ],
+      "segmentations": [],
+      "slicer_version": "5.12.0",
+      "revision": "a5df714",
+      "script_sha256": "f287fb37b3ca6561d196307f0c0eb108d104a1d020c437b4ebddb85523055e18",
+      "oracle_sha256": "57ba8414e1e269f1158a151bf917fde359e89a85f03119e0438bc903349b9876",
+      "report_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_philips_dynamic/strict-multivolume-acceptance.json",
+      "report_sha256": "46dee148a2c94620dd29119d5e46099f72f456cee0e1d1c8c6cd9e81c5d74f4c",
+      "finite_pixels_verified": true,
+      "complete_unique_physical_coverage_verified": true,
+      "cases_sha256": "782d9c354ec0d5b01c6f667e79dc83dc984c9ba9606f1a430832daafa3d18f50",
+      "truth_sha256": "4e3231f56f5cf6f4f5d3751e5f43bbc5531b1a4c950af16880101e744b5a0452",
+      "input_provenance": [
+        {
+          "directory": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_philips_dynamic/dicom",
+          "dicom_file_count": 2025,
+          "dicom_files_sha256": "d3e2167eda2f4cb2330a61887da4485f68dbb1a8d29945803044f5e5a3a0c0cc",
+          "dicom_files_sha256_after_import": "d3e2167eda2f4cb2330a61887da4485f68dbb1a8d29945803044f5e5a3a0c0cc",
+          "fingerprint_algorithm": "SHA256 of UTF-8 JSON [[filename,SHA256(file bytes)],...] in filename order; ensure_ascii=True, separators=(',',':')",
+          "messages": [],
+          "load_success": [
+            true
+          ],
+          "roundtrip_report_sha256": "3a9ceeeb7c4e2506666c99fb5057383414bbb2e9959226f141a3f7abf6e60365",
+          "files_unchanged_during_import": true
+        }
+      ],
+      "display_indices_checked": 45,
+      "native_time_metadata": {
+        "MultiVolume.FrameIdentifyingDICOMTagName": "FrameReferenceTime",
+        "MultiVolume.FrameIdentifyingDICOMTagUnits": "ms",
+        "MultiVolume.FrameLabels": "95996,100996,105996,110996,115996,120996,125996,130996,135996,140996,145996,150996,155996,160996,165996,170996,175996,185996,195996,205996,215996,225996,235996,245996,275996,305996,335996,365996,395996,455996,515996,575996,635996,695996,875996,1055996,1235996,1415996,1595996,1895996,2195996,2495996,2795996,3095996,3395996"
+      }
+    },
+    {
+      "case": "pet_philips_dynamic",
+      "representation": "sequence",
+      "actual_representation": "sequence",
+      "status": "passed",
+      "frames": 45,
+      "voxels": 41990400,
+      "maximum_serialized_value_error": 0.0,
+      "maximum_world_error_mm": 7.071067794012746e-07,
+      "precision_bound_violations": 0,
+      "frame_voxel_sha256": {
+        "0": "0a5f9457fc9b5675d8c576e1c2e6b7e4316efff049cfa36f76f5be71c948ad1b",
+        "1": "96bd12c68bffc0a4c948dd844617c64290d816d0009c0ef77e14b6ccfef0953c",
+        "2": "c86057a494537f272bfe3e639ab1e2791c2d2d3da2b87d9edbe937f413ad3b54",
+        "3": "0ed5e944885da86cf816fbedf71c8eba22b512701a6dd20d59f824ad4bf298c4",
+        "4": "e3ff5da2d5e662c0b97883abebf5e3f71463ebafae4783a79009dee5af00b015",
+        "5": "0fdad16c494b8d3ec8f003175b0287a6104c276afa5277f4ed5a891e7fe24deb",
+        "6": "19171660b14b6d01f3210852d48a6c34aa663fe0b65d6a2aeb942b94e958d8fa",
+        "7": "725a113d6ef8d322032fc961f54ba81a8c4f4eef443d046abcd02cfbbe5d4a23",
+        "8": "48754d7115882e5fc1db151afc87da05cbfe04c3309a23c36b7cefa2b7d179f1",
+        "9": "9b1d4832332723633a2b5a2dd79eacb7e48cf57b2be3ced889fdf6799c4213fc",
+        "10": "34815fc6d9f36f939b91d9b510209b213c1ff0cff3a1d536b3f7fabf56b0a53d",
+        "11": "489b42139456b1efcd4a7eb17c77215ba11612bd16fb0dcaf951076e0081fec1",
+        "12": "073659d1e074edf7b50b43253c68838d7879dda252c6b46ef1ea9c0898defa67",
+        "13": "a4a12440c4f5225ddcc9862d63f0e6e39a5d7e75c6e7387b5eaa9fdedac7ba02",
+        "14": "6b37f8846bba2972def7129424eb7a0e752aa0c1a514300c86c6f6e28664b1c5",
+        "15": "e0e9559b3246c9b068464f2136dfd910d2220acd70765716857e1abe46db2ad3",
+        "16": "03e99432ce621ffa62b5074d6d6a34ace089283c430428199b3a1ccb2cc13a4b",
+        "17": "d8f48bcfe0e07916cdf0256770c5bb79ee14caa8d601e47a2e54ea908d714655",
+        "18": "fcbf0e66d62929b1ec960894d915ae79ad01856d398059b9624b2c713b66e4ac",
+        "19": "047af90493645ed701eedd6513a4abb20c31c7675856db1a9df703bdaa09aa38",
+        "20": "1ec9669ad8325ad659df5d97ab1912ee15f2026bbc77bf6c593920f8183a42f8",
+        "21": "aa3a703da19c6277c493dc12aacb3ec5de2558b5d1549c60a270d2fd7d894aa8",
+        "22": "bfae157075cfa48742d35c5451e13743bcfcc0123649df8574074e3c05db6001",
+        "23": "0dbe434df3a493fe039f7e82ce81eb296da1d2c1a02132f8a8e27144ef4507bc",
+        "24": "882cac44d6d995ae4ea1fc28a98618af45c1c214184708bcad7ea9188bb65b9d",
+        "25": "1c810eae7730b5b1fcf14c4757a8a6c53d3f0653b51b069540351e7f21510ddf",
+        "26": "eff4f2e3ed281188e1582c713deef3ebf3ff82c7d4115a9d62896a86cae1be81",
+        "27": "34ab30f69aa5695d1aa0203c75fb4a287e99c6e68327008152ed639d9230de39",
+        "28": "0ed3b3167980f47d239219a97c31ddda0c55eae7249d74e518f461ac05702cc4",
+        "29": "944f4a2ab9b89068b0304730e386719a23d795fdca7ed7df517bd6ef42d9654f",
+        "30": "c1c648e076e01056b4f9e47f5c79373eec5dbb9659a52b719dc12405b5abf913",
+        "31": "fbe07211ee38389065c4d004147d61a73f28835ad5bf8e1b14ab3a1611f91b84",
+        "32": "f162bfcf4076c9adaf77c01997fb5bc2602ae21774f30e4473ac9e798664df24",
+        "33": "6d1dd16283f9cfc84b32f74410b3479bcd7486ba6ffc784138a2b16e41cfc5cf",
+        "34": "644c16c23217252d2728e56aea4f457dbece72dffa234f8f32b08e96369e1b68",
+        "35": "7d4e91bca1549d46ec2b6284e5865f1e97eb9e65d8ccf49d6b2277afa727dbf3",
+        "36": "feb8ab8573695e4f4f8594db2efe9852100968a5cb0fcedfb272dcc8b10a7a96",
+        "37": "2edab33730d4334e986f413b0894d82ba021d776b217a59d06ec21e699e2fd43",
+        "38": "4271f375b7c220492f7433ab3a78d40e7cf0c1dbffd4a11adccc453371e87232",
+        "39": "880fad705d73b4d6380697bd7ca35ec210e29ef8218ac725982916fce90ce3e3",
+        "40": "50efaeb9ff3f0636c492946cfca35c1e71e64ee10406019a0883f70a49fe02af",
+        "41": "1def1bd6f3f5a27860ca4a2cb8b660b297b180513b0b0a7c6a66b8c409c1baca",
+        "42": "eb4b2b302d48c3402a4ae0cfefa126aee8c062ea87ce93db36c7fccebc1cca37",
+        "43": "b6777b7be6cbb944afdce80c526ffcc5c9b49dc692482d95f737fda7407597f1",
+        "44": "3efd7293fcc50e842c7305c99204465b6915a63b6562c5072d59938d49e49f7b"
+      },
+      "selected_imports": [
+        {
+          "plugin": "Nifti2DicomPETPlugin",
+          "name": "NIfTI conversion: 45 frames Volume Sequence",
+          "confidence": 1.0,
+          "selected": true,
+          "warning": "",
+          "files": 2025
+        }
+      ],
+      "segmentations": [],
+      "slicer_version": "5.12.0",
+      "revision": "a5df714",
+      "script_sha256": "f287fb37b3ca6561d196307f0c0eb108d104a1d020c437b4ebddb85523055e18",
+      "oracle_sha256": "57ba8414e1e269f1158a151bf917fde359e89a85f03119e0438bc903349b9876",
+      "report_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_philips_dynamic/strict-sequence-acceptance.json",
+      "report_sha256": "93163ff8f81cdcbc48d8b88c14a74c460c97be270d60e1ba8f40ed454af0675c",
+      "finite_pixels_verified": true,
+      "complete_unique_physical_coverage_verified": true,
+      "cases_sha256": "782d9c354ec0d5b01c6f667e79dc83dc984c9ba9606f1a430832daafa3d18f50",
+      "truth_sha256": "4e3231f56f5cf6f4f5d3751e5f43bbc5531b1a4c950af16880101e744b5a0452",
+      "input_provenance": [
+        {
+          "directory": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_philips_dynamic/dicom",
+          "dicom_file_count": 2025,
+          "dicom_files_sha256": "d3e2167eda2f4cb2330a61887da4485f68dbb1a8d29945803044f5e5a3a0c0cc",
+          "dicom_files_sha256_after_import": "d3e2167eda2f4cb2330a61887da4485f68dbb1a8d29945803044f5e5a3a0c0cc",
+          "fingerprint_algorithm": "SHA256 of UTF-8 JSON [[filename,SHA256(file bytes)],...] in filename order; ensure_ascii=True, separators=(',',':')",
+          "messages": [],
+          "load_success": [
+            true
+          ],
+          "roundtrip_report_sha256": "3a9ceeeb7c4e2506666c99fb5057383414bbb2e9959226f141a3f7abf6e60365",
+          "files_unchanged_during_import": true
+        }
+      ],
+      "sequence_indices": [
+        "95996",
+        "100996",
+        "105996",
+        "110996",
+        "115996",
+        "120996",
+        "125996",
+        "130996",
+        "135996",
+        "140996",
+        "145996",
+        "150996",
+        "155996",
+        "160996",
+        "165996",
+        "170996",
+        "175996",
+        "185996",
+        "195996",
+        "205996",
+        "215996",
+        "225996",
+        "235996",
+        "245996",
+        "275996",
+        "305996",
+        "335996",
+        "365996",
+        "395996",
+        "455996",
+        "515996",
+        "575996",
+        "635996",
+        "695996",
+        "875996",
+        "1055996",
+        "1235996",
+        "1415996",
+        "1595996",
+        "1895996",
+        "2195996",
+        "2495996",
+        "2795996",
+        "3095996",
+        "3395996"
+      ],
+      "sequence_index_unit": "ms",
+      "browser_indices_checked": 45,
+      "native_time_metadata": {
+        "MultiVolume.FrameIdentifyingDICOMTagName": "FrameReferenceTime",
+        "MultiVolume.FrameIdentifyingDICOMTagUnits": "ms",
+        "MultiVolume.FrameLabels": "95996,100996,105996,110996,115996,120996,125996,130996,135996,140996,145996,150996,155996,160996,165996,170996,175996,185996,195996,205996,215996,225996,235996,245996,275996,305996,335996,365996,395996,455996,515996,575996,635996,695996,875996,1055996,1235996,1415996,1595996,1895996,2195996,2495996,2795996,3095996,3395996"
+      }
+    },
+    {
+      "case": "pet_siemens_3d",
+      "representation": "sequence",
+      "actual_representation": "scalar",
+      "status": "passed",
+      "frames": 1,
+      "voxels": 1360800,
+      "maximum_serialized_value_error": 0.0,
+      "maximum_world_error_mm": 6.131051848253034e-05,
+      "precision_bound_violations": 0,
+      "frame_voxel_sha256": {
+        "0": "fffad5e614563bddd34837e9b2993ef4540900ef73b4f40b31e5848252ea71e4"
+      },
+      "selected_imports": [
+        {
+          "plugin": "DICOMScalarVolumePluginClass",
+          "name": "1004: NIfTI conversion",
+          "confidence": 0.5,
+          "selected": true,
+          "warning": "",
+          "files": 42
+        }
+      ],
+      "segmentations": [],
+      "slicer_version": "5.12.0",
+      "revision": "a5df714",
+      "script_sha256": "f287fb37b3ca6561d196307f0c0eb108d104a1d020c437b4ebddb85523055e18",
+      "oracle_sha256": "57ba8414e1e269f1158a151bf917fde359e89a85f03119e0438bc903349b9876",
+      "report_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_siemens_3d/strict-sequence-acceptance.json",
+      "report_sha256": "9de5d613613b434f80a361ebbcf14f15d270cf400dde6980e80007cff7d25e20",
+      "finite_pixels_verified": true,
+      "complete_unique_physical_coverage_verified": true,
+      "cases_sha256": "aa80016c80e79b30068317e52764cefb024aefee57b6a4ab31d1eaf0ee5e808d",
+      "truth_sha256": "4f2fb6a0758e9b63abec5e803d436aefffdaf88f7894aca7eb48e7a8ba94892c",
+      "input_provenance": [
+        {
+          "directory": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_siemens_3d/dicom",
+          "dicom_file_count": 42,
+          "dicom_files_sha256": "bf33218f88f278ce2c850a41748b360ec23ac3b7c90a5e4ee589b16a89523c60",
+          "dicom_files_sha256_after_import": "bf33218f88f278ce2c850a41748b360ec23ac3b7c90a5e4ee589b16a89523c60",
+          "fingerprint_algorithm": "SHA256 of UTF-8 JSON [[filename,SHA256(file bytes)],...] in filename order; ensure_ascii=True, separators=(',',':')",
+          "messages": [],
+          "load_success": [
+            true
+          ],
+          "roundtrip_report_sha256": "44004d4ca01f9291900d836dd691619c2fd82b76dc71bc416838214aadb4233e",
+          "files_unchanged_during_import": true
+        }
+      ],
+      "native_time_metadata": {}
+    },
+    {
+      "case": "pet_siemens_dynamic",
+      "representation": "multivolume",
+      "actual_representation": "multivolume",
+      "status": "passed",
+      "frames": 45,
+      "voxels": 93985920,
+      "maximum_serialized_value_error": 0.0,
+      "maximum_world_error_mm": 3.850676881230705e-05,
+      "precision_bound_violations": 0,
+      "frame_voxel_sha256": {
+        "0": "78c2d8527014661914e7f4af0e6ef3c8e9dc37d53075a1061ea1058ffba31520",
+        "1": "85ac774f3d3f2987a39855a29cce47df63c502a6c3e913e215070a83d12082f1",
+        "2": "3340291da4f88b064c05e8cee801816c614fe8a4e105de83a261b7dcac96d77f",
+        "3": "021bf8ab43cb2cdfd0314d87a6490a6192e3650306e49d0562c372ac87b2e127",
+        "4": "73108d64c8a197e3dac342a579ddcbf66c609e478cc91bbd3ae9716b56b9104e",
+        "5": "95d552e0741c52e19deb41b3b10bcc4c1289a1728b14dfff859eb2709e5bb38d",
+        "6": "7384d28ed220bff5e07a26eb07dcff427d1e462f63e81f78a473b20210f73d14",
+        "7": "a2c5da3995785f1ab858ffa6ab92ccd19200ccca3e2fc116022220950198963b",
+        "8": "fa9d38a05a147982dc1278c12d4a8a116708f1059a998dadec3c5f1fc16b6888",
+        "9": "f6aae7a2952a79027b209442573c7157139f81a6c300b4b0a00e41118acac5c6",
+        "10": "5010116fcf2b0b48952d283e35219cf479ea14aa8df398283034250e8fe7f9b3",
+        "11": "b9580b430ceae38e42c6cd5d30c9761089221c5ee890912f8cd2862f832c71c4",
+        "12": "4a0171523ae8d6cc9d886ce5c2a28200435c935c2be812c99672e583f3ace200",
+        "13": "377f1a4ce07d58edea72217c6525be6654fc292ba18c4a6001e471dcbf7b8099",
+        "14": "2d086ed442df5b92694bece47fa59f60c6017e7de52266d7692a00e6cc798dae",
+        "15": "74e83bca203cb70cfa90a35ce8bdd0dd84120ebc575fc286fb149c9bc3c67b1b",
+        "16": "71e497ea2ea2002501cf16081a9ebb6e0f37f36072ba6802732169b683241e9a",
+        "17": "c520fa16acc4c0634bb212f0cef767348bfa0378ccfa7948b2342f56b62dc941",
+        "18": "fb24707a80452c864c28680b6ca858645230ff4e735267ccb5ac8d756a86052e",
+        "19": "2dec5fc6f13eeae0be6e685956765611783ddce901796c592cb1469b55c9d94f",
+        "20": "5fcbf20f2bfea972b37e88e927befb8dd65d5f8da97ae5adb631c804860d8f87",
+        "21": "2716a0842778e3f81eaf3f81659803052a88aee97caa86f9811e1009494958ab",
+        "22": "1aaab6fdf427a658efe07538561776f3968bf8cadad6e0102d1f4503a74c952e",
+        "23": "50019d669608d69f3e15f292660bfcff9425eb45eff1484e09e481337eecdb04",
+        "24": "168c108f6088fb74c923d1907ff5327430da1854ae8b3c1390a24ac67b49fe12",
+        "25": "52af3ff3ce44e15508170f2dedc612ad01172e551618881ca9d7c72953840009",
+        "26": "8c46eac14fcb008a2a094c9f0cef54870fea2b6098d378e157eb57028da360cb",
+        "27": "6d310a953ebb65c5496bfa7bd2e946d2a6a3964f06bac4fbd54e429bbb2b7f54",
+        "28": "fd7948db7efcb7c9213d32da3cecb97bea2ca868aa90f0d3c65b3038448a126b",
+        "29": "fc5704ce85dfc22bcf99e308c1472365b6d57b54ccfb65a2713d637dc2b23c0d",
+        "30": "1bd3925edc42dea91508cbc974c3abc9da6abd10c0cccd99201de9020ef16a61",
+        "31": "7d5b19700cc52434849d26bfac41cb3f0797777a4b8c19cdf13c8d9a8aad2207",
+        "32": "5492080706559dc39172f1359cb8b2f27d7c4890a87f126b69ebdaa2b4aa5cc1",
+        "33": "bc512d6417d7614f4eca48eda746aac60e121c434a6a5ef1704b61222ff0314e",
+        "34": "9d1f0f5cb65629fea57f6ac268cd75380430deab7b8bb84fcb70edccb177c2c1",
+        "35": "57f3aeee02a56a7ad5552dd0e5e31bfe7886b7494ea0d25763a795df608de940",
+        "36": "859bb7dacbc63544ddd24d91bba35e6f10fb853411855b6e093ac7026ee861c7",
+        "37": "e769ef3f4ddf539762dc70c9955bb41b2ce4b2c608d2544b7b3f5b6cbb320ca2",
+        "38": "4ae90215efaeb96e28c6cf3de78b2ba5e8a1210d21e49fea2dd5ad6078ec2011",
+        "39": "7a22a22abea24d3b7e81437f89111bcf9b8c07f59e7a285fd4143ad226d47367",
+        "40": "b11b806c6aca1358633932f388f65a5d74ca35dc8ed9b54d630617871c90f86b",
+        "41": "3565535b9a4c72ef2440e5ef800bb82e4a81caf0d45fcc7435af8d0d6263cd45",
+        "42": "c8f653d0a0080a2597833e6478fd68b27566a95982039585fdce9e2ae7704de8",
+        "43": "b51e63c1d7ff51c57a0062030f962d9032fb2f7819f35e72a0e2f61dfd5ff2ab",
+        "44": "b103fd327e9499c2ea7e9e1d05f18103394e4b465db6a0fd179f8f2bc88e7dfa"
+      },
+      "selected_imports": [
+        {
+          "plugin": "Nifti2DicomPETPlugin",
+          "name": "NIfTI conversion: 45 frames MultiVolume",
+          "confidence": 1.0,
+          "selected": true,
+          "warning": "",
+          "files": 3330
+        }
+      ],
+      "segmentations": [],
+      "slicer_version": "5.12.0",
+      "revision": "a5df714",
+      "script_sha256": "f287fb37b3ca6561d196307f0c0eb108d104a1d020c437b4ebddb85523055e18",
+      "oracle_sha256": "57ba8414e1e269f1158a151bf917fde359e89a85f03119e0438bc903349b9876",
+      "report_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_siemens_dynamic/strict-multivolume-acceptance.json",
+      "report_sha256": "3c4c7104b5f3d6e065ee59184a202592c310d4cffda82a1b09cf405242a64c27",
+      "finite_pixels_verified": true,
+      "complete_unique_physical_coverage_verified": true,
+      "cases_sha256": "9cbc0ecd12188bcb405ffac189fa7964ea1d7e7f0adeedaf82c8a2a59cb4a337",
+      "truth_sha256": "27d963c89936c507b84f9997aab247c5b4139aafd2611dabb32c00a7c2620db0",
+      "input_provenance": [
+        {
+          "directory": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_siemens_dynamic/dicom",
+          "dicom_file_count": 3330,
+          "dicom_files_sha256": "ee076e3ae0c73b4f8318dd71756dd09d24fd50c24ce14a9f92e3c52b36a53296",
+          "dicom_files_sha256_after_import": "ee076e3ae0c73b4f8318dd71756dd09d24fd50c24ce14a9f92e3c52b36a53296",
+          "fingerprint_algorithm": "SHA256 of UTF-8 JSON [[filename,SHA256(file bytes)],...] in filename order; ensure_ascii=True, separators=(',',':')",
+          "messages": [],
+          "load_success": [
+            true
+          ],
+          "roundtrip_report_sha256": "bda29d5131b3f1a7ad0680c19f1de8ef248a010f14723891c3997d5fd19d06e3",
+          "files_unchanged_during_import": true
+        }
+      ],
+      "display_indices_checked": 45,
+      "native_time_metadata": {
+        "MultiVolume.FrameIdentifyingDICOMTagName": "FrameReferenceTime",
+        "MultiVolume.FrameIdentifyingDICOMTagUnits": "ms",
+        "MultiVolume.FrameLabels": "2500,7500,11500,17500,22500,26500,32500,37500,41500,47500,52500,56500,62500,67500,71500,77500,85000,94000,104000,115000,124000,135000,145000,164000,194000,224000,254000,284000,329000,390000,450000,510000,570000,689857.92324928,868857.92324928,1048857.9232493,1229857.9232493,1409857.9232493,1648605.3444573,1949605.3444573,2249605.3444573,2549605.3444573,2849605.3444573,3148605.3444573,3449605.3444573"
+      }
+    },
+    {
+      "case": "pet_siemens_dynamic",
+      "representation": "sequence",
+      "actual_representation": "sequence",
+      "status": "passed",
+      "frames": 45,
+      "voxels": 93985920,
+      "maximum_serialized_value_error": 0.0,
+      "maximum_world_error_mm": 3.850676881230705e-05,
+      "precision_bound_violations": 0,
+      "frame_voxel_sha256": {
+        "0": "78c2d8527014661914e7f4af0e6ef3c8e9dc37d53075a1061ea1058ffba31520",
+        "1": "85ac774f3d3f2987a39855a29cce47df63c502a6c3e913e215070a83d12082f1",
+        "2": "3340291da4f88b064c05e8cee801816c614fe8a4e105de83a261b7dcac96d77f",
+        "3": "021bf8ab43cb2cdfd0314d87a6490a6192e3650306e49d0562c372ac87b2e127",
+        "4": "73108d64c8a197e3dac342a579ddcbf66c609e478cc91bbd3ae9716b56b9104e",
+        "5": "95d552e0741c52e19deb41b3b10bcc4c1289a1728b14dfff859eb2709e5bb38d",
+        "6": "7384d28ed220bff5e07a26eb07dcff427d1e462f63e81f78a473b20210f73d14",
+        "7": "a2c5da3995785f1ab858ffa6ab92ccd19200ccca3e2fc116022220950198963b",
+        "8": "fa9d38a05a147982dc1278c12d4a8a116708f1059a998dadec3c5f1fc16b6888",
+        "9": "f6aae7a2952a79027b209442573c7157139f81a6c300b4b0a00e41118acac5c6",
+        "10": "5010116fcf2b0b48952d283e35219cf479ea14aa8df398283034250e8fe7f9b3",
+        "11": "b9580b430ceae38e42c6cd5d30c9761089221c5ee890912f8cd2862f832c71c4",
+        "12": "4a0171523ae8d6cc9d886ce5c2a28200435c935c2be812c99672e583f3ace200",
+        "13": "377f1a4ce07d58edea72217c6525be6654fc292ba18c4a6001e471dcbf7b8099",
+        "14": "2d086ed442df5b92694bece47fa59f60c6017e7de52266d7692a00e6cc798dae",
+        "15": "74e83bca203cb70cfa90a35ce8bdd0dd84120ebc575fc286fb149c9bc3c67b1b",
+        "16": "71e497ea2ea2002501cf16081a9ebb6e0f37f36072ba6802732169b683241e9a",
+        "17": "c520fa16acc4c0634bb212f0cef767348bfa0378ccfa7948b2342f56b62dc941",
+        "18": "fb24707a80452c864c28680b6ca858645230ff4e735267ccb5ac8d756a86052e",
+        "19": "2dec5fc6f13eeae0be6e685956765611783ddce901796c592cb1469b55c9d94f",
+        "20": "5fcbf20f2bfea972b37e88e927befb8dd65d5f8da97ae5adb631c804860d8f87",
+        "21": "2716a0842778e3f81eaf3f81659803052a88aee97caa86f9811e1009494958ab",
+        "22": "1aaab6fdf427a658efe07538561776f3968bf8cadad6e0102d1f4503a74c952e",
+        "23": "50019d669608d69f3e15f292660bfcff9425eb45eff1484e09e481337eecdb04",
+        "24": "168c108f6088fb74c923d1907ff5327430da1854ae8b3c1390a24ac67b49fe12",
+        "25": "52af3ff3ce44e15508170f2dedc612ad01172e551618881ca9d7c72953840009",
+        "26": "8c46eac14fcb008a2a094c9f0cef54870fea2b6098d378e157eb57028da360cb",
+        "27": "6d310a953ebb65c5496bfa7bd2e946d2a6a3964f06bac4fbd54e429bbb2b7f54",
+        "28": "fd7948db7efcb7c9213d32da3cecb97bea2ca868aa90f0d3c65b3038448a126b",
+        "29": "fc5704ce85dfc22bcf99e308c1472365b6d57b54ccfb65a2713d637dc2b23c0d",
+        "30": "1bd3925edc42dea91508cbc974c3abc9da6abd10c0cccd99201de9020ef16a61",
+        "31": "7d5b19700cc52434849d26bfac41cb3f0797777a4b8c19cdf13c8d9a8aad2207",
+        "32": "5492080706559dc39172f1359cb8b2f27d7c4890a87f126b69ebdaa2b4aa5cc1",
+        "33": "bc512d6417d7614f4eca48eda746aac60e121c434a6a5ef1704b61222ff0314e",
+        "34": "9d1f0f5cb65629fea57f6ac268cd75380430deab7b8bb84fcb70edccb177c2c1",
+        "35": "57f3aeee02a56a7ad5552dd0e5e31bfe7886b7494ea0d25763a795df608de940",
+        "36": "859bb7dacbc63544ddd24d91bba35e6f10fb853411855b6e093ac7026ee861c7",
+        "37": "e769ef3f4ddf539762dc70c9955bb41b2ce4b2c608d2544b7b3f5b6cbb320ca2",
+        "38": "4ae90215efaeb96e28c6cf3de78b2ba5e8a1210d21e49fea2dd5ad6078ec2011",
+        "39": "7a22a22abea24d3b7e81437f89111bcf9b8c07f59e7a285fd4143ad226d47367",
+        "40": "b11b806c6aca1358633932f388f65a5d74ca35dc8ed9b54d630617871c90f86b",
+        "41": "3565535b9a4c72ef2440e5ef800bb82e4a81caf0d45fcc7435af8d0d6263cd45",
+        "42": "c8f653d0a0080a2597833e6478fd68b27566a95982039585fdce9e2ae7704de8",
+        "43": "b51e63c1d7ff51c57a0062030f962d9032fb2f7819f35e72a0e2f61dfd5ff2ab",
+        "44": "b103fd327e9499c2ea7e9e1d05f18103394e4b465db6a0fd179f8f2bc88e7dfa"
+      },
+      "selected_imports": [
+        {
+          "plugin": "Nifti2DicomPETPlugin",
+          "name": "NIfTI conversion: 45 frames Volume Sequence",
+          "confidence": 1.0,
+          "selected": true,
+          "warning": "",
+          "files": 3330
+        }
+      ],
+      "segmentations": [],
+      "slicer_version": "5.12.0",
+      "revision": "a5df714",
+      "script_sha256": "f287fb37b3ca6561d196307f0c0eb108d104a1d020c437b4ebddb85523055e18",
+      "oracle_sha256": "57ba8414e1e269f1158a151bf917fde359e89a85f03119e0438bc903349b9876",
+      "report_path": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_siemens_dynamic/strict-sequence-acceptance.json",
+      "report_sha256": "b90814f487528490774ed43018f88049a33b2eba87d6a622c15330fbf0ed9498",
+      "finite_pixels_verified": true,
+      "complete_unique_physical_coverage_verified": true,
+      "cases_sha256": "9cbc0ecd12188bcb405ffac189fa7964ea1d7e7f0adeedaf82c8a2a59cb4a337",
+      "truth_sha256": "27d963c89936c507b84f9997aab247c5b4139aafd2611dabb32c00a7c2620db0",
+      "input_provenance": [
+        {
+          "directory": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed/pet_siemens_dynamic/dicom",
+          "dicom_file_count": 3330,
+          "dicom_files_sha256": "ee076e3ae0c73b4f8318dd71756dd09d24fd50c24ce14a9f92e3c52b36a53296",
+          "dicom_files_sha256_after_import": "ee076e3ae0c73b4f8318dd71756dd09d24fd50c24ce14a9f92e3c52b36a53296",
+          "fingerprint_algorithm": "SHA256 of UTF-8 JSON [[filename,SHA256(file bytes)],...] in filename order; ensure_ascii=True, separators=(',',':')",
+          "messages": [],
+          "load_success": [
+            true
+          ],
+          "roundtrip_report_sha256": "bda29d5131b3f1a7ad0680c19f1de8ef248a010f14723891c3997d5fd19d06e3",
+          "files_unchanged_during_import": true
+        }
+      ],
+      "sequence_indices": [
+        "2500",
+        "7500",
+        "11500",
+        "17500",
+        "22500",
+        "26500",
+        "32500",
+        "37500",
+        "41500",
+        "47500",
+        "52500",
+        "56500",
+        "62500",
+        "67500",
+        "71500",
+        "77500",
+        "85000",
+        "94000",
+        "104000",
+        "115000",
+        "124000",
+        "135000",
+        "145000",
+        "164000",
+        "194000",
+        "224000",
+        "254000",
+        "284000",
+        "329000",
+        "390000",
+        "450000",
+        "510000",
+        "570000",
+        "689857.92324928",
+        "868857.92324928",
+        "1048857.9232493",
+        "1229857.9232493",
+        "1409857.9232493",
+        "1648605.3444573",
+        "1949605.3444573",
+        "2249605.3444573",
+        "2549605.3444573",
+        "2849605.3444573",
+        "3148605.3444573",
+        "3449605.3444573"
+      ],
+      "sequence_index_unit": "ms",
+      "browser_indices_checked": 45,
+      "native_time_metadata": {
+        "MultiVolume.FrameIdentifyingDICOMTagName": "FrameReferenceTime",
+        "MultiVolume.FrameIdentifyingDICOMTagUnits": "ms",
+        "MultiVolume.FrameLabels": "2500,7500,11500,17500,22500,26500,32500,37500,41500,47500,52500,56500,62500,67500,71500,77500,85000,94000,104000,115000,124000,135000,145000,164000,194000,224000,254000,284000,329000,390000,450000,510000,570000,689857.92324928,868857.92324928,1048857.9232493,1229857.9232493,1409857.9232493,1648605.3444573,1949605.3444573,2249605.3444573,2549605.3444573,2849605.3444573,3148605.3444573,3449605.3444573"
+      }
+    }
+  ],
+  "legacy_slicer": [
+    {
+      "case": "pet_dynamic_rider",
+      "representation": "multivolume",
+      "actual_representation": "multivolume",
+      "status": "passed",
+      "frames": 32,
+      "voxels": 24641536,
+      "maximum_serialized_value_error": 0.0,
+      "maximum_world_error_mm": 9.536699678847076e-07,
+      "precision_bound_violations": 0,
+      "frame_voxel_sha256": {
+        "0": "82882ed97417f554dc773e143720daf3e5e934ed44626983e64543247c0a37e0",
+        "1": "82882ed97417f554dc773e143720daf3e5e934ed44626983e64543247c0a37e0",
+        "2": "4627a3c140c95de4428c28801ce445e4179e344f5ca7a4d7aa8f4ef0fe5e215a",
+        "3": "fb3826ededfc83eb5e38888eaa4879be6cc399a50550521aa811a81b771add3d",
+        "4": "fd07dfd94d9bbb28c936b008b7ccd74706108a16cbd6b008e4dcacbca6debec3",
+        "5": "a70e860ccf965fdc2ccd8bf41c174d318b899af41770f682226943c7e3b2b8ee",
+        "6": "5f6b2dab18b0a5152631627b5634bf79fd41690e53edf536449eebf2ba7fe358",
+        "7": "ac1b823e4b54cdb0fb8a326779a79728b3f74cd77c0a34d818802604eb297dd8",
+        "8": "d24679ffa1135bed61277573e271523d87d6bb9090ab397d924535c7a31858e6",
+        "9": "5ccf338d1c643ceaaeab31c5655a61d1c0178bb504486c59240027c9ef3eb519",
+        "10": "900cdca4c8df95059fabcab3c3b76016a93adc088d3b1b9c815a6e5ff4c21a7f",
+        "11": "c87cde0a1b7424949a90a00afd78df1337e92a7e704f231a5040bf23baa2ce1e",
+        "12": "fc4735728c0acb8dae8dac3f4aa9040b8028ac003b18a2ec916ab614e7022cc1",
+        "13": "64305dbc2335afbb9ab368ac8eea8bf847809810c1d7274b31a66fa0b09ed1ff",
+        "14": "92937a9044a96a1e70026d1c2a6c2cb1fa0a5825b5bb374b55a61873a0a31f0f",
+        "15": "05256049e79484a3afb9adf56d9252e01663d01acbbd33953a508960e9e58bb2",
+        "16": "a3b878774af8ab155266cf981ded5163204550f93e2f946ceb3dbdf4d1911387",
+        "17": "e15048a5c30bfcc95881ca72a51f1ad002c2f23851953e2bfd3001390998e72e",
+        "18": "657d930687dcba0d3318378c8642309ded6e66dc7e12a4d098ef33bea78621dc",
+        "19": "99a06543e063961cda09bc76fbe5cf431d13b8abaed95a067a12d43236141971",
+        "20": "90fb2d58bb7c9beb895aa25317d565080b2bcac5093d83cd5ae67965c88d7d54",
+        "21": "640d4aff612611d0624aaf75299bd8ab9809edc1118d8785a94623f9ecb8b4e9",
+        "22": "65101ce704a24ffd38b4abbc41b13eccd6f0556dc3f99d422e6da7dd78604afb",
+        "23": "da4b1478360ab54040d559d8c76102ffbe65e9dc1fda185c062e0316dd741817",
+        "24": "4f954bcf5c4e6b1859f8a66fe1b8a606978638041b116c4943d785ef7bfe8d34",
+        "25": "b596bef2ffd8a6b74e622041d5589417205b1805394379b6b3a3509fb233f886",
+        "26": "31c909ef1fc14eac127efffd114bf9b9dd8141325ef9f03bad2e38c26ad7933b",
+        "27": "27338b57d0290fe7dba67d6cace980ebf5153ed917b974182a0e63abc3766b6a",
+        "28": "fcea8c9e69cd90d3c45ededafec6ea8955d2fdc728fbf4ab3107613c2d8ef910",
+        "29": "c04eb9469ca7cdf5c63923b0bb127a7d1e465a27a572f70265f9b3b34bf02a62",
+        "30": "6f315f7441638dac983963ccec336bf6004754c6c9b27d6d6b2ecb20285a25aa",
+        "31": "af779f54d9ac2097c94c5c5aac317e8c07905e1600c78267bbdc54bfa7ed406a"
+      },
+      "selected_imports": [
+        {
+          "plugin": "Nifti2DicomPETPlugin",
+          "name": "NIfTI conversion: 32 frames MultiVolume",
+          "confidence": 1.0,
+          "selected": true,
+          "warning": "",
+          "files": 1504
+        }
+      ],
+      "segmentations": [],
+      "slicer_version": "5.12.0",
+      "revision": "a5df714",
+      "script_sha256": "f287fb37b3ca6561d196307f0c0eb108d104a1d020c437b4ebddb85523055e18",
+      "oracle_sha256": "57ba8414e1e269f1158a151bf917fde359e89a85f03119e0438bc903349b9876",
+      "report_path": "/private/tmp/nifti2dicom-slicer-fix.nilYDL/strict-legacy-multivolume-acceptance.json",
+      "report_sha256": "5d131a64867ec36f361c208d59eb4311c8bd63f52f3d08b158af3c776c4b1ab8",
+      "finite_pixels_verified": true,
+      "complete_unique_physical_coverage_verified": true,
+      "cases_sha256": "7fbc8aef102072c0139a766955fbfa6b9da9ae7bea6d917f3cba2c26d6826317",
+      "truth_sha256": "60729c26ea6262029097cbef849769a37697e236222fbbfda838f18f02489fcd",
+      "input_provenance": [
+        {
+          "directory": "/private/tmp/nifti2dicom-pet-precision.Haih8e/outputs/pet_dynamic_rider",
+          "dicom_file_count": 1504,
+          "dicom_files_sha256": "6e17a499b4eefa11e4c1b430921abe34ec6d18a949dc7b2d1d0d17a8b5a1c222",
+          "dicom_files_sha256_after_import": "6e17a499b4eefa11e4c1b430921abe34ec6d18a949dc7b2d1d0d17a8b5a1c222",
+          "fingerprint_algorithm": "SHA256 of UTF-8 JSON [[filename,SHA256(file bytes)],...] in filename order; ensure_ascii=True, separators=(',',':')",
+          "messages": [],
+          "load_success": [
+            true
+          ],
+          "files_unchanged_during_import": true
+        }
+      ],
+      "display_indices_checked": 32,
+      "native_time_metadata": {
+        "MultiVolume.FrameIdentifyingDICOMTagName": "FrameReferenceTime",
+        "MultiVolume.FrameIdentifyingDICOMTagUnits": "ms",
+        "MultiVolume.FrameLabels": "0,60000,62000,64000,66000,68000,70000,72000,74000,76000,78000,80000,82000,84000,86000,88000,90000,95000,100000,105000,110000,115000,120000,130000,140000,150000,160000,170000,180000,195000,210000,225000"
+      }
+    },
+    {
+      "case": "pet_static_rider",
+      "representation": "sequence",
+      "actual_representation": "scalar",
+      "status": "passed",
+      "frames": 1,
+      "voxels": 770048,
+      "maximum_serialized_value_error": 0.0,
+      "maximum_world_error_mm": 9.536742595628311e-07,
+      "precision_bound_violations": 0,
+      "frame_voxel_sha256": {
+        "0": "85172547988213f3a1a5be25d50cf9f63af7a15f38c2f6cb718faf73220c6eab"
+      },
+      "selected_imports": [
+        {
+          "plugin": "DICOMScalarVolumePluginClass",
+          "name": "1402: NIfTI conversion",
+          "confidence": 0.5,
+          "selected": true,
+          "warning": "",
+          "files": 47
+        },
+        {
+          "plugin": "DICOMSegmentationPluginClass",
+          "name": "QA binary geometric mask; not clinical",
+          "confidence": 0.95,
+          "selected": true,
+          "warning": "",
+          "files": 1
+        },
+        {
+          "plugin": "DICOMSegmentationPluginClass",
+          "name": "QA multilabel geometric mask; not clinical",
+          "confidence": 0.95,
+          "selected": true,
+          "warning": "",
+          "files": 1
+        }
+      ],
+      "segmentations": [
+        {
+          "kind": "binary",
+          "synthetic_not_clinical": true,
+          "segments": [
+            {
+              "name": "QA sphere A",
+              "nifti_label": 1,
+              "foreground_voxels": 3267,
+              "differing_voxels": 0
+            }
+          ],
+          "attributes": {
+            "DICOM.instanceUIDs": "1.2.826.0.1.3680043.10.511.3.45913910718500363197129892798182698"
+          },
+          "referenced_source_instances": 47
+        },
+        {
+          "kind": "multilabel",
+          "synthetic_not_clinical": true,
+          "segments": [
+            {
+              "name": "QA sphere A",
+              "nifti_label": 5,
+              "foreground_voxels": 3267,
+              "differing_voxels": 0
+            },
+            {
+              "name": "QA box B",
+              "nifti_label": 300,
+              "foreground_voxels": 864,
+              "differing_voxels": 0
+            },
+            {
+              "name": "QA asymmetric C",
+              "nifti_label": 1024,
+              "foreground_voxels": 480,
+              "differing_voxels": 0
+            }
+          ],
+          "attributes": {
+            "DICOM.instanceUIDs": "1.2.826.0.1.3680043.10.511.3.76394052902085113159069551248515478"
+          },
+          "referenced_source_instances": 47
+        }
+      ],
+      "slicer_version": "5.12.0",
+      "revision": "a5df714",
+      "script_sha256": "f287fb37b3ca6561d196307f0c0eb108d104a1d020c437b4ebddb85523055e18",
+      "oracle_sha256": "57ba8414e1e269f1158a151bf917fde359e89a85f03119e0438bc903349b9876",
+      "report_path": "/private/tmp/nifti2dicom-slicer-fix.nilYDL/strict-legacy-sequence-acceptance.json",
+      "report_sha256": "c6a7a5fc1ae9ea4ae70b98f8396b648086bd173c153a6d71b6e99ed680078c11",
+      "finite_pixels_verified": true,
+      "complete_unique_physical_coverage_verified": true,
+      "cases_sha256": "7fbc8aef102072c0139a766955fbfa6b9da9ae7bea6d917f3cba2c26d6826317",
+      "truth_sha256": "aafe248bb6df1882a12949c1d61a6dc73c4a06c2bea4c07c11bf0bbd9aec0e36",
+      "input_provenance": [
+        {
+          "directory": "/private/tmp/nifti2dicom-pet-precision.Haih8e/outputs/pet_static_rider",
+          "dicom_file_count": 47,
+          "dicom_files_sha256": "70f3de77c0f73dc18235b434bee78252694847d096434900ade817a47112236c",
+          "dicom_files_sha256_after_import": "70f3de77c0f73dc18235b434bee78252694847d096434900ade817a47112236c",
+          "fingerprint_algorithm": "SHA256 of UTF-8 JSON [[filename,SHA256(file bytes)],...] in filename order; ensure_ascii=True, separators=(',',':')",
+          "messages": [],
+          "load_success": [
+            true
+          ],
+          "files_unchanged_during_import": true
+        },
+        {
+          "directory": "/private/tmp/nifti2dicom-slicer-fix.nilYDL/binary-seg",
+          "dicom_file_count": 1,
+          "dicom_files_sha256": "3a80c344f6e58bb6c88e6d3fd4224306f3e910314641d025ba4fdab59721bcaf",
+          "dicom_files_sha256_after_import": "3a80c344f6e58bb6c88e6d3fd4224306f3e910314641d025ba4fdab59721bcaf",
+          "fingerprint_algorithm": "SHA256 of UTF-8 JSON [[filename,SHA256(file bytes)],...] in filename order; ensure_ascii=True, separators=(',',':')",
+          "messages": [],
+          "load_success": [
+            true
+          ],
+          "files_unchanged_during_import": true
+        },
+        {
+          "directory": "/private/tmp/nifti2dicom-slicer-fix.nilYDL/multilabel-seg",
+          "dicom_file_count": 1,
+          "dicom_files_sha256": "d3f97d5a6276a1e354bc7f3956b7fbe679366cae514e76e319378563a56b920a",
+          "dicom_files_sha256_after_import": "d3f97d5a6276a1e354bc7f3956b7fbe679366cae514e76e319378563a56b920a",
+          "fingerprint_algorithm": "SHA256 of UTF-8 JSON [[filename,SHA256(file bytes)],...] in filename order; ensure_ascii=True, separators=(',',':')",
+          "messages": [],
+          "load_success": [
+            true
+          ],
+          "files_unchanged_during_import": true
+        }
+      ],
+      "native_time_metadata": {}
+    }
+  ],
+  "ct_ambiguity": {
+    "status": "passed",
+    "source_files": 500,
+    "source_files_unchanged": true,
+    "no_partial_output": true,
+    "existing_output_preserved": true,
+    "attempts": [
+      {
+        "existing_output": false,
+        "code": "ambiguous_reference",
+        "message": "Reference contains 10 DICOM series; select one explicitly.",
+        "hint": "Pass series_uid in Python or --series-uid on the command line.",
+        "details": {
+          "series_uids": [
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.101149985359108843115314962607",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.109924046592639009037308115627",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.126099425530980963839747986253",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.157761568734965241783981770816",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.164304251909335542255203856320",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.253052947614281199389106741253",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.274987695069017848173269995124",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.343750046728758832421627429575",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.434462771470218295650224197262",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.572559330334867629888846900478"
+          ]
+        }
+      },
+      {
+        "existing_output": true,
+        "code": "ambiguous_reference",
+        "message": "Reference contains 10 DICOM series; select one explicitly.",
+        "hint": "Pass series_uid in Python or --series-uid on the command line.",
+        "details": {
+          "series_uids": [
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.101149985359108843115314962607",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.109924046592639009037308115627",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.126099425530980963839747986253",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.157761568734965241783981770816",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.164304251909335542255203856320",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.253052947614281199389106741253",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.274987695069017848173269995124",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.343750046728758832421627429575",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.434462771470218295650224197262",
+            "1.3.6.1.4.1.14519.5.2.1.6834.5010.572559330334867629888846900478"
+          ]
+        }
+      }
+    ]
+  },
+  "viewer_artifact_equivalence": {
+    "status": "passed",
+    "cases": [
+      {
+        "case": "ct_respiratory_00",
+        "files": 50,
+        "all_pixels_and_non_generated_tags_identical": true,
+        "ignored_generated_fields": [
+          "SOPInstanceUID",
+          "SeriesInstanceUID",
+          "ContentDate",
+          "ContentTime",
+          "InstanceCreationDate",
+          "InstanceCreationTime",
+          "SeriesDate",
+          "SeriesTime"
+        ],
+        "ignored_file_meta_fields": [
+          "MediaStorageSOPInstanceUID",
+          "FileMetaInformationGroupLength"
+        ],
+        "accepted_roundtrip_sha256": "8c580a899ad75ed3b52c86c4682346fc8f1e46ce2cb72b2857d97d846485cbbd",
+        "reviewed_roundtrip_sha256": "9bf6ef2aea23a614cebfcab734fa46c853e9a8120adcb566e507c4dcf7c6b3b0"
+      },
+      {
+        "case": "ct_respiratory_01",
+        "files": 50,
+        "all_pixels_and_non_generated_tags_identical": true,
+        "ignored_generated_fields": [
+          "SOPInstanceUID",
+          "SeriesInstanceUID",
+          "ContentDate",
+          "ContentTime",
+          "InstanceCreationDate",
+          "InstanceCreationTime",
+          "SeriesDate",
+          "SeriesTime"
+        ],
+        "ignored_file_meta_fields": [
+          "MediaStorageSOPInstanceUID",
+          "FileMetaInformationGroupLength"
+        ],
+        "accepted_roundtrip_sha256": "ca57f07a8676e73847d99d907e5c2cf5e418ab2d8d3ad243ef0008619c8c3e5f",
+        "reviewed_roundtrip_sha256": "0dee7730b1f855d4fb93ae4c426ba177613b86214b8bcc6814d273afea0a87ba"
+      },
+      {
+        "case": "ct_respiratory_02",
+        "files": 50,
+        "all_pixels_and_non_generated_tags_identical": true,
+        "ignored_generated_fields": [
+          "SOPInstanceUID",
+          "SeriesInstanceUID",
+          "ContentDate",
+          "ContentTime",
+          "InstanceCreationDate",
+          "InstanceCreationTime",
+          "SeriesDate",
+          "SeriesTime"
+        ],
+        "ignored_file_meta_fields": [
+          "MediaStorageSOPInstanceUID",
+          "FileMetaInformationGroupLength"
+        ],
+        "accepted_roundtrip_sha256": "8a75fcda03b2961eb03d1f044d968691af758c2fa5fb5b53d6c350c486be2381",
+        "reviewed_roundtrip_sha256": "090a96b165785c7c0eeb33f62ec90d35e48e91c92e15dcd924446943ebb0b6c1"
+      },
+      {
+        "case": "ct_respiratory_03",
+        "files": 50,
+        "all_pixels_and_non_generated_tags_identical": true,
+        "ignored_generated_fields": [
+          "SOPInstanceUID",
+          "SeriesInstanceUID",
+          "ContentDate",
+          "ContentTime",
+          "InstanceCreationDate",
+          "InstanceCreationTime",
+          "SeriesDate",
+          "SeriesTime"
+        ],
+        "ignored_file_meta_fields": [
+          "MediaStorageSOPInstanceUID",
+          "FileMetaInformationGroupLength"
+        ],
+        "accepted_roundtrip_sha256": "a8b6a71990d7624d5b8eaf10c93b1d01bebf5b715dec98832c974c14bf6238a5",
+        "reviewed_roundtrip_sha256": "ed051b0d0fabe475e0843f354c16f55e9bfae80fd075b05b39e9fb0195ce653f"
+      },
+      {
+        "case": "ct_respiratory_04",
+        "files": 50,
+        "all_pixels_and_non_generated_tags_identical": true,
+        "ignored_generated_fields": [
+          "SOPInstanceUID",
+          "SeriesInstanceUID",
+          "ContentDate",
+          "ContentTime",
+          "InstanceCreationDate",
+          "InstanceCreationTime",
+          "SeriesDate",
+          "SeriesTime"
+        ],
+        "ignored_file_meta_fields": [
+          "MediaStorageSOPInstanceUID",
+          "FileMetaInformationGroupLength"
+        ],
+        "accepted_roundtrip_sha256": "c3145af9a75069c3af1c46fc6bdd6de7086fa4a22f159605a3ba1dedb8deba04",
+        "reviewed_roundtrip_sha256": "e3ba00cea767597c50c11d0fea7d75ac8ff5a86f7b770a36070ac446a9483c0d"
+      },
+      {
+        "case": "ct_respiratory_05",
+        "files": 50,
+        "all_pixels_and_non_generated_tags_identical": true,
+        "ignored_generated_fields": [
+          "SOPInstanceUID",
+          "SeriesInstanceUID",
+          "ContentDate",
+          "ContentTime",
+          "InstanceCreationDate",
+          "InstanceCreationTime",
+          "SeriesDate",
+          "SeriesTime"
+        ],
+        "ignored_file_meta_fields": [
+          "MediaStorageSOPInstanceUID",
+          "FileMetaInformationGroupLength"
+        ],
+        "accepted_roundtrip_sha256": "6bcfa88da88c4eb992a8e804ada67d41ac00e5457c759676d739ea7d74316523",
+        "reviewed_roundtrip_sha256": "3507ece6f3c51dba9a5b8d88c1099e96ec478d5ae3c772b6d143c49000e5fad8"
+      },
+      {
+        "case": "ct_respiratory_06",
+        "files": 50,
+        "all_pixels_and_non_generated_tags_identical": true,
+        "ignored_generated_fields": [
+          "SOPInstanceUID",
+          "SeriesInstanceUID",
+          "ContentDate",
+          "ContentTime",
+          "InstanceCreationDate",
+          "InstanceCreationTime",
+          "SeriesDate",
+          "SeriesTime"
+        ],
+        "ignored_file_meta_fields": [
+          "MediaStorageSOPInstanceUID",
+          "FileMetaInformationGroupLength"
+        ],
+        "accepted_roundtrip_sha256": "e1c9c851ee71e9420e47b63881ef3453773ce9b03a39993899393c75de2f5795",
+        "reviewed_roundtrip_sha256": "24878aa9221e8b68da5f102b4e27832ca71df31cd049e21428aa3b3176abc2cc"
+      },
+      {
+        "case": "ct_respiratory_07",
+        "files": 50,
+        "all_pixels_and_non_generated_tags_identical": true,
+        "ignored_generated_fields": [
+          "SOPInstanceUID",
+          "SeriesInstanceUID",
+          "ContentDate",
+          "ContentTime",
+          "InstanceCreationDate",
+          "InstanceCreationTime",
+          "SeriesDate",
+          "SeriesTime"
+        ],
+        "ignored_file_meta_fields": [
+          "MediaStorageSOPInstanceUID",
+          "FileMetaInformationGroupLength"
+        ],
+        "accepted_roundtrip_sha256": "e5670ee52b44c4f223ef06c17608ec24c3d403dbdb4b49ad33909239f5377335",
+        "reviewed_roundtrip_sha256": "a0e080c0259241b7b7d69e04799de5555759dbf9a559b18fde82a680e5150f66"
+      },
+      {
+        "case": "ct_respiratory_08",
+        "files": 50,
+        "all_pixels_and_non_generated_tags_identical": true,
+        "ignored_generated_fields": [
+          "SOPInstanceUID",
+          "SeriesInstanceUID",
+          "ContentDate",
+          "ContentTime",
+          "InstanceCreationDate",
+          "InstanceCreationTime",
+          "SeriesDate",
+          "SeriesTime"
+        ],
+        "ignored_file_meta_fields": [
+          "MediaStorageSOPInstanceUID",
+          "FileMetaInformationGroupLength"
+        ],
+        "accepted_roundtrip_sha256": "1683bb9370d71b960494b4fbcf37f1e6d0001be4706fc8dfdf6cb1247eaf5163",
+        "reviewed_roundtrip_sha256": "c25adc07d89d82a638cab9670a4e1766ed96e17f907bc192f5b914e93a5669c8"
+      },
+      {
+        "case": "ct_respiratory_09",
+        "files": 50,
+        "all_pixels_and_non_generated_tags_identical": true,
+        "ignored_generated_fields": [
+          "SOPInstanceUID",
+          "SeriesInstanceUID",
+          "ContentDate",
+          "ContentTime",
+          "InstanceCreationDate",
+          "InstanceCreationTime",
+          "SeriesDate",
+          "SeriesTime"
+        ],
+        "ignored_file_meta_fields": [
+          "MediaStorageSOPInstanceUID",
+          "FileMetaInformationGroupLength"
+        ],
+        "accepted_roundtrip_sha256": "8d8134ff5a22c0e1c4e0cd5d1f4e1b14eb92f03c4137a3f559ed659e53f9e23b",
+        "reviewed_roundtrip_sha256": "90d69dd789a3efe9ea13a733006665c4bbeaeda492584ea9658205657bec05fd"
+      },
+      {
+        "case": "mr_qin_breast_dynamic",
+        "files": 4800,
+        "all_pixels_and_non_generated_tags_identical": true,
+        "ignored_generated_fields": [
+          "SOPInstanceUID",
+          "SeriesInstanceUID",
+          "ContentDate",
+          "ContentTime",
+          "InstanceCreationDate",
+          "InstanceCreationTime",
+          "SeriesDate",
+          "SeriesTime"
+        ],
+        "ignored_file_meta_fields": [
+          "MediaStorageSOPInstanceUID",
+          "FileMetaInformationGroupLength"
+        ],
+        "accepted_roundtrip_sha256": "b7270b2c0df7f7e8e5a43d98c59a74bbb66362b52421db5d10fcc88123743af2",
+        "reviewed_roundtrip_sha256": "bac8ec63521a20775e5486c964e6ee0a099d3ca68b8a712d50b2e6fa2a07c06e"
+      },
+      {
+        "case": "pet_philips_3d",
+        "files": 213,
+        "all_pixels_and_non_generated_tags_identical": true,
+        "ignored_generated_fields": [
+          "SOPInstanceUID",
+          "SeriesInstanceUID",
+          "ContentDate",
+          "ContentTime",
+          "InstanceCreationDate",
+          "InstanceCreationTime"
+        ],
+        "ignored_file_meta_fields": [
+          "MediaStorageSOPInstanceUID",
+          "FileMetaInformationGroupLength"
+        ],
+        "accepted_roundtrip_sha256": "99fa5985b9e32e40720f325129c177aa6cf8bb30e9b654d120d65fa400078f24",
+        "reviewed_roundtrip_sha256": "01ab893788f007b84ccb6a1cef79c7925a5336feb047ff0eee208fbd674ee291"
+      },
+      {
+        "case": "pet_philips_dynamic",
+        "files": 2025,
+        "all_pixels_and_non_generated_tags_identical": true,
+        "ignored_generated_fields": [
+          "SOPInstanceUID",
+          "SeriesInstanceUID",
+          "ContentDate",
+          "ContentTime",
+          "InstanceCreationDate",
+          "InstanceCreationTime"
+        ],
+        "ignored_file_meta_fields": [
+          "MediaStorageSOPInstanceUID",
+          "FileMetaInformationGroupLength"
+        ],
+        "accepted_roundtrip_sha256": "0928189b47ff911cf013aa7d3b631f4134560f936e995b7114f7e771b12bdd80",
+        "reviewed_roundtrip_sha256": "3a9ceeeb7c4e2506666c99fb5057383414bbb2e9959226f141a3f7abf6e60365"
+      },
+      {
+        "case": "pet_siemens_3d",
+        "files": 42,
+        "all_pixels_and_non_generated_tags_identical": true,
+        "ignored_generated_fields": [
+          "SOPInstanceUID",
+          "SeriesInstanceUID",
+          "ContentDate",
+          "ContentTime",
+          "InstanceCreationDate",
+          "InstanceCreationTime"
+        ],
+        "ignored_file_meta_fields": [
+          "MediaStorageSOPInstanceUID",
+          "FileMetaInformationGroupLength"
+        ],
+        "accepted_roundtrip_sha256": "6c5856fd676dd246f611aaf4f2e475d77a2b0d7616c9a772a53555f0ce4767e2",
+        "reviewed_roundtrip_sha256": "44004d4ca01f9291900d836dd691619c2fd82b76dc71bc416838214aadb4233e"
+      },
+      {
+        "case": "pet_siemens_dynamic",
+        "files": 3330,
+        "all_pixels_and_non_generated_tags_identical": true,
+        "ignored_generated_fields": [
+          "SOPInstanceUID",
+          "SeriesInstanceUID",
+          "ContentDate",
+          "ContentTime",
+          "InstanceCreationDate",
+          "InstanceCreationTime"
+        ],
+        "ignored_file_meta_fields": [
+          "MediaStorageSOPInstanceUID",
+          "FileMetaInformationGroupLength"
+        ],
+        "accepted_roundtrip_sha256": "4b215c2f45c3bd0ea4b20ca117d17e1aec57b6b0f177ba20d3eca83384e7085c",
+        "reviewed_roundtrip_sha256": "bda29d5131b3f1a7ad0680c19f1de8ef248a010f14723891c3997d5fd19d06e3"
+      }
+    ],
+    "script_sha256": "feebcb066e319493bf79b9e377daf0885bcaa1c9de643b5303fb1bf61a429a9c",
+    "accepted_root": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-final",
+    "reviewed_root": "/private/tmp/nifti2dicom-idc-gaps.7pu3cy/roundtrip-reviewed"
+  },
+  "installed_wheel_smoke": {
+    "status": "passed",
+    "installed_module": "/private/var/folders/ty/kpfln0x146b9f7f8cylsn3q00000gn/T/.tmpoUQkrr/archive-v0/A5lbqvigJujBsHse8ZqzV/lib/python3.12/site-packages/nifti2dicom/__init__.py",
+    "cases": [
+      {
+        "dimensions": 2,
+        "files": 1,
+        "voxels": 20,
+        "maximum_value_error": 0.00015449764223873785
+      },
+      {
+        "dimensions": 3,
+        "files": 3,
+        "voxels": 60,
+        "maximum_value_error": 0.0004978256574403872
+      },
+      {
+        "dimensions": 4,
+        "files": 6,
+        "voxels": 120,
+        "maximum_value_error": 0.0008754863959836712
+      }
+    ],
+    "python": "3.12.11",
+    "cli_help_passed": true,
+    "dependencies": {
+      "nifti2dicom": "2.1.0",
+      "numpy": "2.5.3",
+      "nibabel": "5.4.2",
+      "pydicom": "3.0.2",
+      "highdicom": "0.28.1"
+    },
+    "installed_source_sha256": {
+      "nifti2dicom/__init__.py": "819a152ec09475b4c43f3ee92b35db8aa6a8e201be7d7f8fc9e8507b4ee18b06",
+      "nifti2dicom/__main__.py": "eb820c7b42b19e3e2d38ec8e5e66ec7771dcd8191a3d40fc662e2de97f97e859",
+      "nifti2dicom/api.py": "51d407effd4d7d33617d8758bc4c5840d26c130a1d6e4eefb3a404f5679d876b",
+      "nifti2dicom/cli/__init__.py": "89cccd8841d90ae311acaa5b8acb5544d3941f82700452fa663327ae8d42c207",
+      "nifti2dicom/cli/commands.py": "b76576ce83a12ee0086050619dc4df5b17ee9d38b84a4af4d5e8a3437bd07ac1",
+      "nifti2dicom/cli/presentation.py": "ae24c0c364d9132390895de6cf3cf3b0d627aca41d6fbcd8302cfba2210a7a15",
+      "nifti2dicom/convert_image.py": "05e0c5329dabedfe8cc209d9fc100fd44fd3de8a08b6e02d83aa60974118036b",
+      "nifti2dicom/convert_rgb.py": "5eeb23c3c6347416276a6c5747fa4fdd11b0be9904c090d7b76871db608e9764",
+      "nifti2dicom/convert_seg.py": "107fcd2ea11a958701197bba30bcf8f52108babe4aa36e7efea3388c1c4fc573",
+      "nifti2dicom/converter.py": "90e7898ce1fd122e141a88e90cd7f06cb59187290590df18f8b690a37398f0f8",
+      "nifti2dicom/dicom_io.py": "ed354626748d25e6062f6aee9accf453f1120df3ae97d4b95d3dffc6e8650b32",
+      "nifti2dicom/errors.py": "12fdfdd4de8cdb82b8f8c5870a2b99788e2875c87b51de802dee3bd827e4987b",
+      "nifti2dicom/exceptions.py": "c1af3e1c78a2db757c6b330112d7082ae5e35620ef63c27685f167c811d663a9",
+      "nifti2dicom/geometry.py": "6d8cfa763ee569dd3dffff02ce8cfbc8a5edbf7524823e61da290da52b189686",
+      "nifti2dicom/inference.py": "09668fd8a3f6fd452151ec45d6726ff19b5d9284732db4cc417170b86ccbf240",
+      "nifti2dicom/labels.py": "e383f1536936dd1467018830ae99f166fe40ced9ac57e3bf873930216c697b65",
+      "nifti2dicom/models.py": "8a3cb9af008e10e2f5c1417f08546060be54b3aca5e45eb0ca19e70fdcceec81",
+      "nifti2dicom/orientation.py": "f8df01e75b2746093550b4da0122fdf33df68298db35b8a41fc315da8de65f2f",
+      "nifti2dicom/pipeline.py": "043f7a31f3ffda4caaa54573ee2f500a36772a998f75c947562efbed6092c2d9",
+      "nifti2dicom/pixel.py": "a33274c889e6ffae954c0be28f7cbb402bc493aa906b05b3cdc9ec2164600fb5",
+      "nifti2dicom/pixels.py": "91ef62792276e24bde407ffdfc05133af24f458c2aa21480bf7fd599c58140dc",
+      "nifti2dicom/publication.py": "2f525d54e18e4937f526dc62b315c8d585b2845f83ac9e2208e51faf123f44f6",
+      "nifti2dicom/readers/__init__.py": "6927c9ebaa7fb8c732ec24730d337b98379881bb7e7234c1bd344767666478fa",
+      "nifti2dicom/readers/dicom.py": "1a72ceaa80fdb52df2e63174ea2f5687c513b60c86401ec8f75b5c8f6fa723f1",
+      "nifti2dicom/readers/nifti.py": "59caaf117fc7e22ab79aca5c61ccef9d154fb8a82b48a6c196ec27e8ab357adb",
+      "nifti2dicom/resample.py": "c048c04ea798c34e933cd82bdbd9055ab0a27065394ec074d41a05a72ab06e7a",
+      "nifti2dicom/tags.py": "b1ccdb69702a50b45e9b21899792b5f5c48e777c6586e50bb69519aefeb225b3",
+      "nifti2dicom/writer.py": "8ff81d2fd0009fb78470be68a78e8253bce25f1b2fa33f8b638da51813d3c9cf",
+      "nifti2dicom/writers/__init__.py": "a44d656db6c3f4e17f0cf756c436eb46b456cdcacd55446d012703858af1269f",
+      "nifti2dicom/writers/codes.py": "98449dbbe742705671d2244bdbeaf3a38120ceb4cb9b51478a0f1f73c4e46f02",
+      "nifti2dicom/writers/image.py": "5c6ea9e806cbfeb481bacbe4723cbe43f76ea64c94fb3dd72f70adec02206735",
+      "nifti2dicom/writers/rgb.py": "7dbdbb701ad39abdb3a9ce7d1929f8c936aaae2b587163599dacdba6f63432c3",
+      "nifti2dicom/writers/seg.py": "a9838c8e1797b9bd57d1711f9d18df2ad0bc7c15426690e002f8661119a352b4"
+    },
+    "wheel_sha256": "ca578c5e755da511e0f7d95f327d87cdba2dc5afec16d4f8a56c964582ca49b5",
+    "installed_metadata_matches_wheel": true,
+    "script_sha256": "43ca492707246a0b6eb618bfb13aeb0371ce3d7a35d86f06d595dd81598f527c"
+  },
+  "limitations": [
+    "Quantized scalar values are bounded, not universally lossless.",
+    "MR is a documented Standard Extended SOP Class; strict base-IOD findings remain visible.",
+    "These CT phases are ten separate 3D conversions, not an inferred temporal CT series.",
+    "Clinical/anatomical correctness and unknown upstream NIfTI provenance are not established.",
+    "Enhanced/gated profiles, overlapping/probabilistic/time-varying SEG remain outside supported scope.",
+    "New scalar cases did not run segmentation inference; existing synthetic SEG viewer fixtures were rechecked.",
+    "Slicer acceptance is limited to tested installation and profiles; other receivers require acceptance."
+  ]
+}

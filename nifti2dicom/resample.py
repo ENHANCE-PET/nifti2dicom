@@ -43,8 +43,7 @@ def resample_image(
     interp = _INTERPOLATORS.get(interpolation)
     if interp is None:
         raise ValueError(
-            f"Unknown interpolation '{interpolation}'. "
-            f"Choose from: {', '.join(_INTERPOLATORS)}"
+            f"Unknown interpolation '{interpolation}'. Choose from: {', '.join(_INTERPOLATORS)}"
         )
 
     if output_spacing is None:
@@ -54,8 +53,7 @@ def resample_image(
         in_size = image.GetSize()
         in_spacing = image.GetSpacing()
         output_size = tuple(
-            round(in_size[i] * (in_spacing[i] / output_spacing[i]))
-            for i in range(len(in_size))
+            round(in_size[i] * (in_spacing[i] / output_spacing[i])) for i in range(len(in_size))
         )
 
     return sitk.Resample(

@@ -2,9 +2,22 @@
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.build]
+exclude = [
+    "/.superpowers", "/docs/superpowers", ".env*",
+    "*.sql", "*.sqlite", "*.sqlite3", "*.db",
+    "*.dcm", "*.nii", "*.nii.gz", "*.nrrd", "*.mha", "*.mhd", "*.npz",
+]
+
+[tool.hatch.build.targets.sdist]
+only-include = [
+    "nifti2dicom", "tests", "integrations", "validation", "docs",
+    "README.md", "LICENSE", "pyproject.toml", "AGENTS.md", ".github", ".readthedocs.yml",
+]
+
 [project]
 name = "nifti2dicom"
-version = "2.0.0"
+version = "2.1.0"
 description = "Convert NIfTI images to DICOM format using a reference DICOM series."
 readme = "README.md"
 license = "MIT"
@@ -24,13 +37,12 @@ classifiers = [
 ]
 dependencies = [
     "pydicom>=3.0",
-    "nibabel",
-    "numpy",
-    "SimpleITK",
-    "highdicom",
-    "rich",
-    "click",
-    "python-cfonts",
+    "nibabel>=5.2",
+    "numpy>=1.24",
+    "SimpleITK>=2.3",
+    "highdicom>=0.27",
+    "rich>=13",
+    "click>=8.1",
 ]
 
 [project.optional-dependencies]
@@ -39,10 +51,15 @@ dev = [
     "pytest-cov",
     "ruff",
     "mypy",
+    "build",
 ]
 
 [project.scripts]
 nifti2dicom = "nifti2dicom.cli:cli"
+
+[project.urls]
+Source = "https://github.com/ENHANCE-PET/nifti2dicom"
+Issues = "https://github.com/ENHANCE-PET/nifti2dicom/issues"
 
 [tool.ruff]
 line-length = 100

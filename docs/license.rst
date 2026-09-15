@@ -1,4 +1,4 @@
-Scroll of Rights 📜
-===================
+License
+-------
 
-Nifti2Dicom is bound by the MIT spell of protection. Seek the LICENSE scroll for the incantations and rites.
+nifti2dicom is MIT licensed. See LICENSE in the repository.

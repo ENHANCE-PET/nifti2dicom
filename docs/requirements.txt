@@ -1,11 +1,2 @@
-pydicom
-nibabel
-numpy
-emoji
-rich
-highdicom
-pyfiglet
-sphinx_rtd_dark_mode
-sphinxcontrib-napoleon
-Sphinx
-sphinx_rtd_theme
+sphinx>=7
+sphinx_rtd_theme>=2

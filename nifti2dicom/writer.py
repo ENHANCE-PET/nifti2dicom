@@ -1,25 +1,53 @@
-"""Thread-safe DICOM slice writing.
-
-Fixes the old bug where ``save_slice()`` mutated the shared Dataset
-from multiple threads. Now every write deep-copies first.
-"""
+"""Legacy in-memory writer adapters. Encoding belongs to writers.image."""
 
 from __future__ import annotations
 
-import copy
-import os
 from collections.abc import Callable
-from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 import numpy as np
 import pydicom
-from pydicom.filewriter import dcmwrite
-from pydicom.uid import generate_uid
 
-from nifti2dicom.dicom_io import is_dicom_compressed
-from nifti2dicom.pixel import encode_pixel_data, normalize_for_dicom, normalize_pt_dynamic_range
-from nifti2dicom.tags import copy_tags
+from nifti2dicom.errors import GeometryError, OutputError
+from nifti2dicom.geometry import validate_geometry
+from nifti2dicom.models import Geometry, ImageVolume, ReferenceSeries
+from nifti2dicom.writers.image import iter_image_datasets
+
+
+def _geometry(
+    ds: pydicom.Dataset,
+    size: tuple[int, int, int],
+    positions: np.ndarray | None = None,
+    iop: np.ndarray | None = None,
+) -> Geometry:
+    orientation = np.asarray(ds.ImageOrientationPatient if iop is None else iop, dtype=float)
+    row, col = orientation[:3], orientation[3:]
+    spacing = np.asarray(ds.PixelSpacing, dtype=float)
+    affine = np.eye(4)
+    affine[:3, 0], affine[:3, 1] = row * spacing[1], col * spacing[0]
+    affine[:3, 2] = np.cross(row, col) * float(getattr(ds, "SliceThickness", 1) or 1)
+    affine[:3, 3] = np.asarray(ds.ImagePositionPatient if positions is None else positions[0])
+    if positions is not None and len(positions) > 1:
+        affine[:3, 2] = positions[1] - positions[0]
+        expected = affine[:3, 3] + np.arange(len(positions))[:, None] * affine[:3, 2]
+        if not np.allclose(positions, expected):
+            raise GeometryError(
+                "Legacy slice writing requires a uniformly spaced ordered volume.",
+                hint="Use nifti2dicom.convert for 4D data.",
+            )
+    geometry = Geometry(affine, size)
+    validate_geometry(geometry)
+    return geometry
+
+
+def _destination(output: str | Path, filename: str) -> Path:
+    if Path(filename).name != filename or filename in ("", ".", ".."):
+        raise OutputError("A slice filename must be a basename within the output directory.")
+    destination = Path(output) / filename
+    if destination.exists():
+        raise OutputError(f"Output file already exists: {destination}")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    return destination
 
 
 def save_slice(
@@ -34,80 +62,20 @@ def save_slice(
     iop: np.ndarray | None = None,
     instance_number: int | None = None,
 ) -> None:
-    """Write a single DICOM slice to disk (thread-safe).
-
-    Parameters
-    ----------
-    slice_ds : pydicom.Dataset
-        Reference DICOM slice (will be deep-copied, never mutated).
-    pixel_data : np.ndarray
-        2-D array of real-valued pixel data for this slice.
-    series_description : str
-        Text appended to the original SeriesDescription.
-    filename : str
-        Output filename (basename only).
-    output_dir : str | Path
-        Output directory.
-    modality : str
-        DICOM modality (CT, PT, etc.).
-    header_source : pydicom.Dataset, optional
-        If provided, copy non-spatial tags from this dataset.
-    ipp : np.ndarray, optional
-        Image Position (Patient) for this slice [x, y, z].
-    iop : np.ndarray, optional
-        Image Orientation (Patient) — 6 elements.
-    instance_number : int, optional
-        Override InstanceNumber.
-    """
-    ds = copy.deepcopy(slice_ds)
-
-    if is_dicom_compressed(ds):
-        ds.decompress()
-
-    # Pixel encoding
-    if modality == "PT":
-        slope = float(getattr(ds, "RescaleSlope", 1.0))
-        intercept = float(getattr(ds, "RescaleIntercept", 0.0))
-        stored, new_slope, new_intercept = normalize_pt_dynamic_range(
-            pixel_data, slope, intercept
+    """Write one slice with the caller's series identity and fresh instance identity."""
+    rows, cols = pixel_data.shape
+    geometry = _geometry(slice_ds, (cols, rows, 1), None if ipp is None else np.asarray([ipp]), iop)
+    ref_geometry = _geometry(slice_ds, (int(slice_ds.Columns), int(slice_ds.Rows), 1))
+    reference = ReferenceSeries((slice_ds,), (), ref_geometry)
+    image = ImageVolume(np.asarray(pixel_data)[None, None], geometry)
+    ds = next(
+        iter_image_datasets(
+            image, reference, description=series_description, header_source=header_source
         )
-        ds.RescaleSlope = str(new_slope)
-        ds.RescaleIntercept = str(new_intercept)
-        ds.PixelData = encode_pixel_data(stored)
-        ds.Rows, ds.Columns = stored.shape
-    else:
-        slope = float(getattr(ds, "RescaleSlope", 1.0))
-        intercept = float(getattr(ds, "RescaleIntercept", 0.0))
-        pixel_rep = int(getattr(ds, "PixelRepresentation", 1))
-        stored = normalize_for_dicom(pixel_data, slope, intercept, pixel_rep)
-        ds.PixelData = encode_pixel_data(stored)
-        ds.Rows, ds.Columns = stored.shape
-
-    # Header tag copying
-    if header_source is not None:
-        copy_tags(ds, header_source)
-
-    # Spatial tags
-    if ipp is not None:
-        ds.ImagePositionPatient = [str(v) for v in ipp]
-    if iop is not None:
-        ds.ImageOrientationPatient = [str(v) for v in iop]
-    if instance_number is not None:
-        ds.InstanceNumber = instance_number
-
-    # Series metadata
-    ds.SeriesNumber = int(getattr(ds, "SeriesNumber", 1)) * 10
-    existing_desc = getattr(ds, "SeriesDescription", "")
-    if existing_desc:
-        ds.SeriesDescription = f"{existing_desc}_{series_description}"
-    else:
-        ds.SeriesDescription = series_description
-
-    # Fresh UIDs to avoid collision
-    ds.SOPInstanceUID = generate_uid()
-
-    out_path = os.path.join(str(output_dir), filename)
-    dcmwrite(out_path, ds, write_like_original=False)
+    )
+    ds.SeriesInstanceUID = getattr(slice_ds, "SeriesInstanceUID", None) or ds.SeriesInstanceUID
+    ds.InstanceNumber = instance_number if instance_number is not None else 1
+    pydicom.dcmwrite(_destination(output_dir, filename), ds, enforce_file_format=True)
 
 
 def write_slices_parallel(
@@ -122,55 +90,35 @@ def write_slices_parallel(
     iop: np.ndarray | None = None,
     on_progress: Callable[[], None] | None = None,
 ) -> None:
-    """Write all slices in parallel using a thread pool.
-
-    Parameters
-    ----------
-    dicom_slices : list[pydicom.Dataset]
-        Reference DICOM datasets (one per slice).
-    filenames : list[str]
-        Output filenames.
-    pixel_data_3d : np.ndarray
-        3-D array ``(num_slices, rows, cols)``.
-    series_description : str
-        Appended to SeriesDescription.
-    output_dir : str | Path
-        Output directory.
-    modality : str
-        DICOM modality.
-    header_source : pydicom.Dataset, optional
-        Header source for tag copying.
-    ipp_list : np.ndarray, optional
-        IPP array ``(num_slices, 3)``.
-    iop : np.ndarray, optional
-        IOP — 6-element array.
-    on_progress : callable, optional
-        Called once per completed slice (for progress bars).
-    """
-    output_dir = Path(output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
-
-    with ThreadPoolExecutor() as pool:
-        futures = []
-        for idx, (ds, fname) in enumerate(zip(dicom_slices, filenames, strict=True)):
-            ipp = ipp_list[idx] if ipp_list is not None else None
-            futures.append(
-                pool.submit(
-                    save_slice,
-                    ds,
-                    pixel_data_3d[idx],
-                    series_description,
-                    fname,
-                    output_dir,
-                    modality,
-                    header_source=header_source,
-                    ipp=ipp,
-                    iop=iop,
-                    instance_number=idx + 1,
-                )
-            )
-
-        for future in as_completed(futures):
-            future.result()  # raise any exception from the thread
-            if on_progress:
-                on_progress()
+    """Historical batch entry point; modern serialization streams a volume."""
+    if (
+        not dicom_slices
+        or len(dicom_slices) != len(filenames)
+        or len(filenames) != len(pixel_data_3d)
+    ):
+        raise GeometryError(
+            "Slice templates, filenames and pixel planes must have matching lengths."
+        )
+    if len(set(filenames)) != len(filenames):
+        raise OutputError("Output slice filenames must be unique.")
+    nz, rows, cols = pixel_data_3d.shape
+    positions = np.asarray([ds.ImagePositionPatient for ds in dicom_slices], dtype=float)
+    ref_geometry = _geometry(
+        dicom_slices[0], (int(dicom_slices[0].Columns), int(dicom_slices[0].Rows), nz), positions
+    )
+    geometry = _geometry(
+        dicom_slices[0],
+        (cols, rows, nz),
+        positions if ipp_list is None else np.asarray(ipp_list),
+        iop,
+    )
+    reference = ReferenceSeries(tuple(dicom_slices), (), ref_geometry)
+    image = ImageVolume(np.asarray(pixel_data_3d)[None], geometry)
+    destinations = [_destination(output_dir, name) for name in filenames]
+    datasets = iter_image_datasets(
+        image, reference, description=series_description, header_source=header_source
+    )
+    for ds, destination in zip(datasets, destinations, strict=True):
+        pydicom.dcmwrite(destination, ds, enforce_file_format=True)
+        if on_progress:
+            on_progress()

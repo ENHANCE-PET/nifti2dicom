@@ -6,12 +6,14 @@ from pathlib import Path
 
 import pytest
 
-from nifti2dicom.exceptions import ShapeMismatchError
+from nifti2dicom.errors import OutputError
 
 
 class TestConvertNiftiToDicom:
-    def test_shape_mismatch_raises(self, sample_dicom_dir: Path, tmp_path: Path) -> None:
-        """A NIfTI whose oriented shape doesn't match the DICOM series should raise."""
+    def test_different_shape_preserves_native_grid(
+        self, sample_dicom_dir: Path, tmp_path: Path
+    ) -> None:
+        """A reference provides metadata without limiting the output dimensions."""
         import nibabel as nib
         import numpy as np
 
@@ -23,14 +25,20 @@ class TestConvertNiftiToDicom:
 
         from nifti2dicom.convert_image import convert_nifti_to_dicom
 
-        with pytest.raises(ShapeMismatchError):
-            convert_nifti_to_dicom(
-                ref_dir=sample_dicom_dir,
-                nifti_path=nifti_path,
-                output_dir=tmp_path / "output",
-            )
+        result = convert_nifti_to_dicom(
+            ref_dir=sample_dicom_dir,
+            nifti_path=nifti_path,
+            output_dir=tmp_path / "output",
+        )
+        assert len(result.files) == 10
+        import pydicom
 
-    def test_successful_conversion(self, sample_dicom_dir: Path, sample_nifti_3d: Path, tmp_path: Path) -> None:
+        ds = pydicom.dcmread(result.files[0])
+        assert ds.Rows == ds.Columns == 10
+
+    def test_successful_conversion(
+        self, sample_dicom_dir: Path, sample_nifti_3d: Path, tmp_path: Path
+    ) -> None:
         """End-to-end: convert a matching NIfTI and verify output DICOM files."""
         from nifti2dicom.convert_image import convert_nifti_to_dicom
 
@@ -43,36 +51,42 @@ class TestConvertNiftiToDicom:
         )
 
         assert output.exists()
-        dcm_files = list(output.glob("*"))
+        dcm_files = list(output.glob("*.dcm"))
         assert len(dcm_files) == 3
 
         # Verify each is valid DICOM
         import pydicom
+
         for f in dcm_files:
             ds = pydicom.dcmread(str(f))
             assert ds.Rows == 4
             assert ds.Columns == 4
             assert "test_conversion" in ds.SeriesDescription
 
-    def test_skip_existing_without_force(self, sample_dicom_dir: Path, sample_nifti_3d: Path, tmp_path: Path) -> None:
-        """If output dir exists and force=False, should skip without error."""
+    def test_existing_without_force_errors(
+        self, sample_dicom_dir: Path, sample_nifti_3d: Path, tmp_path: Path
+    ) -> None:
+        """Existing output is preserved and reported as an error."""
         from nifti2dicom.convert_image import convert_nifti_to_dicom
 
         output = tmp_path / "existing_output"
         output.mkdir()
         (output / "marker.txt").write_text("exists")
 
-        convert_nifti_to_dicom(
-            ref_dir=sample_dicom_dir,
-            nifti_path=sample_nifti_3d,
-            output_dir=output,
-            force_overwrite=False,
-        )
+        with pytest.raises(OutputError, match="already exists"):
+            convert_nifti_to_dicom(
+                ref_dir=sample_dicom_dir,
+                nifti_path=sample_nifti_3d,
+                output_dir=output,
+                force_overwrite=False,
+            )
 
         # Should not have written DICOM files since it skipped
         assert (output / "marker.txt").exists()
 
-    def test_force_overwrite(self, sample_dicom_dir: Path, sample_nifti_3d: Path, tmp_path: Path) -> None:
+    def test_force_overwrite(
+        self, sample_dicom_dir: Path, sample_nifti_3d: Path, tmp_path: Path
+    ) -> None:
         """With force=True, should overwrite existing output."""
         from nifti2dicom.convert_image import convert_nifti_to_dicom
 
@@ -89,4 +103,4 @@ class TestConvertNiftiToDicom:
         )
 
         assert not (output / "old_file.txt").exists()
-        assert len(list(output.glob("*"))) == 3
+        assert len(list(output.glob("*.dcm"))) == 3

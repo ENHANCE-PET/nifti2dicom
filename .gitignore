@@ -13,3 +13,10 @@ venv/
 *.so
 .DS_Store
 docs/_build/
+
+# Local Slicer databases and their SQLite sidecars are not project sources.
+/ctkDICOM*.sql*
+
+# Local implementation notes are not part of the public package.
+/.superpowers/
+/docs/superpowers/

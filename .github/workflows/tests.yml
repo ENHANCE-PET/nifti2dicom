@@ -1,0 +1,29 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.10', '3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -e '.[dev]'
+      - run: python -m pytest
+      - run: python -m pytest integrations/slicer/tests
+      - run: python -m ruff check nifti2dicom tests integrations/slicer validation
+      - run: python -m ruff format --check nifti2dicom tests integrations/slicer validation
+      - run: python -m mypy nifti2dicom --ignore-missing-imports
+      - run: python -m build
+      - run: python -m validation.check_distribution dist/*.tar.gz dist/*.whl

@@ -1,0 +1,196 @@
+{
+  "date": "2026-09-13",
+  "scope": "PET optional tracer-code metadata fix and unchanged spatial/temporal/pixel fidelity",
+  "previous_evidence": "2026-09-13-idc-pet-summary.json",
+  "license": "CC BY 3.0",
+  "idc_version": "v24",
+  "total_frames": 3126,
+  "total_voxels": 51216384,
+  "total_validator_errors": 0,
+  "cases": [
+    {
+      "alias": "pet_static_rider",
+      "series_instance_uid": "1.3.6.1.4.1.9328.50.17.294334834487040944282189170865267767718",
+      "source_DOI": "10.7937/k9/tcia.2015.ofip7tvm",
+      "frames": 47,
+      "validator_passed": 47,
+      "validator_errors": 0,
+      "validator_error_patterns": [],
+      "voxels_checked": 770048,
+      "max_absolute_intensity_error_BQML": 0.4577692558975741,
+      "half_quantization_step_BQML": 0.457770514763105,
+      "max_world_coordinate_error_mm": 0.000003337860007945892,
+      "deliberate_corruption_mismatched_voxels": {
+        "left_right": 550666,
+        "anterior_posterior": 606286,
+        "inferior_superior": 546388
+      },
+      "wrong_uniform_timing_rejected_without_publication": null,
+      "source_files_aggregate_sha256": "ba0b470b06c5a2c41f8bde156f4bf36518c9bc2b3f135f27907b66018ea06ce4",
+      "output_files_aggregate_sha256": "1847a5c61d0b510fa3a4ef12cf7b9afb7b2dacbd8e0689e4236dfb503760476f",
+      "metadata_change_audit": {
+        "case": "pet_static_rider",
+        "files": 47,
+        "instances_with_optional_code_omitted": 47,
+        "all_other_isotope_metadata_identical_to_source": true,
+        "pixel_bytes_rescale_geometry_and_temporal_metadata_identical_to_previous_output": true,
+        "previous_outputs_unchanged": true,
+        "original_source_hashes_unchanged": true,
+        "nifti_fixture_identical": true,
+        "omission_warning_count": 1
+      },
+      "warnings": [
+        "PET values are interpreted in the reference Units; NIfTI cannot independently verify activity/SUV units.",
+        "Omitted optional RadiopharmaceuticalCodeSequence: the reference contains an incomplete coded description. Source files are unchanged; no missing code was guessed."
+      ],
+      "precision_diagnostic": {
+        "ROI": "entire spatial volume including background, not an anatomical ROI",
+        "clinical_acceptance_assessed": false,
+        "max_relative_L1_error_percent": 0.0032371033196718743,
+        "max_absolute_whole_volume_mean_bias_percent": 0.00012954333642066444,
+        "worst_mean_bias_timepoint_zero_based": 0,
+        "worst_source_mean_BQML": 5239.012037707348,
+        "worst_output_mean_BQML": 5239.018824498337,
+        "source_nonzero_encoded_zero_over_all_timepoints": 2761,
+        "complete_nonzero_timepoints_encoded_zero": []
+      }
+    },
+    {
+      "alias": "pet_dynamic_rider",
+      "series_instance_uid": "1.3.6.1.4.1.9328.50.17.6911118773075816549698191732956359004",
+      "source_DOI": "10.7937/k9/tcia.2015.ofip7tvm",
+      "frames": 1504,
+      "validator_passed": 1504,
+      "validator_errors": 0,
+      "validator_error_patterns": [],
+      "voxels_checked": 24641536,
+      "max_absolute_intensity_error_BQML": 27.765563012131906,
+      "half_quantization_step_BQML": 27.765576317998,
+      "max_world_coordinate_error_mm": 0.000014781959976062353,
+      "deliberate_corruption_mismatched_voxels": {
+        "left_right": 15415598,
+        "anterior_posterior": 16994114,
+        "inferior_superior": 15242262,
+        "time_reversal": 17836800
+      },
+      "wrong_uniform_timing_rejected_without_publication": true,
+      "source_files_aggregate_sha256": "1eff22d0a84f569f325906afbcbf7aec14080e4f1e20396c82b97a6ee0d83dee",
+      "output_files_aggregate_sha256": "2fd5ddd5853d0016dfb606c92131c6415b243af4beff7704b7ab2fadb36f4f2a",
+      "metadata_change_audit": {
+        "case": "pet_dynamic_rider",
+        "files": 1504,
+        "instances_with_optional_code_omitted": 0,
+        "all_other_isotope_metadata_identical_to_source": true,
+        "pixel_bytes_rescale_geometry_and_temporal_metadata_identical_to_previous_output": true,
+        "previous_outputs_unchanged": true,
+        "original_source_hashes_unchanged": true,
+        "nifti_fixture_identical": true,
+        "omission_warning_count": 0
+      },
+      "warnings": [
+        "Timepoint order is preserved, but acquisition timing is unknown in the NIfTI header.",
+        "PET values are interpreted in the reference Units; NIfTI cannot independently verify activity/SUV units."
+      ],
+      "precision_diagnostic": {
+        "ROI": "entire spatial volume including background, not an anatomical ROI",
+        "clinical_acceptance_assessed": false,
+        "max_relative_L1_error_percent": 0.38898484819420687,
+        "max_absolute_whole_volume_mean_bias_percent": 0.04475015093203131,
+        "worst_mean_bias_timepoint_zero_based": 2,
+        "worst_source_mean_BQML": 144.05800955092226,
+        "worst_output_mean_BQML": 143.99354337421855,
+        "source_nonzero_encoded_zero_over_all_timepoints": 462899,
+        "complete_nonzero_timepoints_encoded_zero": []
+      }
+    },
+    {
+      "alias": "pet_dynamic_flt",
+      "series_instance_uid": "1.3.6.1.4.1.14519.5.2.1.7009.2401.644907425191838618941441902072",
+      "source_DOI": "10.7937/k9/tcia.2017.ol20zmxg",
+      "frames": 1575,
+      "validator_passed": 1575,
+      "validator_errors": 0,
+      "validator_error_patterns": [],
+      "voxels_checked": 25804800,
+      "max_absolute_intensity_error_BQML": 7.840826209544501,
+      "half_quantization_step_BQML": 7.84083035477225,
+      "max_world_coordinate_error_mm": 0,
+      "deliberate_corruption_mismatched_voxels": {
+        "left_right": 11660606,
+        "anterior_posterior": 16626876,
+        "inferior_superior": 13064450,
+        "time_reversal": 18758138
+      },
+      "wrong_uniform_timing_rejected_without_publication": true,
+      "source_files_aggregate_sha256": "125f29c96b70550ccbfaa1e4058a0ee6a62ca2664de74470b5afe634825c2144",
+      "output_files_aggregate_sha256": "a3517829ee450319f2396fc58a3af0490030368dabdabaac8dfc652f0001e8b1",
+      "metadata_change_audit": {
+        "case": "pet_dynamic_flt",
+        "files": 1575,
+        "instances_with_optional_code_omitted": 1575,
+        "all_other_isotope_metadata_identical_to_source": true,
+        "pixel_bytes_rescale_geometry_and_temporal_metadata_identical_to_previous_output": true,
+        "previous_outputs_unchanged": true,
+        "original_source_hashes_unchanged": true,
+        "nifti_fixture_identical": true,
+        "omission_warning_count": 1
+      },
+      "warnings": [
+        "Timepoint order is preserved, but acquisition timing is unknown in the NIfTI header.",
+        "PET values are interpreted in the reference Units; NIfTI cannot independently verify activity/SUV units.",
+        "Omitted optional RadiopharmaceuticalCodeSequence: the reference contains an incomplete coded description. Source files are unchanged; no missing code was guessed."
+      ],
+      "precision_diagnostic": {
+        "ROI": "entire spatial volume including background, not an anatomical ROI",
+        "clinical_acceptance_assessed": false,
+        "max_relative_L1_error_percent": 8.69237712693262,
+        "max_absolute_whole_volume_mean_bias_percent": 2.1413625640829257,
+        "worst_mean_bias_timepoint_zero_based": 3,
+        "worst_source_mean_BQML": 13.745192463995428,
+        "worst_output_mean_BQML": 13.450858058210283,
+        "source_nonzero_encoded_zero_over_all_timepoints": 2629296,
+        "complete_nonzero_timepoints_encoded_zero": []
+      }
+    }
+  ],
+  "test_first_baseline": {
+    "malformed_code_cases_failed": 16,
+    "complete_code_cases_passed": 6
+  },
+  "final_test_count": 620,
+  "package_source_sha256": "5cbe2cede1d3b6887057ce4ae7abf104f8ca8ff7d593c22de395ba5f9a5fb14e",
+  "package_hash_method": "SHA256 of sorted nifti2dicom/**/*.py: repository-relative POSIX path, NUL, file bytes, NUL",
+  "aggregate_file_hash_method": "SHA256 of UTF-8 json.dumps(filename_to_sha256, sort_keys=True) with default separators",
+  "conversion_environment": {
+    "python": "3.13.3",
+    "numpy": "2.4.2",
+    "nibabel": "5.4.0",
+    "pydicom": "3.0.1",
+    "highdicom": "0.28.1",
+    "simpleitk": "2.5.6"
+  },
+  "validator_provenance": {
+    "dicom_validator": "0.9.0",
+    "pydicom": "3.0.2",
+    "python": "3.12.11",
+    "edition": "2026c",
+    "validator_or_specification_modified": false,
+    "standard_sha256": {
+      "dict_info.json": "790df6fba413a0c7673f05de28774eec2f40e95132bd4512b3cbbc00ce065a95",
+      "iod_info.json": "e07b4e2fee0ebe5cb1f4e80f28018302102d583bfcc31b48569e5a02c5bc0f86",
+      "module_info.json": "d78a08c185cc7a14e1e12bc33eb6d7eefadfda8f55ed14fc41f5e9d45b6ffbb3"
+    },
+    "script_sha256": "f03f122cbb0b6e219e21aef55910876fab2b4576ba79963c2619fca6078527ce"
+  },
+  "wheel_sha256": "8867a3cef05112fcede389f886e9743d2261d42a4957d60f4762ecd1db563d95",
+  "qa_root": "/private/tmp/nifti2dicom-pet-codes-r1.fHombk",
+  "scripts_sha256": {
+    "pet_roundtrip.py": "f6c44dbcb9cb1482752b60c58067ff8642f1be9e0e5bc06e4b5aecabe6d81b5c",
+    "validate_pet.py": "f03f122cbb0b6e219e21aef55910876fab2b4576ba79963c2619fca6078527ce",
+    "audit_metadata_change.py": "c9867aac3a332e7020f5980ffd7f1d21633e8ed8d930cf608bdfe891accd4951",
+    "measure_frame_precision.py": "8089aac078a3656b450a36b7f14837c61b217ec37a728dadbd844d8a43aa900b"
+  },
+  "dciodvfy_run_on_these_outputs": false,
+  "target_viewer_acceptance": false,
+  "encoding_precision_policy_changed": false
+}

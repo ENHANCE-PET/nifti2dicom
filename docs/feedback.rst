@@ -1,4 +1,8 @@
-A Magical Conduit for Thoughts 🐛🗣
-===================================
+Feedback
+========
 
-Bewitched by bugs or wish to share potion improvements? [Open an issue](GitHub-issue-link). Also, tales of harmony between NIfTI and DICOM are always welcome. Share your scrolls and stories!
+Report reproducible problems at the
+`GitHub issue tracker <https://github.com/ENHANCE-PET/nifti2dicom/issues>`_.
+
+Include the package version, command, error code and a minimal synthetic
+reproduction where possible. Do not upload patient-identifying data.

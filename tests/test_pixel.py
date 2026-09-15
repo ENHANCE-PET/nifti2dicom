@@ -12,27 +12,35 @@ from nifti2dicom.pixel import encode_pixel_data, normalize_for_dicom, normalize_
 class TestNormalizeForDicom:
     def test_identity_transform(self) -> None:
         data = np.array([[100.0, 200.0], [300.0, 400.0]])
-        result = normalize_for_dicom(data, rescale_slope=1.0, rescale_intercept=0.0, pixel_representation=1)
+        result = normalize_for_dicom(
+            data, rescale_slope=1.0, rescale_intercept=0.0, pixel_representation=1
+        )
         assert result.dtype == np.int16
         np.testing.assert_array_equal(result, data.astype(np.int16))
 
     def test_with_slope_intercept(self) -> None:
         data = np.array([[10.0, 20.0]])
-        result = normalize_for_dicom(data, rescale_slope=2.0, rescale_intercept=5.0, pixel_representation=0)
-        # stored = (data - 5) / 2 = [2.5, 7.5] → clipped and cast to uint16
+        result = normalize_for_dicom(
+            data, rescale_slope=2.0, rescale_intercept=5.0, pixel_representation=0
+        )
+        # Nearest rounding minimizes reconstruction error, including ties-to-even.
         assert result.dtype == np.uint16
-        expected = np.array([[2, 7]], dtype=np.uint16)
+        expected = np.array([[2, 8]], dtype=np.uint16)
         np.testing.assert_array_equal(result, expected)
 
     def test_zero_slope_raises(self) -> None:
         data = np.array([[1.0]])
         with pytest.raises(PixelEncodingError, match="zero"):
-            normalize_for_dicom(data, rescale_slope=0.0, rescale_intercept=0.0, pixel_representation=1)
+            normalize_for_dicom(
+                data, rescale_slope=0.0, rescale_intercept=0.0, pixel_representation=1
+            )
 
-    def test_clipping_negative_to_unsigned(self) -> None:
+    def test_negative_unsigned_overflow_is_explicit(self) -> None:
         data = np.array([[-100.0]])
-        result = normalize_for_dicom(data, rescale_slope=1.0, rescale_intercept=0.0, pixel_representation=0)
-        assert result[0, 0] == 0  # clipped to uint16 min
+        with pytest.raises(PixelEncodingError, match="overflow"):
+            normalize_for_dicom(
+                data, rescale_slope=1.0, rescale_intercept=0.0, pixel_representation=0
+            )
 
 
 class TestEncodePixelData:
