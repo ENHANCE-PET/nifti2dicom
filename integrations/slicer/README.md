@@ -16,7 +16,7 @@ it does not change nifti2dicom output or modify Slicer's application files.
 Check registration in Slicer's Python console:
 
 ```python
-print(slicer.modules.dicomPlugins['MultiVolumeImporterPlugin'].__name__)
+print(slicer.modules.dicomPlugins["MultiVolumeImporterPlugin"].__name__)
 # Nifti2DicomPETPlugin
 ```
 
@@ -49,6 +49,7 @@ def _register_pet_integration():
     factory.registerModule(qt.QFileInfo("/absolute/path/to/Nifti2DicomPET.py"))
     if not factory.loadModules(["Nifti2DicomPET"]):
         logging.error("PET integration could not load. Check its path and the Slicer error log.")
+
 
 _register_pet_integration()
 del _register_pet_integration
