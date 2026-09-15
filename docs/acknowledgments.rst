@@ -1,6 +1,7 @@
-The Magical Consortium 👏
-==========================
+Acknowledgments
+===============
 
-- Elixir of Alertness, the coffee brew. ☕️
-- All who endured a spellcaster’s ramblings on DICOM glyphs.
-- Our emblematic beast: The platypus. Much like our concoction, it's unparalleled and achieves wonders in its unique way!
+This package builds on NiBabel, NumPy, pydicom, highdicom and SimpleITK.
+The terminal presentation takes its coral and greige palette from LION.
+
+Authors: Lalith Kumar Shiyam Sundar, Aaron Selfridge and Siqi Li.

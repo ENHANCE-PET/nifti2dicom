@@ -1,0 +1,424 @@
+{
+  "date": "2026-09-12",
+  "cases": [
+    {
+      "case": "ct001_2d_derived_r4",
+      "status": "validator_failed",
+      "package_sources_sha256": "056c40487a36bf68ebd41edb36a3a411f32c5911d3ba9b500d99e89988ccf26e",
+      "decoded_voxels": 332288,
+      "max_pixel_error": 0.0,
+      "max_allowed_quantization_error": 0.501466,
+      "max_grid_error_voxels": 2.5579538487363607e-11,
+      "timepoints": 1,
+      "dicom_files": 1,
+      "warnings": [],
+      "external_validator": {
+        "checked_files": 1,
+        "errors": 1,
+        "warnings": 1
+      },
+      "input_sha256": "56da1d73cad1b3099728ee1b412c74f72b197685f8f4707d1d515c38789b59b3",
+      "sources_unchanged": true,
+      "seconds": 2.19,
+      "current_standard": {
+        "totals": {
+          "stock": {
+            "files": 1,
+            "passed": 1,
+            "errors": 0
+          }
+        },
+        "error_patterns": {
+          "stock": []
+        }
+      }
+    },
+    {
+      "case": "ct001_3d_r4",
+      "status": "validator_failed",
+      "package_sources_sha256": "056c40487a36bf68ebd41edb36a3a411f32c5911d3ba9b500d99e89988ccf26e",
+      "decoded_voxels": 46520320,
+      "max_pixel_error": 0.0,
+      "max_allowed_quantization_error": 0.502218,
+      "max_grid_error_voxels": 1.6697754290362354e-11,
+      "timepoints": 1,
+      "dicom_files": 140,
+      "warnings": [],
+      "external_validator": {
+        "checked_files": 3,
+        "errors": 3,
+        "warnings": 3
+      },
+      "input_sha256": "a685f5ce6238df40e67710ca841befa066d1282484d1ef497feb0898a888d410",
+      "sources_unchanged": true,
+      "seconds": 7.93,
+      "current_standard": {
+        "totals": {
+          "stock": {
+            "files": 140,
+            "passed": 140,
+            "errors": 0
+          }
+        },
+        "error_patterns": {
+          "stock": []
+        }
+      }
+    },
+    {
+      "case": "ct001_4d_synthetic_time_r4",
+      "status": "validator_failed",
+      "package_sources_sha256": "056c40487a36bf68ebd41edb36a3a411f32c5911d3ba9b500d99e89988ccf26e",
+      "decoded_voxels": 93040640,
+      "max_pixel_error": 0.0,
+      "max_allowed_quantization_error": 0.502235,
+      "max_grid_error_voxels": 1.6697754290362354e-11,
+      "timepoints": 2,
+      "dicom_files": 280,
+      "warnings": [
+        "4D CT uses standard-extended temporal attributes. Confirm that the receiving viewer groups timepoints correctly."
+      ],
+      "external_validator": {
+        "checked_files": 3,
+        "errors": 3,
+        "warnings": 15
+      },
+      "input_sha256": "925f86ee3b40dcac9a365d5cc79e4927bb375d76b7c3bc06e049395249843810",
+      "sources_unchanged": true,
+      "seconds": 20.0,
+      "current_standard": {
+        "totals": {
+          "stock": {
+            "files": 280,
+            "passed": 0,
+            "errors": 840
+          }
+        },
+        "error_patterns": {
+          "stock": [
+            {
+              "error": "TagUnexpected",
+              "keyword": "NumberOfTemporalPositions",
+              "module": "General",
+              "scope": "General",
+              "tag_path": "(0020,0105)",
+              "type": "Undefined",
+              "files_with_error": 280
+            },
+            {
+              "error": "TagUnexpected",
+              "keyword": "TemporalPositionIdentifier",
+              "module": "General",
+              "scope": "General",
+              "tag_path": "(0020,0100)",
+              "type": "Undefined",
+              "files_with_error": 280
+            },
+            {
+              "error": "TagUnexpected",
+              "keyword": "TemporalResolution",
+              "module": "General",
+              "scope": "General",
+              "tag_path": "(0020,0110)",
+              "type": "Undefined",
+              "files_with_error": 280
+            }
+          ]
+        }
+      },
+      "temporal_data_are_constructed": true
+    },
+    {
+      "case": "pet001_activity_3d_r4",
+      "status": "validator_failed",
+      "package_sources_sha256": "056c40487a36bf68ebd41edb36a3a411f32c5911d3ba9b500d99e89988ccf26e",
+      "decoded_voxels": 16760000,
+      "max_pixel_error": 0.5579444577306276,
+      "max_allowed_quantization_error": 0.6310742378506551,
+      "max_grid_error_voxels": 2.4556356947869062e-11,
+      "timepoints": 1,
+      "pet_timing_and_decay_preserved": true,
+      "matched_pet_frames": 419,
+      "max_original_rounded_plane_distance_mm": 0.005037326799993025,
+      "dicom_files": 419,
+      "warnings": [
+        "Reference positions are rounded (maximum grid deviation 0.005 mm); the resampling grid spans the original first and last planes.",
+        "PET values are interpreted in the reference Units; NIfTI cannot independently verify activity/SUV units."
+      ],
+      "external_validator": {
+        "checked_files": 3,
+        "errors": 3,
+        "warnings": 12
+      },
+      "input_sha256": "5c79968da0b0596d2278d88b5934e806321876ab1d61a3c30b4c37a8b36ebfb6",
+      "sources_unchanged": true,
+      "seconds": 22.52,
+      "current_standard": {
+        "totals": {
+          "stock": {
+            "files": 419,
+            "passed": 419,
+            "errors": 0
+          }
+        },
+        "error_patterns": {
+          "stock": []
+        }
+      },
+      "half_quantization_step_bqml": 0.557944457770655
+    },
+    {
+      "case": "lion001_binary_r4",
+      "status": "validator_failed",
+      "package_sources_sha256": "056c40487a36bf68ebd41edb36a3a411f32c5911d3ba9b500d99e89988ccf26e",
+      "segments": 1,
+      "foreground_voxels": 18294,
+      "source_planes": 419,
+      "exact_source_frame_roundtrip": true,
+      "label_mapping": {
+        "1": 1
+      },
+      "dicom_files": 1,
+      "warnings": [
+        "Reference positions are rounded (maximum grid deviation 0.005 mm); the resampling grid spans the original first and last planes."
+      ],
+      "external_validator": {
+        "checked_files": 1,
+        "errors": 2,
+        "warnings": 163
+      },
+      "input_sha256": "b81f06c4dac862698d8e316d683650ce77211a2afe25212466b07eab4f414f28",
+      "sources_unchanged": true,
+      "seconds": 8.88,
+      "current_standard": {
+        "totals": {
+          "stock": {
+            "files": 1,
+            "passed": 0,
+            "errors": 6
+          },
+          "seg_macro_table_in_memory": {
+            "files": 1,
+            "passed": 1,
+            "errors": 0
+          }
+        },
+        "error_patterns": {
+          "stock": [
+            {
+              "error": "TagUnexpected",
+              "keyword": "DerivationImageSequence",
+              "module": "Multi-frame Functional Groups",
+              "scope": "General",
+              "tag_path": "(5200,9230) / (0008,9124)",
+              "type": "Undefined",
+              "files_with_error": 1
+            },
+            {
+              "error": "TagUnexpected",
+              "keyword": "FrameContentSequence",
+              "module": "Multi-frame Functional Groups",
+              "scope": "General",
+              "tag_path": "(5200,9230) / (0020,9111)",
+              "type": "Undefined",
+              "files_with_error": 1
+            },
+            {
+              "error": "TagUnexpected",
+              "keyword": "PixelMeasuresSequence",
+              "module": "Multi-frame Functional Groups",
+              "scope": "General",
+              "tag_path": "(5200,9229) / (0028,9110)",
+              "type": "Undefined",
+              "files_with_error": 1
+            },
+            {
+              "error": "TagUnexpected",
+              "keyword": "PlaneOrientationSequence",
+              "module": "Multi-frame Functional Groups",
+              "scope": "General",
+              "tag_path": "(5200,9229) / (0020,9116)",
+              "type": "Undefined",
+              "files_with_error": 1
+            },
+            {
+              "error": "TagUnexpected",
+              "keyword": "PlanePositionSequence",
+              "module": "Multi-frame Functional Groups",
+              "scope": "General",
+              "tag_path": "(5200,9230) / (0020,9113)",
+              "type": "Undefined",
+              "files_with_error": 1
+            },
+            {
+              "error": "TagUnexpected",
+              "keyword": "SegmentIdentificationSequence",
+              "module": "Multi-frame Functional Groups",
+              "scope": "General",
+              "tag_path": "(5200,9229) / (0062,000A)",
+              "type": "Undefined",
+              "files_with_error": 1
+            }
+          ],
+          "seg_macro_table_in_memory": []
+        }
+      },
+      "independent_decoder": {
+        "case": "lion001_binary_r4",
+        "decoder": "dcmqi 1.5.7 / segimage2itkimage",
+        "output_masks": 1,
+        "differing_voxels": 0,
+        "exact_roundtrip_on_original_mask_grid": true,
+        "seconds": 0.49
+      }
+    },
+    {
+      "case": "moose001_multilabel_r4",
+      "status": "validator_failed",
+      "package_sources_sha256": "056c40487a36bf68ebd41edb36a3a411f32c5911d3ba9b500d99e89988ccf26e",
+      "segments": 18,
+      "foreground_voxels": 16883774,
+      "source_planes": 140,
+      "exact_source_frame_roundtrip": true,
+      "label_mapping": {
+        "1": 1,
+        "2": 2,
+        "4": 3,
+        "5": 4,
+        "6": 5,
+        "7": 6,
+        "8": 7,
+        "9": 8,
+        "11": 9,
+        "12": 10,
+        "13": 11,
+        "15": 12,
+        "16": 13,
+        "17": 14,
+        "19": 15,
+        "21": 16,
+        "22": 17,
+        "23": 18
+      },
+      "dicom_files": 1,
+      "warnings": [
+        "Descriptions for labels absent from the mask were omitted.",
+        "Label 1: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 2: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 4: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 5: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 6: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 7: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 8: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 9: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 11: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 12: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 13: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 15: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 16: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 17: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 19: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 21: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 22: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Label 23: unspecified coded meaning; supply category/type codes for semantic interoperability.",
+        "Omitted optional ProcedureCodeSequence: the reference contains an incomplete coded description. Source files are unchanged; no missing code was guessed."
+      ],
+      "external_validator": {
+        "checked_files": 1,
+        "errors": 2,
+        "warnings": 876
+      },
+      "input_sha256": "b2940421fd43950654ef9d1d17673a2b849e6e2458ed07de0cc6e7382c371952",
+      "sources_unchanged": true,
+      "seconds": 9.46,
+      "current_standard": {
+        "totals": {
+          "stock": {
+            "files": 1,
+            "passed": 0,
+            "errors": 6
+          },
+          "seg_macro_table_in_memory": {
+            "files": 1,
+            "passed": 1,
+            "errors": 0
+          }
+        },
+        "error_patterns": {
+          "stock": [
+            {
+              "error": "TagUnexpected",
+              "keyword": "DerivationImageSequence",
+              "module": "Multi-frame Functional Groups",
+              "scope": "General",
+              "tag_path": "(5200,9230) / (0008,9124)",
+              "type": "Undefined",
+              "files_with_error": 1
+            },
+            {
+              "error": "TagUnexpected",
+              "keyword": "FrameContentSequence",
+              "module": "Multi-frame Functional Groups",
+              "scope": "General",
+              "tag_path": "(5200,9230) / (0020,9111)",
+              "type": "Undefined",
+              "files_with_error": 1
+            },
+            {
+              "error": "TagUnexpected",
+              "keyword": "PixelMeasuresSequence",
+              "module": "Multi-frame Functional Groups",
+              "scope": "General",
+              "tag_path": "(5200,9229) / (0028,9110)",
+              "type": "Undefined",
+              "files_with_error": 1
+            },
+            {
+              "error": "TagUnexpected",
+              "keyword": "PlaneOrientationSequence",
+              "module": "Multi-frame Functional Groups",
+              "scope": "General",
+              "tag_path": "(5200,9229) / (0020,9116)",
+              "type": "Undefined",
+              "files_with_error": 1
+            },
+            {
+              "error": "TagUnexpected",
+              "keyword": "PlanePositionSequence",
+              "module": "Multi-frame Functional Groups",
+              "scope": "General",
+              "tag_path": "(5200,9230) / (0020,9113)",
+              "type": "Undefined",
+              "files_with_error": 1
+            },
+            {
+              "error": "TagUnexpected",
+              "keyword": "SegmentIdentificationSequence",
+              "module": "Multi-frame Functional Groups",
+              "scope": "General",
+              "tag_path": "(5200,9230) / (0062,000A)",
+              "type": "Undefined",
+              "files_with_error": 1
+            }
+          ],
+          "seg_macro_table_in_memory": []
+        }
+      },
+      "independent_decoder": {
+        "case": "moose001_multilabel_r4",
+        "decoder": "dcmqi 1.5.7 / segimage2itkimage",
+        "output_masks": 18,
+        "differing_voxels": 0,
+        "exact_roundtrip_on_original_mask_grid": true,
+        "seconds": 11.36
+      }
+    }
+  ],
+  "dicom_edition": "2026c",
+  "dicom_validator_version": "0.9.0",
+  "dcmqi_version": "1.5.7",
+  "legacy_dicom3tools_version": "1.00.snapshot.20170109062447",
+  "local_tests_passed": 304,
+  "linux_installed_wheel_tests_passed": 304,
+  "tested_wheel_sha256": "f93df1a454fd43c3473f55bae315190f3137e266a104c898b2e03d5f9308cdd2"
+}

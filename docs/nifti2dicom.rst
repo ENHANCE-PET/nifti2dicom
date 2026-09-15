@@ -1,45 +1,21 @@
-nifti2dicom package
-===================
+Python API
+==========
 
-Submodules
+Conversion
 ----------
 
-nifti2dicom.conf module
------------------------
-
-.. automodule:: nifti2dicom.conf
+.. automodule:: nifti2dicom.api
    :members:
-   :undoc-members:
-   :show-inheritance:
 
-nifti2dicom.constants module
-----------------------------
+Results and geometry
+--------------------
 
-.. automodule:: nifti2dicom.constants
+.. automodule:: nifti2dicom.models
    :members:
-   :undoc-members:
-   :show-inheritance:
 
-nifti2dicom.converter module
-----------------------------
+Errors
+------
 
-.. automodule:: nifti2dicom.converter
+.. automodule:: nifti2dicom.errors
    :members:
-   :undoc-members:
-   :show-inheritance:
-
-nifti2dicom.display module
---------------------------
-
-.. automodule:: nifti2dicom.display
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Module contents
----------------
-
-.. automodule:: nifti2dicom
-   :members:
-   :undoc-members:
    :show-inheritance:

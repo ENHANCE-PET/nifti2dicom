@@ -21,19 +21,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.x'
+        python-version: '3.13'
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install build
+        pip install -e '.[dev]'
+    - name: Verify package
+      run: |
+        python -m pytest
+        python -m pytest integrations/slicer/tests
+        python -m ruff check nifti2dicom tests integrations/slicer validation
+        python -m ruff format --check nifti2dicom tests integrations/slicer validation
+        python -m mypy nifti2dicom --ignore-missing-imports
     - name: Build package
       run: python -m build
+    - name: Inspect distribution contents
+      run: python -m validation.check_distribution dist/*.tar.gz dist/*.whl
     - name: Publish package
-      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
+      uses: pypa/gh-action-pypi-publish@dc37677b2e1c63e2034f94d8a5b11f265b73ba33 # v1.14.2
       with:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN_N2D }}
+        attestations: false # Token-based publishing; attestations require Trusted Publishing.
