@@ -36,6 +36,8 @@ Run `.venv/bin/python -m pytest` and
 `.venv/bin/python -m validation.check_distribution dist/*.tar.gz dist/*.whl`
 before release. CI exercises Python 3.10–3.13.
 Type-check with `.venv/bin/python -m mypy nifti2dicom --ignore-missing-imports`.
+Mypy uses the active interpreter; CI checks each supported Python version with
+its matching dependencies. Do not force older syntax onto newer NumPy stubs.
 
 Opt-in IDC downloads, independent pixel/geometry audits, external conformance
 validators and installed-Slicer commands live in `validation/README.md`.
