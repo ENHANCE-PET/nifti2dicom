@@ -17,7 +17,7 @@ only-include = [
 
 [project]
 name = "nifti2dicom"
-version = "2.1.0"
+version = "2.2.0"
 description = "Convert NIfTI images to DICOM format using a reference DICOM series."
 readme = "README.md"
 license = "MIT"

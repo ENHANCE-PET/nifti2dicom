@@ -44,4 +44,23 @@ added or downloaded. Existing repository guidance and architecture were read.
   file creation prevents final-component symlink/concurrent overwrite attacks,
   not hostile modification of an ancestor directory by its owner.
 - Local repairs require a release before package consumers inherit them.
-- No remote, push, PR, release or merge was performed.
+- The audit created no remote and rewrote no published history. Release candidates
+  are prepared on the existing security branch; publishing is coordinated separately.
+
+## Version 2.2.0 release candidate
+
+- PyPI and GitHub tag availability were checked by the coordinating release agent.
+  Version metadata and the source fallback agree; historical validation records
+  retain the versions that originally produced their results.
+- Final source verification: 832 unit/integration tests and 135 Slicer integration
+  tests pass; Ruff lint/format and mypy pass.
+- Built the actual 2.2.0 source distribution and wheel. The distribution guard
+  checked 121 source-archive and 38 wheel entries without local/imaging artifacts.
+- Loaded the candidate wheel outside the repository, asserted its version and
+  module path, then ran the complete test corpus against it: 967 passed.
+- Public conversion functions and geometry/pixel tests remain covered. Python
+  >=3.11, dependency floors and stricter legacy output safety are documented in
+  README. No input profile or clinical/interoperability claim was expanded.
+- Release gate: reviewed PR into main; full Python 3.11–3.13 CI green on final
+  candidate and merge commit; publish tag v2.2.0 at that merged commit; monitor
+  Upload Python Package; verify downloaded PyPI artifacts and fresh installation.

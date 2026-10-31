@@ -260,3 +260,11 @@ new output files exclusively to avoid overwriting concurrently created files.
 
 Python 3.11 or newer is required so supported installations can use Pillow 13
 security fixes. Runtime metadata excludes known vulnerable pydicom releases.
+
+### Version 2.2 migration
+
+Version 2.2 requires Python 3.11 or newer and patched pydicom/Pillow releases.
+The public conversion API, geometry and pixel encoding remain the same. Legacy
+slice writers reject symbolic links and concurrent output-file replacement;
+existing output files continue to require a new destination. This release does
+not add new input profiles or establish additional viewer/clinical validation.

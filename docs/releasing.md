@@ -8,13 +8,13 @@ pushes and merges run CI but do not publish a package.
 
 1. Choose an unused version on PyPI and update `pyproject.toml`. Keep package
    version declarations consistent. Do not reuse or replace a released version.
-2. Open a PR into `main`. Wait for the full Python 3.10–3.13 test matrix, lint,
+2. Open a PR into `main`. Wait for the full Python 3.11–3.13 test matrix, lint,
    type checks, package builds and archive checks to pass on its final commit.
    Review the changed files and relevant real-data/viewer evidence. Unit tests
    alone do not establish DICOM interoperability or clinical suitability.
 3. Merge the reviewed PR and verify CI on the merged commit. Do not bypass
    failing checks, even when repository settings do not require them.
-4. Publish a GitHub release with a tag such as `v2.1.0`, targeting that exact
+4. Publish a GitHub release with a tag such as `v2.2.0`, targeting that exact
    merged commit. Match the tag to the package version and include migration
    notes, supported profiles and important limitations in the release notes.
 5. Monitor **Upload Python Package** through completion. It reruns tests,
