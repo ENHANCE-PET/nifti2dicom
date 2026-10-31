@@ -254,3 +254,9 @@ Optional reproducible public-data checks are described in
 not dependencies of ordinary unit tests or package installation.
 
 MIT licensed. Authors: Lalith Kumar Shiyam Sundar, Aaron Selfridge and Siqi Li.
+
+Compatibility slice writers reject existing files and symbolic links, and create
+new output files exclusively to avoid overwriting concurrently created files.
+
+Python 3.11 or newer is required so supported installations can use Pillow 13
+security fixes. Runtime metadata excludes known vulnerable pydicom releases.

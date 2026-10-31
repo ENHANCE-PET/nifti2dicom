@@ -21,7 +21,7 @@ version = "2.1.0"
 description = "Convert NIfTI images to DICOM format using a reference DICOM series."
 readme = "README.md"
 license = "MIT"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 authors = [
     { name = "Lalith Kumar Shiyam Sundar" },
     { name = "Aaron Selfridge" },
@@ -36,11 +36,12 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Medical Science Apps.",
 ]
 dependencies = [
-    "pydicom>=3.0",
+    "pydicom>=3.0.2",
     "nibabel>=5.2",
     "numpy>=1.24",
     "SimpleITK>=2.3",
     "highdicom>=0.27",
+    "pillow>=13",
     "rich>=13",
     "click>=8.1",
 ]
@@ -64,14 +65,14 @@ Issues = "https://github.com/ENHANCE-PET/nifti2dicom/issues"
 [tool.ruff]
 required-version = "==0.16.7"
 line-length = 100
-target-version = "py310"
+target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "B", "C4", "UP"]
 
 [tool.mypy]
 # Use the active interpreter so installed dependency stubs match its syntax.
-# CI also runs on Python 3.10 to enforce the minimum supported version.
+# CI also runs on Python 3.11 to enforce the minimum supported version.
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
