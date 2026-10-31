@@ -7,7 +7,7 @@ from importlib.metadata import PackageNotFoundError, version
 try:
     __version__ = version("nifti2dicom")
 except PackageNotFoundError:
-    __version__ = "2.1.0.dev0"
+    __version__ = "2.2.0.dev0"
 
 # Public API re-exports
 from nifti2dicom.api import convert, inspect

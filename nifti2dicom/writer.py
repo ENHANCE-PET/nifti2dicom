@@ -44,10 +44,19 @@ def _destination(output: str | Path, filename: str) -> Path:
     if Path(filename).name != filename or filename in ("", ".", ".."):
         raise OutputError("A slice filename must be a basename within the output directory.")
     destination = Path(output) / filename
-    if destination.exists():
+    if destination.is_symlink() or destination.exists():
         raise OutputError(f"Output file already exists: {destination}")
     destination.parent.mkdir(parents=True, exist_ok=True)
     return destination
+
+
+def _write_new(destination: Path, ds: pydicom.Dataset) -> None:
+    """Create a slice exclusively so links and concurrent files cannot be overwritten."""
+    try:
+        with destination.open("xb") as stream:
+            pydicom.dcmwrite(stream, ds, enforce_file_format=True)
+    except FileExistsError as exc:
+        raise OutputError(f"Output file already exists: {destination}") from exc
 
 
 def save_slice(
@@ -75,7 +84,7 @@ def save_slice(
     )
     ds.SeriesInstanceUID = getattr(slice_ds, "SeriesInstanceUID", None) or ds.SeriesInstanceUID
     ds.InstanceNumber = instance_number if instance_number is not None else 1
-    pydicom.dcmwrite(_destination(output_dir, filename), ds, enforce_file_format=True)
+    _write_new(_destination(output_dir, filename), ds)
 
 
 def write_slices_parallel(
@@ -119,6 +128,6 @@ def write_slices_parallel(
         image, reference, description=series_description, header_source=header_source
     )
     for ds, destination in zip(datasets, destinations, strict=True):
-        pydicom.dcmwrite(destination, ds, enforce_file_format=True)
+        _write_new(destination, ds)
         if on_progress:
             on_progress()

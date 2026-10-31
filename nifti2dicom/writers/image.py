@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Callable, Iterable, Iterator
 from copy import deepcopy
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from itertools import product
 from pathlib import Path
 
@@ -370,7 +370,7 @@ def _base_dataset(
     ds.SeriesDescription = (description if description is not None else "NIfTI conversion")[:64]
     ds.ImageType = ["DERIVED", "SECONDARY", "OTHER"]
     ds.Manufacturer = "nifti2dicom"
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     ds.SeriesDate = ds.ContentDate = ds.InstanceCreationDate = now.strftime("%Y%m%d")
     ds.SeriesTime = ds.ContentTime = ds.InstanceCreationTime = now.strftime("%H%M%S.%f")
     return ds

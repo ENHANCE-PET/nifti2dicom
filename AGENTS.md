@@ -34,7 +34,7 @@ Run `.venv/bin/python -m pytest` and
 `nifti2dicom tests integrations/slicer validation` with Ruff. Build with
 `.venv/bin/python -m build`, then inspect the actual archives using
 `.venv/bin/python -m validation.check_distribution dist/*.tar.gz dist/*.whl`
-before release. CI exercises Python 3.10–3.13.
+before release. CI exercises Python 3.11–3.13.
 Type-check with `.venv/bin/python -m mypy nifti2dicom --ignore-missing-imports`.
 Mypy uses the active interpreter; CI checks each supported Python version with
 its matching dependencies. Do not force older syntax onto newer NumPy stubs.
