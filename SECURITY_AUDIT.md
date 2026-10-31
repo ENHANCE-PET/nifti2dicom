@@ -24,12 +24,13 @@ added or downloaded. Existing repository guidance and architecture were read.
 - Full suite: 832 passed. Slicer integration suite: 135 passed.
 - Ruff lint and formatting checks pass; mypy reports no issues in 33 source files.
 - After the equivalent datetime.UTC syntax migration: fresh lint/format/type
-  checks and five security regressions pass.
+  checks pass, and both full suites were rerun (832 and 135 passed).
 - Final Python 3.11 runtime dependency resolution succeeds.
-- Prior fully installed Python 3.13 runtime/dev environment: pip-audit reported no
-  known vulnerabilities. Parent owns the final runtime-only audit refresh.
-- `uv build` successfully built the sdist and wheel; parent owns final archive
-  inspection/rebuild after reports. `git diff --check` passes.
+- Final Python 3.11 runtime-only graph: pip-audit checked 15 packages, none skipped,
+  and reported no known vulnerabilities.
+- `uv build` successfully rebuilt the final sdist and wheel; the distribution
+  guard found no local/data artifacts (121 sdist and 38 wheel entries checked).
+  `git diff --check` passes.
 - Parent independent source review approved the exclusive-write repair.
 
 ## Evidence and limits
