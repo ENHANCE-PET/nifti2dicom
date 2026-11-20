@@ -20,6 +20,7 @@ class Segment:
     name: str
     category: Code
     property_type: Code
+    color: tuple[int, int, int] | None = None
 
 
 @dataclass(frozen=True)
@@ -70,6 +71,21 @@ def _code(raw: Any, fallback: Code) -> Code:
             "Code values and schemes must be nonempty; meanings must be 1–64 characters."
         )
     return code
+
+
+def _color(raw: Any, label_value: int) -> tuple[int, int, int] | None:
+    if raw is None:
+        return None
+    if (
+        isinstance(raw, (list, tuple))
+        and len(raw) == 3
+        and all(isinstance(c, int) and not isinstance(c, bool) and 0 <= c <= 255 for c in raw)
+    ):
+        return (raw[0], raw[1], raw[2])
+    raise LabelError(
+        f"Label {label_value} has an invalid color {raw!r}.",
+        hint="Supply color as [R, G, B] with integers from 0 to 255.",
+    )
 
 
 def prepare_segments(
@@ -171,12 +187,13 @@ def prepare_segments(
             property_raw = {"value": str(snomed["ID"]), "scheme": "SCT", "meaning": snomed["name"]}
         category = _code(raw.get("category"), unspecified)
         property_type = _code(property_raw, unspecified)
+        color = _color(raw.get("color"), value)
         if category == unspecified or property_type == unspecified:
             warnings.append(
                 f"Label {value}: unspecified coded meaning; "
                 "supply category/type codes for semantic interoperability."
             )
-        segments.append(Segment(value, number, raw["name"], category, property_type))
+        segments.append(Segment(value, number, raw["name"], category, property_type, color))
     return SegmentationInfo(
         tuple(segments), algorithm_type, algorithm_name, algorithm_version, tuple(warnings)
     )
