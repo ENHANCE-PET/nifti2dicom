@@ -7,8 +7,8 @@ import pytest
 from pydicom.uid import generate_uid
 
 from nifti2dicom.errors import ConversionError, LabelError
-from tests.conftest import _make_dicom_slice
 from nifti2dicom.labels import prepare_segments
+from tests.conftest import _make_dicom_slice
 
 
 @pytest.fixture
@@ -208,6 +208,7 @@ def test_incomplete_optional_source_codes_are_omitted_not_invented(
         assert output.ProcedureCodeSequence[0] == item
     assert all(path.read_bytes() == original for path, original in before.items())
 
+
 def test_prepare_segments_custom_rgb_and_fallback() -> None:
     mask = np.array([[[1, 2]]], dtype=np.uint8)
     labels = {
@@ -227,6 +228,7 @@ def test_prepare_segments_custom_rgb_and_fallback() -> None:
     assert len(info.segments) == 2
     assert info.segments[0].color == (255, 0, 128)
     assert info.segments[1].color is None
+
 
 @pytest.mark.parametrize(
     "bad_color",
