@@ -74,7 +74,7 @@ unspecified local code and produce a warning. Supply real codes from your
 segmentation schema rather than inferring them from pixel values.
 
 MOOSE's nested `organ_indices` format and its `SNOMED.ID`/`SNOMED.name` entries
-are accepted. A richer file can also carry algorithm provenance:
+are accepted. A richer file can also carry algorithm provenance and label colors:
 
 ```json
 {
@@ -85,7 +85,8 @@ are accepted. A richer file can also carry algorithm provenance:
       "category": {
         "value": "123037004", "scheme": "SCT", "meaning": "Anatomical Structure"
       },
-      "type": {"value": "10200004", "scheme": "SCT", "meaning": "Liver"}
+      "type": {"value": "10200004", "scheme": "SCT", "meaning": "Liver"},
+      "color": [255, 0, 0]
     }
   }
 }

@@ -79,7 +79,13 @@ def write_seg(
             version=segments.algorithm_version,
             family=Code("SEGMENTATION", "99NIFTI2DICOM", "Segmentation algorithm"),
         )
-    colors = [(232, 116, 97), (81, 160, 160), (224, 180, 82), (147, 119, 184), (111, 166, 110)]
+    default_colors = [
+        (232, 116, 97),
+        (81, 160, 160),
+        (224, 180, 82),
+        (147, 119, 184),
+        (111, 166, 110),
+    ]
     descriptions = [
         hd.seg.SegmentDescription(
             segment_number=s.number,
@@ -88,7 +94,13 @@ def write_seg(
             segmented_property_type=s.property_type,
             algorithm_type=segments.algorithm_type,
             algorithm_identification=algorithm,
-            display_color=hd.color.CIELabColor.from_rgb(*colors[(s.number - 1) % len(colors)]),
+            display_color=hd.color.CIELabColor.from_rgb(
+                *(
+                    s.color
+                    if s.color is not None
+                    else default_colors[(s.number - 1) % len(default_colors)]
+                )
+            ),
         )
         for s in segments.segments
     ]
